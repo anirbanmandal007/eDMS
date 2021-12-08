@@ -3,6 +3,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthUtils } from 'app/core/auth/auth.utils';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
@@ -10,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor
     /**
      * Constructor
      */
-    constructor(private _authService: AuthService)
+    constructor(private _authService: AuthService, private _userService: UserService)
     {
     }
 
@@ -33,7 +34,8 @@ export class AuthInterceptor implements HttpInterceptor
         // for the protected API routes which our response interceptor will
         // catch and delete the access token from the local storage while logging
         // the user out from the app.
-        if ( this._authService.accessToken && !AuthUtils.isTokenExpired(this._authService.accessToken) )
+        // if ( this._authService.accessToken && !AuthUtils.isTokenExpired(this._authService.accessToken) )
+        if ( this._authService.accessToken )
         {
             newReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + this._authService.accessToken)
@@ -48,7 +50,7 @@ export class AuthInterceptor implements HttpInterceptor
                 if ( error instanceof HttpErrorResponse && error.status === 401 )
                 {
                     // Sign out
-                    this._authService.signOut();
+                    this._authService.signOut(this._authService.accessToken, this._userService.user[0].id);
 
                     // Reload the app
                     location.reload();

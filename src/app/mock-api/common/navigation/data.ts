@@ -8,6 +8,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/example'
+    },
+    {
+        id   : 'userManagement',
+        title: 'User Management',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        disabled: false,
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -30,10 +37,29 @@ export const futuristicNavigation: FuseNavigationItem[] = [
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
-        title: 'Example',
+        id   : 'dashboard',
+        title: 'Dashboard',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        link : '/dashboard',
+        disabled: false
+    },
+    {
+        id   : 'userManagement',
+        title: 'User Management',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        disabled: false,
+        link : '/userManagement/user',
+        children: [
+            {
+                id   : 'users',
+                title: 'Users',
+                type : 'basic',
+                icon : 'heroicons_outline:chart-pie',
+                link : '/userManagement/user',
+                disabled: false,
+            }
+        ]
     }
 ];

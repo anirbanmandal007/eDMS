@@ -1,5 +1,5 @@
 {
-    "name": "@fuse/starter",
+    "name": "eDMS",
     "version": "14.0.0",
     "description": "Fuse - Angular Admin Template and Starter Project",
     "author": "https://themeforest.net/user/srcn",
@@ -47,7 +47,7 @@
         "@angular-eslint/eslint-plugin-template": "12.6.1",
         "@angular-eslint/schematics": "12.6.1",
         "@angular-eslint/template-parser": "12.6.1",
-        "@angular/cli": "13.0.2",
+        "@angular/cli": "^13.0.4",
         "@angular/compiler-cli": "13.0.1",
         "@tailwindcss/aspect-ratio": "0.3.0",
         "@tailwindcss/line-clamp": "0.2.2",

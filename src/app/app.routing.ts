@@ -10,14 +10,14 @@ import { InitialDataResolver } from 'app/app.resolvers';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    {path: '', pathMatch : 'full', redirectTo: 'example'},
+    {path: '', pathMatch : 'full', redirectTo: 'dashboard'},
 
-    // Redirect signed in user to the '/example'
+    // Redirect signed in user to the '/dashboard'
     //
     // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
-    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'example'},
+    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'dashboard'},
 
     // Auth routes for guests
     {
@@ -45,6 +45,9 @@ export const appRoutes: Route[] = [
         component: LayoutComponent,
         data: {
             layout: 'empty'
+        },
+        resolve    : {
+            initialData: InitialDataResolver,
         },
         children: [
             {path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)},
@@ -74,7 +77,21 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children   : [
-            {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
+            {path: 'dashboard', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
         ]
-    }
+    },
+
+    // Users routes
+    {
+        path: '',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve    : {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {path: 'userManagement', loadChildren: () => import('app/modules/user-management/user-management.module').then(m => m.UserManagementModule)},
+        ]
+    },
 ];

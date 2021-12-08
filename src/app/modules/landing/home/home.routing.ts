@@ -5,5 +5,10 @@ export const landingHomeRoutes: Route[] = [
     {
         path     : '',
         component: LandingHomeComponent
+    },
+    
+    {
+        path     : 'dashboard',
+        component: LandingHomeComponent
     }
 ];

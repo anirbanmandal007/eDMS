@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FuseLoadingService } from '@fuse/services/loading/loading.service';
 
 @Component({
     selector     : 'example',
@@ -10,7 +11,10 @@ export class ExampleComponent
     /**
      * Constructor
      */
-    constructor()
+    constructor(
+        private _fuseLoadingService: FuseLoadingService
+    )
     {
+        this._fuseLoadingService.hide();
     }
 }

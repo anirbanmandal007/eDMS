@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import { map, Observable, ReplaySubject, tap, BehaviorSubject } from 'rxjs';
 import { User } from 'app/core/user/user.types';
 
 @Injectable({
@@ -26,15 +26,23 @@ export class UserService
      *
      * @param value
      */
-    set user(value: User)
+    set user(value: any)
     {
         // Store the value
         this._user.next(value);
     }
 
-    get user$(): Observable<User>
+    get user$(): Observable<any>
     {
         return this._user.asObservable();
+    }
+
+    getUserData() {
+       return JSON.parse(localStorage.getItem('userData'));
+    }
+
+    setUserData(user) {
+        localStorage.setItem('userData', user);
     }
 
     // -----------------------------------------------------------------------------------------------------
