@@ -8,7 +8,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     imports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
     exports: [
         CommonModule,

@@ -7,6 +7,7 @@ import { UserConfirmationRequiredComponent } from '../user-confirmation-required
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserManagementService } from '../user-management.service';
 import { ToasterService } from 'app/shared/toaster.service';
+import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user',
@@ -53,7 +54,7 @@ export class UserComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.geUserList();
+    this.getUserList();
 
     this.AddUserForm = this._formBuilder.group({
       id: [""],
@@ -86,7 +87,7 @@ export class UserComponent implements OnInit {
   selectRole (event: any) {
     this.role_id = event.target.value;
   }
-  geUserList() {
+  getUserList() {
     this._userManagementService.getUsersData().subscribe(data => {
       this.dataSource = data;
       this.displayTable = true;
@@ -117,18 +118,36 @@ export class UserComponent implements OnInit {
   }
  
   deleteRow(userId:any,userName:any){
-    let data = {
-      "id":userId,
-      "name":userName
-    }
-    this.openlist = false;
-    const dialogConfig = new MatDialogConfig();
+    const message = `Are you sure you want delete this row?`;
 
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = data;
-        this.dialog.open(UserConfirmationRequiredComponent, dialogConfig);
+    const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      maxWidth: "0",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult) {
+        alert('user clicked confirm');
+      } else {
+        alert('user clicked cancel');
+      }
+    });
+
+  // let data = {
+  //   "id":userId,
+  //   "name":userName
+  // }
+  // this.openlist = false;
+  // const dialogConfig = new MatDialogConfig();
+
+  //     dialogConfig.disableClose = true;
+  //     dialogConfig.autoFocus = true;
+  //     dialogConfig.data = data;
+  //     this.dialog.open(UserConfirmationRequiredComponent, dialogConfig);
   }
+
   closeeditDialog(){
     this.openlist = false;
     this.modalopen = false;
@@ -166,7 +185,7 @@ this._userManagementService.createUsersData(body).subscribe(data => {
   //this.dataSource = data;
   this.modalopen = false;
   this.createmodalopen = false;
-  window.location.reload();
+  this.getUserList();
 });
 
   }
@@ -177,6 +196,7 @@ this._userManagementService.createUsersData(body).subscribe(data => {
     this.editmodalopen = true;
 
     this._userManagementService.getUsersDataById(userId).subscribe(data => {
+      console.log(data)
       this.editform = this._formBuilder.group({
         id: [data.id],
         name: new FormControl(data.name, [Validators.required]),
