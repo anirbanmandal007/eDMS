@@ -18,7 +18,8 @@ export class UserComponent implements OnInit {
   @ViewChild('openmenu') toggleButton: ElementRef;
   @ViewChild('data-menu') menu: ElementRef;
 
-
+  role_id: string = '';
+  
   recId: any;
   openlist: boolean = false;
   text: string;
@@ -38,9 +39,7 @@ export class UserComponent implements OnInit {
     //public toastr: ToastrService,
     private dialog: MatDialog) { 
     this.renderer.listen('window', 'click',(e:Event)=>{
-
-      
-     if(this.toggleButton.nativeElement && this.menu.nativeElement && e.target !== this.toggleButton.nativeElement && e.target!==this.menu.nativeElement ){
+     if(this.toggleButton && this.toggleButton.nativeElement && this.menu.nativeElement && e.target !== this.toggleButton.nativeElement && e.target!==this.menu.nativeElement ){
          this.openlist=false;
      }
  });
@@ -80,9 +79,10 @@ export class UserComponent implements OnInit {
       Remarks: [""],
       User_Token: localStorage.getItem('User_Token'),
     });
-
-    
-    
+  }
+  //event handler for the select element's change event
+  selectRole (event: any) {
+    this.role_id = event.target.value;
   }
   geUserList() {
     this._userManagementService.getUsersData().subscribe(data => {
@@ -113,20 +113,18 @@ export class UserComponent implements OnInit {
     this.recId = getId;
     this.openlist = true;
   }
-  editRowdata(userId:any){
-    this.openlist = false;
-    this.modalopen = true;
-    this.editmodalopen = true;
-  }
+ 
   deleteRow(userId:any,userName:any){
+    let data = {
+      "id":userId,
+      "name":userName
+    }
     this.openlist = false;
     const dialogConfig = new MatDialogConfig();
 
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        dialogConfig.data = userName;
-       
-
+        dialogConfig.data = data;
         this.dialog.open(UserConfirmationRequiredComponent, dialogConfig);
   }
   closeeditDialog(){
@@ -146,39 +144,81 @@ export class UserComponent implements OnInit {
     
   }
   CreateRowData(){
-   console.log('Form data:' + JSON.stringify(this.AddUserForm.value));
-   console.log('Username:' + this.AddUserForm.controls.username.value)
-  //   console.log("true");
-  //   let body = {
-  //     name: this.cf.name.value,
-  //     userid: this.cf.userid.value,
-  //     pwd: this.cf.pwd.value,
-  //     confirmPass: this.cf.confirmPass.value,
-  //     email: this.cf.email.value,
-  //     mobile: this.cf.mobile.value,
-  //     sysRoleID:0,
-  //     Remarks: this.cf.Remarks.value
-  //   }
-
-  //   const apiUrl1 = "https://e-storage.crownims.com/SODDMS/api/Admin/Create?user_Token=3D72E6CB-68DF-4FCB-8AD1-E05AA";
-  //   this.http.post(apiUrl1,body).subscribe((data: {}) => {
-  //     console.log("data",data);
-  //   });
-
-  //   // if(this.AddUserForm.value.User_Token == null) {
-  //   //   this.AddUserForm.value.User_Token = localStorage.getItem('User_Token');
-  //   // }
-  //   // if (this.AddUserForm.get('id').value) {
-  //   //  // console.log('Form',this.AddUserForm.value);
-  //   //   //console.log('Inside Edit');
-  //   //   const apiUrl = "Admin/Update";
-     
-  //   // } else {
-     
-      
-  //   // }
+  console.log('Form data:' + JSON.stringify(this.AddUserForm.value));
+  console.log('Username:' + this.AddUserForm.controls.username.value)
+  console.log("true");
+  let body = {
+    name: this.AddUserForm.controls.username.value,
+    userid: this.AddUserForm.controls.userid.value,
+    pwd: this.AddUserForm.controls.pwd.value,
+    confirmPass: this.AddUserForm.controls.confirmPass.value,
+    email: this.AddUserForm.controls.email.value,
+    mobile:String(this.AddUserForm.controls.mobile.value),
+    sysRoleID:this.role_id,
+    Remarks: this.AddUserForm.controls.Remarks.value
   }
-  editRow(){
+console.log(body)
+
+this._userManagementService.createUsersData(body).subscribe(data => {
+  alert("sucessfully created");
+  //this.dataSource = data;
+  this.modalopen = false;
+  this.createmodalopen = false;
+  window.location.reload();
+});
+
+  }
+  editRow(userId:any){
+    console.log("editing");
+    this.openlist = false;
+    this.modalopen = true;
+    this.editmodalopen = true;
+
+    this._userManagementService.getUsersDataById(userId).subscribe(data => {
+      this.editform = this._formBuilder.group({
+        id: [data.id],
+        name: new FormControl(data.name, [Validators.required]),
+        userid: [data.userid, Validators.required],
+        pwd: [data.pwd, Validators.required],
+        email: [data.email, [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+        ]],
+        mobile: [data.mobile],
+        role: [data.role, Validators.required],
+        Remarks: [data.Remarks]
+      });
+      
+    });
+    
+  }
+  editRowdata(){
+    let cpass;
+    if(this.editform.controls.confirmPass){
+      cpass = this.editform.controls.confirmPass.value
+    }else{
+      cpass = "";
+    }
+
+    let body = {
+      name: this.editform.controls.name.value,
+      userid: this.editform.controls.userid.value,
+      pwd: this.editform.controls.pwd.value,
+      confirmPass: cpass,
+      email: this.editform.controls.email.value,
+      mobile:String(this.editform.controls.mobile.value),
+      sysRoleID:this.role_id,
+      Remarks: this.editform.controls.Remarks.value
+    }
+
+    console.log("update body",body);
+
+    this._userManagementService.updateUsersData(body).subscribe(data => {
+      alert("sucessfully updated");
+      //this.dataSource = data;
+      this.modalopen = false;
+      this.editmodalopen = false;
+      window.location.reload();
+    });
+   
     
   }
   validateFields()

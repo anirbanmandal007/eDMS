@@ -1,0 +1,264 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="row nav_direction">
+            <div class="col-12">
+              <ol class="breadcrumb">
+                <li><mat-icon aria-hidden="false" aria-label="icon" class="breadcrumb_icon">home</mat-icon></li>
+                <li><mat-icon aria-hidden="false" aria-label="icon" class="breadcrumb_icon">supervisor_account</mat-icon>User Management</li>
+                <li><mat-icon aria-hidden="false" aria-label="icon" class="breadcrumb_icon">account_box</mat-icon>Role</li>
+              </ol>
+            </div>
+        </div>
+        <!-- CONTENT GOES HERE -->
+        <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+          <div class="page-title">
+            <h3>All Roles</h3>
+          </div>
+          <div class="btn-panel"><button type="button" (click)="CreateRow()" >Create Role</button></div>
+          <div *ngIf="displayTable">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <thead>
+                <tr>
+                  <th class="text-left">Sr No.</th>
+                  <th class="text-left">Role Name</th>
+                  <th class="text-left">Remarks</th>
+                  <th class="text-left">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let role of dataSource; let i = index;" class="data-tr">
+                  <td>{{i + 1}}</td>
+                  <td>{{role.roleName}}</td>
+                  <td>{{role.remarks}}</td>
+                  <td (click)="openMenu(role.id)" class="cursor-pointer"><mat-icon #openmenu >more_vert</mat-icon>
+                    <ul class="data-menu" *ngIf="role.id == selectedId">
+                      <li (click)="editRow(role.id)"><mat-icon class="pr-4">edit</mat-icon>Edit</li>
+                      <li (click)="deleteRow(role.id,role.name)"><mat-icon class="pr-4">delete</mat-icon>Delete</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+        </div>
+    </div>
+</div>
+<!--Start of edit user modal-->
+<!-- <div class="overlay" *ngIf="modalopen"></div>
+<div class="modal-content" *ngIf="editmodalopen">
+  <div class="modal-body">
+<div class=" card">
+  <div class=" card-header"><h3 class=" mb-0">Edit User</h3></div>
+
+  <div class="card-body">
+    <form  class="needs-validation" novalidate="" [formGroup]="editform" (ngSubmit)="editRowdata()">
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label class="form-control-label" for="name">
+            Name* 
+          </label>
+          <input class="form-control" name="name" id="name" [formControlName]="'name'" placeholder="Name" type="text"/>
+
+          <div  class="errorMsg-feedback"
+           *ngIf="f.name && f.name.touched && f.name.invalid && f.name.errors.required">Required</div>
+
+          <div style="margin-top: .25rem;" class="alert alert-danger"
+          *ngIf="f.name && f.name.touched && f.name.invalid && f.name.errors.required">Name is required</div>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="userid">
+            User Id*
+          </label>
+          <input name="userid" id="userid" [formControlName]="'userid'" placeholder="User Id" type="text" class="form-control"/>
+          <div  class="errorMsg-feedback" *ngIf="f.userid && f.userid.touched && f.userid.hasError('required')">Required</div>
+        </div>
+      </div>
+      <div class="form-row">
+        
+
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="email">
+            Email*
+          </label>
+
+          <input   id="email" [formControlName]="'email'" placeholder="Email" type="email" class="form-control"/>
+          <div  class="errorMsg-feedback" *ngIf="f.email && f.email.touched && f.email.hasError('required')">Email Id Required</div>
+          <div  class="errorMsg-feedback" *ngIf="f.email && f.email.touched && f.email.errors?.pattern">Please Enter Valid Email Id</div>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="mobile">
+            Mobile
+          </label>
+
+          <input name="mobile" id="mobile" maxlength="10" [formControlName]="'mobile'" placeholder="Mobile" type="number" class="form-control"/>
+          <div  class="errorMsg-feedback" *ngIf="f.mobile && f.mobile.touched && f.mobile.hasError('required')">Mobile No Required</div>
+        </div>
+      </div>
+
+      <div class=" form-row">
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="loginPass">
+            Password*
+          </label>
+          <input name="pwd" id="loginPass" [formControlName]="'pwd'" required minlength="8" placeholder="Password" type="password" class="form-control">
+          <div  class="errorMsg-feedback" *ngIf="f.pwd && f.pwd.touched && f.pwd.hasError('required')">Password Required</div>
+          
+          <div  class="errorMsg-feedback"
+          *ngIf="f.pwd && f.pwd.touched && f.pwd.errors &&f.pwd.errors.minlength">Password should be 8 character</div>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="confirmPass">
+            Confirm Password*
+          </label>
+
+          <input name="confirmPass" id="confirmPass" [formControlName]="'confirmPass'" placeholder="Confirm Password" type="password" class="form-control">
+          <div  class="errorMsg-feedback" *ngIf="f.confirmPass && f.confirmPass.touched && f.confirmPass.hasError('required')">Confirm Password Required</div>
+          <div  class="errorMsg-feedback" *ngIf="f.confirmPass && f.confirmPass.touched && f.confirmPass.invalid && f.confirmPass.errors.confirmedValidator" >
+            Password and Confirm Password must be match.</div>
+       
+        </div>
+      </div> 
+      <div class=" form-row">
+        
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="sysRoleID">
+            Role*
+          </label>
+          <input name="role" id="loginPass" [formControlName]="'role'" required minlength="8" placeholder="Role" type="text" class="form-control">
+          <div  class="errorMsg-feedback" *ngIf="f.sysRoleID && f.sysRoleID.touched && f.sysRoleID.hasError('required')">Role Required</div>
+         
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="Remarks">
+            Remarks
+          </label>
+
+          <input name="Remarks" id="Remarks" [formControlName]="'Remarks'" placeholder="Remarks" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class=" form-row">
+        <button  class="btn btn-primary" type="submit" (click)="editRowdata()">
+          Submit
+        </button>
+        <button type="button" class="btn btn-warning" (click)="closeeditDialog()">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+<!--End of edit user modal-->
+<!--Start of create user modal
+<div class="modal-content" *ngIf="createmodalopen">
+  <div class="modal-body">
+<div class=" card">
+  <div class=" card-header"><h3 class=" mb-0">Create User</h3></div>
+
+  <div class="card-body">
+    <form  class="needs-validation" [formGroup]="AddUserForm">
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label class="form-control-label" for="username">
+            Name* 
+          </label>
+          <input class="form-control" name="username" id="username" [formControlName]="'username'" placeholder="Name" type="text"/>
+
+          <div  class="errorMsg-feedback"
+           *ngIf="cf.name && cf.name.touched && cf.name.invalid && cf.name.errors.required">Required</div>
+
+          <div style="margin-top: .25rem;" class="alert alert-danger"
+          *ngIf="cf.name && cf.name.touched && cf.name.invalid && cf.name.errors.required">Name is required</div>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="userid">
+            User Id*
+          </label>
+          <input name="userid" id="userid" [formControlName]="'userid'" placeholder="User Id" type="text" class="form-control"/>
+          <div  class="errorMsg-feedback" *ngIf="cf.userid && cf.userid.touched && cf.userid.hasError('required')">Required</div>
+        </div>
+      </div>
+      <div class="form-row">
+        
+
+        <div class=" col-md-6 mb-3">
+          <label
+            class=" form-control-label"
+            for="email"
+          >
+            Email*
+          </label>
+
+          <input   id="email" [formControlName]="'email'" placeholder="Email" type="email" class="form-control"/>
+          <div  class="errorMsg-feedback" *ngIf="cf.email && cf.email.touched && cf.email.hasError('required')">Email Id Required</div>
+          <div  class="errorMsg-feedback" *ngIf="cf.email && cf.email.touched && cf.email.errors?.pattern">Please Enter Valid Email Id</div>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="mobile">
+            Mobile
+          </label>
+
+          <input name="mobile" id="mobile" maxlength="10" [formControlName]="'mobile'" placeholder="Mobile" type="number" class="form-control"/>
+          <div  class="errorMsg-feedback" *ngIf="cf.mobile && cf.mobile.touched && cf.mobile.hasError('required')">Mobile No Required</div>
+        </div>
+      </div>
+
+      <div class=" form-row">
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="loginPass">
+            Password*
+          </label>
+          <input name="pwd" id="loginPass" [formControlName]="'pwd'" required minlength="8" placeholder="Password" type="password" class="form-control">
+          <div  class="errorMsg-feedback" *ngIf="cf.pwd && cf.pwd.touched && cf.pwd.hasError('required')">Password Required</div>
+          
+          <div  class="errorMsg-feedback"
+          *ngIf="cf.pwd && cf.pwd.touched && cf.pwd.errors &&cf.pwd.errors.minlength">Password should be 8 character</div>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="confirmPass">
+            Confirm Password*
+          </label>
+
+          <input name="confirmPass" id="confirmPass" [formControlName]="'confirmPass'" placeholder="Confirm Password" type="password" class="form-control">
+          <div  class="errorMsg-feedback" *ngIf="cf.confirmPass && cf.confirmPass.touched && cf.confirmPass.hasError('required')">Confirm Password Required</div>
+          <div  class="errorMsg-feedback" *ngIf="cf.confirmPass && cf.confirmPass.touched && cf.confirmPass.invalid && cf.confirmPass.errors.confirmedValidator" >
+            Password and Confirm Password must be match.</div>
+       
+        </div>
+      </div> 
+      <div class=" form-row">
+        
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="sysRoleID">
+            Role*
+          </label>
+          <select name="role" data-toggle="select" id="sysRoleID" class="form-control" placeholder="role" (change)="selectRole($event)">
+            <option value="0"> Select Role Name </option>
+            <option value="1"> Admin </option>
+            <option value="1015"> Crown User </option>
+            <option value="1016"> Customer User </option>
+          </select>
+        
+          <div  class="errorMsg-feedback" *ngIf="cf.sysRoleID && cf.sysRoleID.touched && cf.sysRoleID.hasError('required')">Role Required</div>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label class=" form-control-label" for="Remarks">
+            Remarks
+          </label>
+
+          <input name="Remarks" id="Remarks" [formControlName]="'Remarks'" placeholder="Remarks" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <button  class="btn btn-primary" type="button" (click)="CreateRowData()">
+          Submit
+        </button>
+        <button type="button" class="btn btn-warning" (click)="closeDialog()">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div> -->
+<!--End of create user modal-->

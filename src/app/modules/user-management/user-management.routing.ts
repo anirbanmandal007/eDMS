@@ -1,6 +1,8 @@
 import { Route } from '@angular/router';
 import { UserManagementComponent } from './user-management.component';
 import { UserComponent } from './user/user.component';
+import { RoleManagementComponent } from "./role-management/role-management.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 
 export const userManagementRoutes: Route[] = [
@@ -10,7 +12,9 @@ export const userManagementRoutes: Route[] = [
         // component: UserManagementComponent,
         // pathMatch: 'full',
         children: [
-            {path: 'user', component: UserComponent}
+            {path: 'user', component: UserComponent},
+            {path: 'roles', component: RoleManagementComponent},
+            {path: 'change-password', component: ChangePasswordComponent},
         ]
     }
 ];

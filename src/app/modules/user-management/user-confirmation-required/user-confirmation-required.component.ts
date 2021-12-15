@@ -11,7 +11,7 @@ export class UserConfirmationRequiredComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<UserConfirmationRequiredComponent> ) {
 
-      this.name = data;
+      this.name = data.name;
 
    }
 
