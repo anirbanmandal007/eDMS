@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserConfirmationRequiredComponent } from '../user-confirmation-required/user-confirmation-required.component';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserManagementService } from '../user-management.service';
+import { ToasterService } from 'app/shared/toaster.service';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,7 @@ export class UserComponent implements OnInit {
   //@ViewChild('AddUserNgForm') AddUserNgForm: NgForm;
   @ViewChild('openmenu') toggleButton: ElementRef;
   @ViewChild('data-menu') menu: ElementRef;
-
+  
   role_id: string = '';
   
   recId: any;
@@ -37,7 +38,8 @@ export class UserComponent implements OnInit {
     private _authService: AuthService,
     private _userManagementService: UserManagementService,
     //public toastr: ToastrService,
-    private dialog: MatDialog) { 
+    private dialog: MatDialog,
+    private _toasterService: ToasterService) { 
     this.renderer.listen('window', 'click',(e:Event)=>{
      if(this.toggleButton && this.toggleButton.nativeElement && this.menu.nativeElement && e.target !== this.toggleButton.nativeElement && e.target!==this.menu.nativeElement ){
          this.openlist=false;
@@ -160,7 +162,7 @@ export class UserComponent implements OnInit {
 console.log(body)
 
 this._userManagementService.createUsersData(body).subscribe(data => {
-  alert("sucessfully created");
+  this._toasterService.showToaster('User created succesfully', 'success')
   //this.dataSource = data;
   this.modalopen = false;
   this.createmodalopen = false;

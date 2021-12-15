@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { UserManagementService } from '../user-management.service';
 
 @Component({
   selector: 'app-change-password',
@@ -13,19 +14,29 @@ import { AuthService } from 'app/core/auth/auth.service';
     animations   : fuseAnimations
 })
 export class ChangePasswordComponent implements OnInit {
-
+  submitted = false;
   changepasswordform:FormGroup;
-  constructor(private _formBuilder:FormBuilder) { }
+  constructor(
+    private _formBuilder:FormBuilder,
+    private _userManagementService: UserManagementService
+    ) {}
 
   ngOnInit(): void {
     this.changepasswordform = this._formBuilder.group({
       pwd: ["", Validators.required],
       confirmPass: ["", Validators.required]
-      
-     
     });
   }
 
-  resetPwd(){}
-  onSubmit(){}
+  onSubmit(){
+    this.submitted = true;
+    let body = {
+      pwd: this.changepasswordform.controls.pwd.value,
+      confirmPass: this.changepasswordform.controls.confirmPass.value
+    }
+    console.log(body)
+    this._userManagementService.changepassword(body).subscribe(data => {
+      alert("Password update");
+    });
+  }
 }

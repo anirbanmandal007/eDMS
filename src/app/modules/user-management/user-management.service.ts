@@ -68,4 +68,17 @@ export class UserManagementService {
   }
 
   /** Role api call end */
+
+  /** Change password api call end */
+  changepassword(data:any) {
+    let user_information = localStorage.getItem('userData');
+    let user_informationObj = JSON.parse(user_information);
+    console.log(user_informationObj.id);
+    data["CreatedBy"]=user_informationObj.id
+    data["User_Token"]=this.userToken
+    console.log(data);
+    const apiUrl = "UserLogin/Changepassword"
+    return this._httpService.post(apiUrl,data);
+  }
+  /** change password api call end */
 }

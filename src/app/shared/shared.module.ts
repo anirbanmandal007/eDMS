@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @NgModule({
     imports: [
@@ -11,7 +13,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     exports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ConfirmationDialogComponent
+    ],
+    declarations: [
+      ConfirmationDialogComponent,
+      SnackbarComponent
     ]
 })
 export class SharedModule

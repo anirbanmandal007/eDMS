@@ -4,6 +4,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
@@ -11,7 +12,8 @@ export class AuthInterceptor implements HttpInterceptor
     /**
      * Constructor
      */
-    constructor(private _authService: AuthService, private _userService: UserService)
+    constructor(private _authService: AuthService, private _userService: UserService, private _router: Router
+    )
     {
     }
 
@@ -54,6 +56,13 @@ export class AuthInterceptor implements HttpInterceptor
 
                     // Reload the app
                     location.reload();
+                }
+
+                // Catch Invalid token responses
+                if ( error.error && error.error.Message === 'Invalid token!!!' )
+                {
+                    this._authService.removeAccessToen();
+                    this._router.navigate(['sign-in']);
                 }
 
                 return throwError(error);

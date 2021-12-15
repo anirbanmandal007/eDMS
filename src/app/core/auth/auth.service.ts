@@ -37,6 +37,11 @@ export class AuthService
         return localStorage.getItem('User_Token') ?? '';
     }
 
+    removeAccessToen() {
+        localStorage.removeItem('User_Token');
+        localStorage.removeItem('userData');
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
