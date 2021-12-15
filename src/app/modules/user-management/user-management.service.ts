@@ -29,7 +29,6 @@ export class UserManagementService {
   }
 
   getUsersDataById(id:any) {
-   
     const apiUrl = "Admin/GetDetails?ID="+id+"&user_Token="+ this.userToken
     return this._httpService.get(apiUrl);
   }
@@ -40,6 +39,13 @@ export class UserManagementService {
     const apiUrl = "Admin/Update"
     return this._httpService.post(apiUrl,data);
   }
+  deleteUsersData(data:any) {
+    data["User_Token"]=this.userToken
+    console.log(data);
+    const apiUrl = "Admin/Delete"
+    return this._httpService.post(apiUrl,data);
+  }
+
   /** User api call end */
   /** Role api call start */
 

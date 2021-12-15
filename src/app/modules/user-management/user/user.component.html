@@ -142,7 +142,13 @@
           <label class="form-control-label" for="sysRoleID">
             Role*
           </label>
-          <input name="role" id="loginPass" [formControlName]="'role'" required minlength="8" placeholder="Role" type="text" class="form-control">
+          <select name="role" data-toggle="select" id="sysRoleID" class="form-control" placeholder="role" (change)="selectRole($event)">
+            <option value="0"> Select Role Name </option>
+            <option value="1"> Admin </option>
+            <option value="1015"> Crown User </option>
+            <option value="1016"> Customer User </option>
+          </select>
+          <!--<input name="role" id="loginPass" [formControlName]="'role'" required minlength="8" placeholder="Role" type="text" class="form-control">-->
           <div class="errorMsg-feedback" *ngIf="f.sysRoleID && f.sysRoleID.touched && f.sysRoleID.hasError('required')">Role Required</div>
          
         </div>
@@ -267,7 +273,7 @@
         </div>
       </div>
       <div class="form-row">
-        <button class="btn btn-primary" type="button" (click)="CreateRowData()">
+        <button class="btn btn-primary" type="button" (click)="createRowData()">
           Submit
         </button>
         <button type="button" class="btn btn-warning" (click)="closeDialog()">Close</button>

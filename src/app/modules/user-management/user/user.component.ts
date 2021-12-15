@@ -118,8 +118,9 @@ export class UserComponent implements OnInit {
   }
  
   deleteRow(userId:any,userName:any){
-    const message = `Are you sure you want delete this row?`;
-
+    console.log("user id:"+userId);
+    console.log("user Name:"+userName);
+    const message = `Are you sure you want delete this user: `+userName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -129,25 +130,12 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if(dialogResult) {
-        alert('user clicked confirm');
+        this.deleteUser(userId);
       } else {
-        alert('user clicked cancel');
       }
     });
-
-  // let data = {
-  //   "id":userId,
-  //   "name":userName
-  // }
-  // this.openlist = false;
-  // const dialogConfig = new MatDialogConfig();
-
-  //     dialogConfig.disableClose = true;
-  //     dialogConfig.autoFocus = true;
-  //     dialogConfig.data = data;
-  //     this.dialog.open(UserConfirmationRequiredComponent, dialogConfig);
   }
-
+  
   closeeditDialog(){
     this.openlist = false;
     this.modalopen = false;
@@ -164,7 +152,7 @@ export class UserComponent implements OnInit {
 
     
   }
-  CreateRowData(){
+  createRowData(){
   console.log('Form data:' + JSON.stringify(this.AddUserForm.value));
   console.log('Username:' + this.AddUserForm.controls.username.value)
   console.log("true");
@@ -178,71 +166,80 @@ export class UserComponent implements OnInit {
     sysRoleID:this.role_id,
     Remarks: this.AddUserForm.controls.Remarks.value
   }
-console.log(body)
+  console.log(body)
 
-this._userManagementService.createUsersData(body).subscribe(data => {
-  this._toasterService.showToaster('User created succesfully', 'success')
-  //this.dataSource = data;
-  this.modalopen = false;
-  this.createmodalopen = false;
-  this.getUserList();
-});
+  this._userManagementService.createUsersData(body).subscribe(data => {
+    this._toasterService.showToaster('User created succesfully', 'success')
+    //this.dataSource = data;
+    this.modalopen = false;
+    this.createmodalopen = false;
+    this.getUserList();
+  });
 
+}
+editRow(userId:any){
+  console.log("editing");
+  this.openlist = false;
+  this.modalopen = true;
+  this.editmodalopen = true;
+
+  this._userManagementService.getUsersDataById(userId).subscribe(data => {
+    console.log(data)
+    this.editform = this._formBuilder.group({
+      id: [data.id],
+      name: new FormControl(data.name, [Validators.required]),
+      userid: [data.userid, Validators.required],
+      pwd: [data.pwd, Validators.required],
+      email: [data.email, [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+      ]],
+      mobile: [data.mobile],
+      role: [data.role, Validators.required],
+      Remarks: [data.Remarks]
+    });
+    
+  });
+  
+}
+editRowdata(){
+  let cpass;
+  if(this.editform.controls.confirmPass){
+    cpass = this.editform.controls.confirmPass.value
+  }else{
+    cpass = "";
   }
-  editRow(userId:any){
-    console.log("editing");
+
+  let body = {
+    name: this.editform.controls.name.value,
+    userid: this.editform.controls.userid.value,
+    pwd: this.editform.controls.pwd.value,
+    confirmPass: cpass,
+    email: this.editform.controls.email.value,
+    mobile:String(this.editform.controls.mobile.value),
+    sysRoleID:this.role_id,
+    Remarks: this.editform.controls.Remarks.value
+  }
+
+  console.log("update body",body);
+
+  this._userManagementService.updateUsersData(body).subscribe(data => {
+    this._toasterService.showToaster('sucessfully updated', 'success');
+    //this.dataSource = data;
+    this.modalopen = false;
+    this.editmodalopen = false;
+    window.location.reload();
+  });
+}
+deleteUser(userId:any){
+  let data = {
+  "id":userId
+  };
+  this._userManagementService.deleteUsersData(data).subscribe(data => {
+    this._toasterService.showToaster(data, 'success');
     this.openlist = false;
-    this.modalopen = true;
-    this.editmodalopen = true;
-
-    this._userManagementService.getUsersDataById(userId).subscribe(data => {
-      console.log(data)
-      this.editform = this._formBuilder.group({
-        id: [data.id],
-        name: new FormControl(data.name, [Validators.required]),
-        userid: [data.userid, Validators.required],
-        pwd: [data.pwd, Validators.required],
-        email: [data.email, [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-        ]],
-        mobile: [data.mobile],
-        role: [data.role, Validators.required],
-        Remarks: [data.Remarks]
-      });
-      
-    });
-    
-  }
-  editRowdata(){
-    let cpass;
-    if(this.editform.controls.confirmPass){
-      cpass = this.editform.controls.confirmPass.value
-    }else{
-      cpass = "";
-    }
-
-    let body = {
-      name: this.editform.controls.name.value,
-      userid: this.editform.controls.userid.value,
-      pwd: this.editform.controls.pwd.value,
-      confirmPass: cpass,
-      email: this.editform.controls.email.value,
-      mobile:String(this.editform.controls.mobile.value),
-      sysRoleID:this.role_id,
-      Remarks: this.editform.controls.Remarks.value
-    }
-
-    console.log("update body",body);
-
-    this._userManagementService.updateUsersData(body).subscribe(data => {
-      alert("sucessfully updated");
-      //this.dataSource = data;
-      this.modalopen = false;
-      this.editmodalopen = false;
-      window.location.reload();
-    });
-   
-    
-  }
+    this.createmodalopen = false;
+    this.getUserList();
+  });   
+}
   validateFields()
   {
     if (this.cf.username.value =="" )
