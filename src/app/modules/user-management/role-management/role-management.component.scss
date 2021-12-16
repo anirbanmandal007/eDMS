@@ -134,8 +134,8 @@
     z-index: 99;
 }
 .modal-body{
-    padding: 2%;
-    width: 80%;
+    padding: 1% 2%;
+    width: 90%;
 }
 .card {
     margin-bottom: 30px;
@@ -249,6 +249,24 @@ label {
 
 .btn-warning {
     box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+li ul {
+    padding: 7px 10px;
+}
+li ul li{
+    padding: 5px;
+}
+.content-wrap{
+    display: flex;
+    width: 100%;
+}
+.left-panel{
+    width:35%;
+    padding: 0.5% 2% 2%;
+}
+.right-panel{
+    width:65%;
+    padding: 0.5% 2% 2%;
 }
 .row_icon li{
     display: inline-flex;

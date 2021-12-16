@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'app/core/auth/auth.service';
 import { HttpService } from 'app/core/service/http.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { HttpService } from 'app/core/service/http.service';
 export class UserManagementService {
 
   userToken: string;
+  private rolesChanged = new BehaviorSubject(new Date().getTime());
+  isRoleChanged = this.rolesChanged.asObservable();
 
   constructor(
     private _httpService: HttpService,
@@ -49,6 +52,7 @@ export class UserManagementService {
   /** User api call end */
   /** Role api call start */
 
+  
   getRolesData() {
     const apiUrl = "Role/GetList?user_Token="+ this.userToken
     return this._httpService.get(apiUrl);
@@ -65,11 +69,34 @@ export class UserManagementService {
     const apiUrl = "Admin/GetDetails?ID="+id+"&user_Token="+ this.userToken
     return this._httpService.get(apiUrl);
   }
+  getAllPages(id:any) {
+    const apiUrl = "Role/GetPageList?ID="+id+"&user_Token="+ this.userToken
+    return this._httpService.get(apiUrl);
+  }
+  getAllRights(id:any) {
+    const apiUrl = "Role/GetRightList?ID="+id+"&user_Token="+ this.userToken
+    return this._httpService.get(apiUrl);
+  }
+
+  saveRoleInfo(data) {
+   
+    const apiUrl = "Role/Create"
+    return this._httpService.post(apiUrl,data);
+  }
 
   updateRolesData(data) {
     data["User_Token"]=this.userToken
     console.log(data);
     const apiUrl = "Admin/Update"
+    return this._httpService.post(apiUrl,data);
+  }
+  roleChanged() {
+    this.rolesChanged.next(new Date().getTime());
+  }
+  deleteRolesData(data:any) {
+    data["User_Token"]=this.userToken
+    console.log(data);
+    const apiUrl = "Role/Delete"
     return this._httpService.post(apiUrl,data);
   }
 
