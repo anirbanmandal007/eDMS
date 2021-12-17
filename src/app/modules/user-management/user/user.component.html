@@ -144,9 +144,7 @@
           </label>
           <select name="role" data-toggle="select" id="sysRoleID" class="form-control" placeholder="role" (change)="selectRole($event)">
             <option value="0"> Select Role Name </option>
-            <option value="1"> Admin </option>
-            <option value="1015"> Crown User </option>
-            <option value="1016"> Customer User </option>
+            <option *ngFor="let role of roleList" [value]="role.id">{{role.roleName}}</option>
           </select>
           <!--<input name="role" id="loginPass" [formControlName]="'role'" required minlength="8" placeholder="Role" type="text" class="form-control">-->
           <div class="errorMsg-feedback" *ngIf="f.sysRoleID && f.sysRoleID.touched && f.sysRoleID.hasError('required')">Role Required</div>
@@ -257,9 +255,7 @@
           </label>
           <select name="role" data-toggle="select" id="sysRoleID" class="form-control" placeholder="role" (change)="selectRole($event)">
             <option value="0"> Select Role Name </option>
-            <option value="1"> Admin </option>
-            <option value="1015"> Crown User </option>
-            <option value="1016"> Customer User </option>
+            <option *ngFor="let role of roleList" [value]="role.id">{{role.roleName}}</option>
           </select>
          <!-- <input name="role" id="loginPass" [formControlName]="'sysRoleID'" required minlength="8" placeholder="Role" type="text" class="form-control">-->
           <div class="errorMsg-feedback" *ngIf="cf.sysRoleID && cf.sysRoleID.touched && cf.sysRoleID.hasError('required')">Role Required</div>

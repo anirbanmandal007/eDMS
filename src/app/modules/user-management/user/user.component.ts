@@ -31,6 +31,7 @@ export class UserComponent implements OnInit {
   editmodalopen: boolean = false;
   createmodalopen:boolean = false;
   AddUserForm: FormGroup;
+  roleList: any;
   
   
   constructor(
@@ -56,6 +57,9 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.getUserList();
 
+    this._userManagementService.getRolesData().subscribe(data => {
+      this.roleList = data;
+    });
     this.AddUserForm = this._formBuilder.group({
       id: [""],
       username: ["", Validators.required],
@@ -156,25 +160,28 @@ export class UserComponent implements OnInit {
   console.log('Form data:' + JSON.stringify(this.AddUserForm.value));
   console.log('Username:' + this.AddUserForm.controls.username.value)
   console.log("true");
-  let body = {
-    name: this.AddUserForm.controls.username.value,
-    userid: this.AddUserForm.controls.userid.value,
-    pwd: this.AddUserForm.controls.pwd.value,
-    confirmPass: this.AddUserForm.controls.confirmPass.value,
-    email: this.AddUserForm.controls.email.value,
-    mobile:String(this.AddUserForm.controls.mobile.value),
-    sysRoleID:this.role_id,
-    Remarks: this.AddUserForm.controls.Remarks.value
-  }
-  console.log(body)
-
-  this._userManagementService.createUsersData(body).subscribe(data => {
-    this._toasterService.showToaster('User created succesfully', 'success')
-    //this.dataSource = data;
-    this.modalopen = false;
-    this.createmodalopen = false;
-    this.getUserList();
-  });
+  // if(this.validateFields){
+    let body = {
+      name: this.AddUserForm.controls.username.value,
+      userid: this.AddUserForm.controls.userid.value,
+      pwd: this.AddUserForm.controls.pwd.value,
+      confirmPass: this.AddUserForm.controls.confirmPass.value,
+      email: this.AddUserForm.controls.email.value,
+      mobile:String(this.AddUserForm.controls.mobile.value),
+      sysRoleID:this.role_id,
+      Remarks: this.AddUserForm.controls.Remarks.value
+    }
+    console.log(body)
+  
+    this._userManagementService.createUsersData(body).subscribe(data => {
+      this._toasterService.showToaster('User created succesfully', 'success')
+      //this.dataSource = data;
+      this.modalopen = false;
+      this.createmodalopen = false;
+      this.getUserList();
+    });
+  // }
+ 
 
 }
 editRow(userId:any){
@@ -240,10 +247,13 @@ deleteUser(userId:any){
     this.getUserList();
   });   
 }
+
   validateFields()
   {
-    if (this.cf.username.value =="" )
+    
+    if (this.cf.username.value == "" )
     {
+     
              this.showmessage("Please Enter name");
               return false;
     }
@@ -270,6 +280,7 @@ deleteUser(userId:any){
     }
     if (this.cf.sysRoleID.value <=0 )
     {
+     
              this.showmessage("Please select role confirmPass");
               return false;
     }   

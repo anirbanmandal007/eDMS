@@ -37,6 +37,7 @@ _UserList:any;
 myFiles: string[] = [];  
 _PageIDAndChk:any;
 _pageRights:any;
+_PageTitle:any = "Create Role";
 
   constructor(
     private renderer: Renderer2,
@@ -108,6 +109,7 @@ _pageRights:any;
     this.selectedId = id;
   }
   CreateRow(){
+    
     let _RoleID= localStorage.getItem('_RoleID') ; 
 
     if (Number(_RoleID) > 0)
@@ -127,19 +129,20 @@ _pageRights:any;
     this.modalopen = true;
     this.createmodalopen  = true;
   }
-  editRow(){
-    this.modalopen = true;
-    this.editmodalopen  = true;
+  editRow(RoleL:any){
+    this._PageTitle = "Edit Role";
+    localStorage.setItem('_RoleID',RoleL.id) ;    
+    localStorage.setItem('_RoleName',RoleL.roleName) ;    
+    localStorage.setItem('_RoleRemark',RoleL.roleName) ; 
+    this.CreateRow();
   }
-  closeeditDialog(){
-    this.openlist = false;
-    this.modalopen = false;
-    this.editmodalopen = false;
-  }
+  
   closeDialog(){
+    localStorage.removeItem('_RoleID');
     this.openlist = false;
     this.modalopen = false;
     this.createmodalopen = false;
+    this.OnBack();
   }
   deleteRow(roleId,roleName){
     console.log("roleId:"+roleId);
@@ -200,6 +203,7 @@ _pageRights:any;
     }
 
     getRightList(TID:number) {  
+      this._RightList = "";
     
     this._userManagementService.getAllRights(TID).subscribe((data: {}) => { 
 
