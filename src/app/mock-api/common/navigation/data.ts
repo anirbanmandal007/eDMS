@@ -49,6 +49,39 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 disabled: false,
             }
         ]
+    },
+    {
+        id   : 'reports',
+        title: 'Reports',
+        type : 'aside',
+        icon : 'heroicons_outline:document-report',
+        disabled: false,
+        children: [
+            {
+                id   : 'logs',
+                title: 'Logs',
+                type : 'basic',
+                icon : 'heroicons_outline:server',
+                link : '/reports/logs',
+                disabled: false,
+            },
+            {
+                id   : 'status',
+                title: 'Status',
+                type : 'basic',
+                icon : 'heroicons_outline:status-online',
+                link : '/reports/status',
+                disabled: false,
+            },
+            {
+                id   : 'metadata',
+                title: 'Metadata',
+                type : 'basic',
+                icon : 'heroicons_outline:document-duplicate',
+                link : '/reports/metadata',
+                disabled: false,
+            }
+        ]
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -114,5 +147,38 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type : 'aside',
         icon : 'heroicons_outline:user-group',
         disabled: false,
+    },
+    {
+        id   : 'reports',
+        title: 'Reports',
+        type : 'aside',
+        icon : 'heroicons_outline:document-report',
+        disabled: false,
+        children: [
+            {
+                id   : 'logs',
+                title: 'Logs',
+                type : 'basic',
+                icon : 'heroicons_outline:server',
+                link : '/reports/logs',
+                disabled: false,
+            },
+            {
+                id   : 'status',
+                title: 'Status',
+                type : 'basic',
+                icon : 'heroicons_outline:status-online',
+                link : '/reports/status',
+                disabled: false,
+            },
+            {
+                id   : 'metadata',
+                title: 'Metadata',
+                type : 'basic',
+                icon : 'heroicons_outline:document-duplicate',
+                link : '/reports/metadata',
+                disabled: false,
+            }
+        ]
     }
 ];
