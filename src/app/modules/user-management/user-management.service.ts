@@ -73,10 +73,6 @@ export class UserManagementService {
     const apiUrl = "Role/GetPageList?ID="+id+"&user_Token="+ this.userToken
     return this._httpService.get(apiUrl);
   }
-  getAllRights(id:any) {
-    const apiUrl = "Role/GetRightList?ID="+id+"&user_Token="+ this.userToken
-    return this._httpService.get(apiUrl);
-  }
 
   saveRoleInfo(data) {
    

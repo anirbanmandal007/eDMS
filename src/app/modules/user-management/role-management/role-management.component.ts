@@ -1,12 +1,13 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserConfirmationRequiredComponent } from '../user-confirmation-required/user-confirmation-required.component';
 import { UserManagementService } from '../user-management.service';
-import { ToasterService } from 'app/shared/toaster.service';
+import { ToasterService } from 'app/shared/toaster/toaster.service';
 import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { SharedService } from 'app/shared/shared.service';
 @Component({
   selector: 'app-role-management',
   templateUrl: './role-management.component.html',
@@ -46,7 +47,8 @@ _PageTitle:any = "Create Role";
     private _userManagementService: UserManagementService,
     private dialog: MatDialog,
     private router:Router,
-    private _toasterService: ToasterService) {
+    private toaster: ToasterService,
+    private _sharedService: SharedService) {
     this.renderer.listen('window', 'click',(e:Event)=>{
       if(this.toggleButton && this.toggleButton.nativeElement && this.menu.nativeElement && e.target !== this.toggleButton.nativeElement && e.target!==this.menu.nativeElement ){
           this.openlist=false;
@@ -107,6 +109,7 @@ _PageTitle:any = "Create Role";
   }
   openMenu(id:any){
     this.selectedId = id;
+    this.openlist = true;
   }
   CreateRow(){
     
@@ -205,7 +208,7 @@ _PageTitle:any = "Create Role";
     getRightList(TID:number) {  
       this._RightList = "";
     
-    this._userManagementService.getAllRights(TID).subscribe((data: {}) => { 
+    this._sharedService.getAllRights(TID).subscribe((data: {}) => { 
 
     this._RightList = data;  
     this._RightList.forEach(item => {
@@ -258,7 +261,7 @@ _PageTitle:any = "Create Role";
       const rights = this.AddRoleForm.value._PageRight;
       this._userManagementService.saveRoleInfo(this.AddRoleForm.value)
       .subscribe( data => {
-        this._toasterService.showToaster('User created succesfully', 'success')
+        this.toaster.show('success', 'Saved!', 'Roles saved succesfully!');
         this.OnReset();
         setTimeout(() => {
           this._userManagementService.roleChanged();
@@ -355,10 +358,17 @@ _PageTitle:any = "Create Role";
       "id":roleId
       };
       this._userManagementService.deleteRolesData(data).subscribe(data => {
-        this._toasterService.showToaster(data, 'success');
+        this.toaster.show('success', 'Deleted!', 'Roles deleted succesfully!');
         this.openlist = false;
         this.createmodalopen = false;
         this.geRoleList();
       });   
+    }
+
+    @HostListener('document:click', ['$event'])
+    clickout(event) {
+      if(event.target && event.target.innerText !== 'more_vert') {
+        this.openlist = false;
+      }
     }
 }
