@@ -82,6 +82,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 disabled: false,
             }
         ]
+    },
+    {
+        id   : 'process',
+        title: 'Process',
+        type : 'aside',
+        icon : 'heroicons_outline:database',
+        disabled: false,
+        children: [
+            {
+                id   : 'indexing',
+                title: 'Indexing',
+                type : 'basic',
+                icon : 'heroicons_outline:document-text',
+                link : '/process/indexing',
+                disabled: false,
+            }
+        ]
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -177,6 +194,23 @@ export const horizontalNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_outline:document-duplicate',
                 link : '/reports/metadata',
+                disabled: false,
+            }
+        ]
+    },
+    {
+        id   : 'process',
+        title: 'Process',
+        type : 'aside',
+        icon : 'heroicons_outline:database',
+        disabled: false,
+        children: [
+            {
+                id   : 'indexing',
+                title: 'Indexing',
+                type : 'basic',
+                icon : 'heroicons_outline:document-text',
+                link : '/process/indexing',
                 disabled: false,
             }
         ]

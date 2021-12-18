@@ -93,6 +93,7 @@ export const appRoutes: Route[] = [
         children: [
             {path: 'userManagement', loadChildren: () => import('app/modules/user-management/user-management.module').then(m => m.UserManagementModule)},
             {path: 'reports', loadChildren: () => import('app/modules/reports/reports.module').then(m => m.ReportsModule)},
+            {path: 'process', loadChildren: () => import('app/modules/process/process.module').then(m => m.ProcessModule)},
         ]
     },
 ];
