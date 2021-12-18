@@ -6,8 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { UserConfirmationRequiredComponent } from '../user-confirmation-required/user-confirmation-required.component';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserManagementService } from '../user-management.service';
-import { ToasterService } from 'app/shared/toaster.service';
+import { ToasterService } from 'app/shared/toaster/toaster.service';
 import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -41,20 +43,26 @@ export class UserComponent implements OnInit {
     private _userManagementService: UserManagementService,
     //public toastr: ToastrService,
     private dialog: MatDialog,
-    private _toasterService: ToasterService) { 
-    this.renderer.listen('window', 'click',(e:Event)=>{
-     if(this.toggleButton && this.toggleButton.nativeElement && this.menu.nativeElement && e.target !== this.toggleButton.nativeElement && e.target!==this.menu.nativeElement ){
-         this.openlist=false;
-     }
- });
- 
+    private toaster: ToasterService) {
   }
-  dtOptions: ADTSettings = {};
-  
+  dtOptions: DataTables.Settings = {};
   dataSource:any;
-
+  dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.dtOptions = {
+        processing: true,
+        ordering: true,
+        info: false,
+        searching: true,
+        paging: true,
+        pageLength:10
+        
+      }
+    }, 0);
+    
+
     this.getUserList();
 
     this._userManagementService.getRolesData().subscribe(data => {
@@ -96,18 +104,6 @@ export class UserComponent implements OnInit {
       this.dataSource = data;
       this.displayTable = true;
     });
-
-    setTimeout(() => {
-      this.dtOptions = {
-        processing: true,
-        ordering: true,
-        info: false,
-        searching: true,
-        paging: true,
-        pageLength:10
-        
-      };
-    }, 1000);
   }
   
   get f(){
@@ -174,7 +170,7 @@ export class UserComponent implements OnInit {
     console.log(body)
   
     this._userManagementService.createUsersData(body).subscribe(data => {
-      this._toasterService.showToaster('User created succesfully', 'success')
+      this.toaster.show('success', 'Created!', 'User created succesfully!');
       //this.dataSource = data;
       this.modalopen = false;
       this.createmodalopen = false;
@@ -227,13 +223,13 @@ editRowdata(){
   }
 
   console.log("update body",body);
-
+  this.closeeditDialog();
   this._userManagementService.updateUsersData(body).subscribe(data => {
-    this._toasterService.showToaster('sucessfully updated', 'success');
+    this.toaster.show('success', 'Updated!', 'User updated successfully!');
     //this.dataSource = data;
     this.modalopen = false;
     this.editmodalopen = false;
-    window.location.reload();
+    this.getUserList();
   });
 }
 deleteUser(userId:any){
@@ -241,7 +237,7 @@ deleteUser(userId:any){
   "id":userId
   };
   this._userManagementService.deleteUsersData(data).subscribe(data => {
-    this._toasterService.showToaster(data, 'success');
+    this.toaster.show('success', 'Deleted!', 'User deleted successfully!');
     this.openlist = false;
     this.createmodalopen = false;
     this.getUserList();
@@ -307,5 +303,12 @@ deleteUser(userId:any){
     );
 */
 
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event) {
+    if(event.target && event.target.innerText !== 'more_vert') {
+      this.openlist = false;
+    }
   }
 }

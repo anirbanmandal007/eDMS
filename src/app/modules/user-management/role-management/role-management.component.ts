@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserConfirmationRequiredComponent } from '../user-confirmation-required/user-confirmation-required.component';
 import { UserManagementService } from '../user-management.service';
-import { ToasterService } from 'app/shared/toaster.service';
+import { ToasterService } from 'app/shared/toaster/toaster.service';
 import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 @Component({
   selector: 'app-role-management',
@@ -46,7 +46,7 @@ _PageTitle:any = "Create Role";
     private _userManagementService: UserManagementService,
     private dialog: MatDialog,
     private router:Router,
-    private _toasterService: ToasterService) {
+    private toaster: ToasterService) {
     this.renderer.listen('window', 'click',(e:Event)=>{
       if(this.toggleButton && this.toggleButton.nativeElement && this.menu.nativeElement && e.target !== this.toggleButton.nativeElement && e.target!==this.menu.nativeElement ){
           this.openlist=false;
@@ -258,7 +258,7 @@ _PageTitle:any = "Create Role";
       const rights = this.AddRoleForm.value._PageRight;
       this._userManagementService.saveRoleInfo(this.AddRoleForm.value)
       .subscribe( data => {
-        this._toasterService.showToaster('User created succesfully', 'success')
+        this.toaster.show('success', 'Saved!', 'Roles saved succesfully!');
         this.OnReset();
         setTimeout(() => {
           this._userManagementService.roleChanged();
@@ -355,7 +355,7 @@ _PageTitle:any = "Create Role";
       "id":roleId
       };
       this._userManagementService.deleteRolesData(data).subscribe(data => {
-        this._toasterService.showToaster(data, 'success');
+        this.toaster.show('success', 'Deleted!', 'Roles deleted succesfully!');
         this.openlist = false;
         this.createmodalopen = false;
         this.geRoleList();

@@ -14,6 +14,8 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { UserManagementComponent } from './modules/user-management/user-management.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ToasterContainerComponent } from './shared/toaster/toaster-container.component';
+import { ToasterComponent } from './shared/toaster/toaster.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -23,7 +25,9 @@ const routerConfig: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent,
-        UserManagementComponent
+        UserManagementComponent,
+        ToasterContainerComponent,
+        ToasterComponent
     ],
     imports     : [
         BrowserModule,
