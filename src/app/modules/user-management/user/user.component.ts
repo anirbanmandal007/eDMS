@@ -50,18 +50,18 @@ export class UserComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.dtOptions = {
-        processing: true,
-        ordering: true,
-        info: false,
-        searching: true,
-        paging: true,
-        pageLength:10
-        
+    const that = this;
+    this.dtOptions = {
+      processing: true,
+      ordering: true,
+      info: false,
+      searching: true,
+      paging: true,
+      pageLength:10,
+      drawCallback() {
+        that.displayTable = true;
       }
-    }, 0);
-    
+    }
 
     this.getUserList();
 
@@ -95,6 +95,7 @@ export class UserComponent implements OnInit {
       User_Token: localStorage.getItem('User_Token'),
     });
   }
+
   //event handler for the select element's change event
   selectRole (event: any) {
     this.role_id = event.target.value;
@@ -102,7 +103,7 @@ export class UserComponent implements OnInit {
   getUserList() {
     this._userManagementService.getUsersData().subscribe(data => {
       this.dataSource = data;
-      this.displayTable = true;
+      // this.displayTable = true;
     });
   }
   

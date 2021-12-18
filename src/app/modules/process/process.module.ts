@@ -6,6 +6,7 @@ import { ProcessComponent } from './process.component';
 import { IndexingComponent } from './indexing/indexing.component';
 import { ViewIndexingComponent } from './view-indexing/view-indexing.component';
 import { EditIndexingComponent } from './edit-indexing/edit-indexing.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
@@ -13,11 +14,12 @@ import { EditIndexingComponent } from './edit-indexing/edit-indexing.component';
     ProcessComponent,
     IndexingComponent,
     ViewIndexingComponent,
-    EditIndexingComponent
+    EditIndexingComponent,
   ],
   imports: [
     CommonModule,
-    ProcessRoutingModule
+    ProcessRoutingModule,
+    SharedModule
   ]
 })
 export class ProcessModule { }

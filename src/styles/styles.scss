@@ -10,6 +10,7 @@
 }
 .dataTable thead th {
     padding: 18px;
+    text-align: left;
 }
 .dataTable tbody td {
     text-align: left;
@@ -256,4 +257,25 @@ label {
     background: #d5d5d5;
     padding: 10px;
     margin-bottom: 8px;
+}
+.visually-hidden, .visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute!important;
+    width: 1px!important;
+    height: 1px!important;
+    padding: 0!important;
+    margin: -1px!important;
+    overflow: hidden!important;
+    clip: rect(0,0,0,0)!important;
+    white-space: nowrap!important;
+    border: 0!important;
+}
+
+.spinner-border {
+    vertical-align: -.125em;
+    border: .25em solid;
+    border-right: .25em solid transparent;
+}
+
+.svg-action {
+    cursor: pointer;
 }
