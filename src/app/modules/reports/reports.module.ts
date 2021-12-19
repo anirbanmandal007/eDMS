@@ -8,7 +8,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
 import { reportRoutes } from './reports.routing';
 import { RouterModule } from '@angular/router';
-
+import { DataTablesModule } from 'angular-datatables';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule} from "@angular/material/form-field";
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,8 +23,14 @@ import { RouterModule } from '@angular/router';
     MetadataComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(reportRoutes),
+    DataTablesModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

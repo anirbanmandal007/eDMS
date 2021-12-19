@@ -1,1 +1,88 @@
-<p>status works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="row nav_direction">
+            <div class="col-12">
+              <ol class="breadcrumb">
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                Reports</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
+                  </svg>Status Report</li>
+              </ol>
+            </div>
+        </div>
+        <!-- CONTENT GOES HERE -->
+        <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+          <div class="page-title flex">
+              <h3>Status Report</h3>
+          </div>
+          <div class="btn-panel"> <button class="btn" [disabled]="!isValid()" (click)="onSearch()"> Search</button>
+            <button class="btn" [disabled]="!isValid()" (click)="onDownload()"> Download</button>    </div>
+          <div layout="row">
+            <div flex>
+                <div layout="row">
+                    <form class="needs-validation"  [formGroup]="StatusReportForm">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div >
+                                <div class=" form-group">
+                                    <label  for="TemplateID" class=" form-control-label">  Select Template </label>      
+                                    <select name="TemplateID" id="TemplateID" class="form-control form-control-sm" formControlName="TemplateID">
+                                      <option value=0>Select Template</option>   
+                                      <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
+                                      {{_Temp.TemplateName}}  
+                                      </option>   
+                                      </select>
+                                  </div>
+                            </div>
+                            <div >
+                                <div class=" form-group">
+                                    <label  for="_Flag" class=" form-control-label">  Select Indexing </label>      
+                                    <select name="_Flag" class="form-control form-control-sm" formControlName="_Flag">
+                                      <option selected value=0>ALL</option>   
+                                      <option value="Y">YES</option>
+                                      <option value="N">NO</option>   
+                                      
+                                      </select>
+                                  </div>
+                            </div>
+                        </div>
+                      </form>
+                </div>
+            </div>
+            
+          </div>
+          <div class="pt-9" *ngIf="displayTable">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <thead>
+                <tr>
+                  <th class="text-left">SRNO</th>
+                  <th class="text-left">REGION</th>
+                  <th class="text-left">CUSTOMER</th>
+                  <th class="text-left">FILE NO</th>
+                  <th class="text-left">PAGECOUNT</th>
+                  <th class="text-left">ISINDEXING</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of _FilteredList; let i = index;" class="data-tr">
+                  <td>{{i + 1}}</td>
+                  <td>{{row.Department}}</td>
+                  <td>{{row.Customer}}</td>
+                  <td>{{row.FileNo}}</td>
+                  <td>{{row.PageCount}}</td>
+                  <td>{{row.IsIndexing}}</td>
+                 
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+        </div>
+    </div>
+</div>

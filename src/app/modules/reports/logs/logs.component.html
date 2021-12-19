@@ -1,1 +1,89 @@
-<p>logs works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="row nav_direction">
+            <div class="col-12">
+              <ol class="breadcrumb">
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                Reports</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                  </svg>Log Report</li>
+              </ol>
+            </div>
+        </div>
+        <!-- CONTENT GOES HERE -->
+        <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+          <div class="page-title flex">
+              <h3>Log Report</h3>
+          </div>
+          <div layout="row">
+            <div flex>
+                <div layout="row">
+                    <form class="needs-validation" novalidate="" [formGroup]="LogReportForm">
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class=" form-group">
+                                    <label  for="TemplateID" class=" form-control-label"> From Date</label>      
+                                    <input type="date" formControlName="DATEFROM"  placeholder="Datepicker" class="form-control form-control-sm" >
+                            </div>
+                            <div class=" form-group">
+                                <label  for="TemplateID" class=" form-control-label">To Date </label>      
+                                <input type="date" formControlName="DATETO"  placeholder="Datepicker" class="form-control form-control-sm" >
+                            </div>
+                            <div class=" form-group">
+                                <label  for="ActiivtyID" class=" form-control-label">  Select Actiivty</label>      
+                                <select name="ActiivtyID" id="ActiivtyID" class="form-control form-control-sm" formControlName="ActiivtyID" >
+                                    <option value=0>ALL</option>  
+                                    <option value=1>Download</option>  
+                                    <option value=2>Searched</option> 
+                                    <option value=3>Delete</option>  
+                                    <option value=4>Archive</option> 
+                                    <option value=5>Email</option> 
+                                    <option value=6>View</option> 
+                                    <option value=7>Login</option>  
+                                    <option value=8>Logout</option>                 
+                                </select>
+                            </div>
+                            <div class=" form-group btn-panel">
+                                <button class="btn h-8" [disabled]="!isValid()" (click)="onSearch()"> Search</button>
+                                <button class="btn h-8" [disabled]="!isValid()" (click)="onDownload()"> Download</button>
+                            </div>
+                           
+                        </div>
+                      </form>
+                </div>
+            </div>
+            
+          </div>
+          <div class="pt-9" *ngIf="displayTable">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <thead>
+                <tr>
+                  <th class="text-left">SRNO</th>
+                  <th class="text-left">USERNAME</th>
+                  <th class="text-left">ACTION</th>
+                  <th class="text-left">ACTION TYPE</th>
+                  <th class="text-left">LOGDATE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of _FilteredList; let i = index;" class="data-tr">
+                  <td>{{i + 1}}</td>
+                  <td>{{row.UserName}}</td>
+                  <td>{{row.FileNo}}</td>
+                  <td>{{row.Activity}}</td>
+                  <td>{{row.LogDate | date : 'short'}}</td>
+                 
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+        </div>
+    </div>
+</div>

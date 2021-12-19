@@ -41,7 +41,6 @@ export class UserComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _userManagementService: UserManagementService,
-    //public toastr: ToastrService,
     private dialog: MatDialog,
     private toaster: ToasterService) {
   }
