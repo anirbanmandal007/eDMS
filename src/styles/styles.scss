@@ -2,6 +2,11 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
 .bg-wt{
     background-color: #fff;
 }
@@ -278,4 +283,15 @@ label {
 
 .svg-action {
     cursor: pointer;
+}
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+    border-bottom: 1px solid #111;
+}
+.search-table {
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: transparent;
+    margin-left: 3px;
+    height: 34px;
 }

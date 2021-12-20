@@ -31,7 +31,41 @@
             <div class="page-title">
               <h3>Indexing</h3>
             </div>
-            <div *ngIf="!displayTable">
+            <div class="w-full mb-4 text-right">
+              Search: 
+              <input
+                #search
+                id="search"
+                type="text"
+                class="search-table form-control w-120 inline-block"
+                aria-label="Search"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <ngx-datatable *ngIf="indexData" class="material w-full" style="height: 600px;" [rows]="indexData" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="50" [limit]="10" [count]="indexData.length" [scrollbarV]="true">
+            
+              <ngx-datatable-column *ngFor="let column of columns; 
+                let i = index;" name="{{column.prop}}"
+                prop="{{column.prop}}">
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Is Indexing">
+                <ng-template ngx-datatable-cell-template>
+                  <span>N</span>
+                </ng-template>
+              </ngx-datatable-column>
+              
+              <ngx-datatable-column name="Action">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <svg (click)="viewIndexData(row)" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            <!-- <div *ngIf="!displayTable">
               <div class="flex items-center justify-center">
                 <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
                   <span class="visually-hidden">Loading...</span>
@@ -69,7 +103,7 @@
                 </tbody>
               </table>
 
-            </div>  
+            </div>   -->
           </div>
 
     </div>        
