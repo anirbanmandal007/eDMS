@@ -1,1 +1,74 @@
-<p>view-indexing works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main content-->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="row nav_direction">
+            <div class="col-12">
+              <ol class="breadcrumb">
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                </li>
+                  <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z" />
+                        <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z" />
+                      <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z" />
+                    </svg>  
+                    Process
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                    </svg>  
+                    Indexing
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    View
+                </li>
+              </ol>
+            </div>
+        </div>
+
+        <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+            <div class="page-title">
+              <h3>View Indexing</h3>
+            </div>
+            <div class="grid grid-cols-3 gap-8">
+              <div class="col-span-2">
+                  <ngx-doc-viewer
+                    [url]="doc"
+                    viewer="google"
+                    style="width:100%;height:65vh;"
+                ></ngx-doc-viewer>
+              </div>
+              <div>
+                <form [formGroup]="indexForm" class="grid grid-cols-2 gap-x-20">
+                  <div>
+                    <label class="custom-form-label">
+                      Template
+                      <select (change)="getFields()" class="form-control custom-select" formControlName="templateName">
+                        <option *ngFor="let temp of _TemplateList" [value]="temp.TemplateName">{{temp.TemplateName}}</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label>
+                      Customer
+                      <select class="form-control custom-select" formControlName="branchName">
+                        <option *ngFor="let temp of branchList" [value]="temp.BranchID">{{temp.BranchName}}</option>
+                      </select>
+                    </label>
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

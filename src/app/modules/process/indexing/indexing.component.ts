@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProcessService } from '../process.service';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-indexing',
@@ -18,7 +19,9 @@ export class IndexingComponent implements OnInit {
   @ViewChild('search', { static: false }) search: any;
   
   constructor(
-    private _processService: ProcessService
+    private _processService: ProcessService,
+    private _router: Router,
+    private _activatedRoute:ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +48,7 @@ export class IndexingComponent implements OnInit {
   }
 
   viewIndexData(row) {
-    console.log(row);
+    this._router.navigate(['./view', row.FileNo], {relativeTo:this._activatedRoute});
   }
 
   ngAfterViewInit(): void {

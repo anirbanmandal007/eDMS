@@ -17,8 +17,27 @@ export class ProcessService {
   }
 
   getIndexingData() {
-    const apiUrl = "DataEntry/GetPendingData?UserID=1&user_Token="+ this.userToken
+    const apiUrl = "DataEntry/GetPendingData?UserID=1&user_Token="+ this.userToken;
     return this._httpService.get(apiUrl);
   }
 
+  getIndexingFile(fileNo) {
+    const apiUrl = "SearchFileStatus/GetFullFile?ID=1&user_Token="+ this.userToken + "&_fileName="+fileNo;
+    return this._httpService.get(apiUrl);
+  }
+
+  getTemplates() {
+    const apiUrl = "TemplateMapping/GetTemplateMappingListByUserID?UserID=1&user_Token="+ this.userToken;
+    return this._httpService.get(apiUrl);
+  }
+  
+  getFields(tempId, fileNo) {
+    const apiUrl = "DataEntry/GetFieldsName?id=" + tempId + "&FileNo=" + fileNo +"&user_Token="+ this.userToken;
+    return this._httpService.get(apiUrl);
+  }
+
+  getBranchList() {
+    const apiUrl = "BranchMapping/GetBranchDetailsUserWise?ID=1&user_Token="+ this.userToken;
+    return this._httpService.get(apiUrl);
+  }
 }
