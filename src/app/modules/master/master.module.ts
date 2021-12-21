@@ -30,7 +30,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    MasterRoutingModule
+    MasterRoutingModule,
+    DataTablesModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatButtonModule
   ]
 })
 export class MasterModule { }
