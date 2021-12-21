@@ -22,7 +22,7 @@ export class LogsComponent implements OnInit {
   _HeaderList:any;
  
   _ColNameList = ["UserName","FileNo", "Activity", "LogDate"];
-
+  //_ColNameList = [{prop: 'UserName'}, {prop: 'FileNo'}, {prop: 'Activity'},{prop: 'LogDate'}]
 
   bsValue = new Date();
   bsRangeValue: Date[];
@@ -102,8 +102,7 @@ export class LogsComponent implements OnInit {
     return this.LogReportForm.valid 
   }
 
-  getLogList() {  
-           
+  getLogList() {       
     this.__reportservice.showLog(this.LogReportForm.value)
     .subscribe( data => {
       this._StatusList = data;          
@@ -119,8 +118,6 @@ export class LogsComponent implements OnInit {
       this.displayTable = true;
 
   });
-
-
   } 
 
 }

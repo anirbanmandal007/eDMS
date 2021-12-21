@@ -61,6 +61,36 @@
             </div>
             
           </div>
+          <!--ngx-datatable
+            class="material"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="entries != -1 ? entries : undefined"
+            [rows]="_FilteredList"
+            (activate)="onActivate($event)"
+          >
+            <ngx-datatable-column name="SrNo">
+              <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="UserName">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.UserName}}</ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Action">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.FileNo}}</ng-template>
+            </ngx-datatable-column>
+
+            
+            <ngx-datatable-column name="Action Type">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.Activity}}</ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="LogDate">
+            <ng-template let-row="row" ngx-datatable-cell-template>{{row.LogDate | date : 'short'}}</ng-template>
+          </ngx-datatable-column>
+          
+          </ngx-datatable-->
           <div class="pt-9" *ngIf="displayTable">
             <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
