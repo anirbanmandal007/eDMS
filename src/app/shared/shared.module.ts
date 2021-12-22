@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         MatFormFieldModule,
         MatInputModule,
         MatProgressSpinnerModule,
-        NgxDatatableModule
+        NgxDatatableModule,
+        NgxDocViewerModule
     ],
     exports: [
         CommonModule,
@@ -34,7 +36,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         MatFormFieldModule,
         MatInputModule,
         MatProgressSpinnerModule,
-        NgxDatatableModule
+        NgxDatatableModule,
+        NgxDocViewerModule
     ],
     declarations: [
         ConfirmationDialogComponent
