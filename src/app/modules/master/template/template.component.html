@@ -39,10 +39,10 @@
                   <td>{{template.TemplateName}}</td>
                   <td (click)="openMenu(template.id)" class="cursor-pointer"><mat-icon #openmenu >more_vert</mat-icon>
                     <ul class="data-menu row_icon" *ngIf="openlist && template.id == selectedId">
-                      <li (click)="editRow(template)"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <li (click)="editTemplate(template)"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                       </svg>Edit</li>
-                      <li (click)="deleteRow(template.id,template.TemplateName)"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <li (click)="deleteTemplate(template.id,template.TemplateName)"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>Delete</li>
                     </ul>
@@ -61,26 +61,27 @@
         <div class=" card-header"><h3 class=" mb-0">{{_PageTitle}}</h3></div>
 
         <div class="card-body">
-          <form class="needs-validation" novalidate="" [formGroup]="AddTemplateForm" (ngSubmit)="onSubmit()">
+          <form class="needs-validation" novalidate="" [formGroup]="TemplateForm">
             <div class="form-row">
               <div class="col-md-6">
                 <label class="form-control-label" for="TemplateName">
                   Name
                 </label>
-                <input class="form-control" id="TemplateName" formControlName="'TemplateName'" placeholder="Name" type="text"/>
+                <input class="form-control" id="TemplateName" name ="TemplateName" [formControlName]="'TemplateName'" placeholder="Name" type="text"/>
 
                 <div class="errorMsg-feedback"
-                *ngIf="cf.name && cf.name.touched && cf.name.invalid && cf.name.errors.required">Required</div>
+                *ngIf="tf.name && tf.name.touched && tf.name.invalid && tf.name.errors.required">Required</div>
 
                 <div style="margin-top: .25rem;" class="alert alert-danger"
-                *ngIf="cf.name && cf.name.touched && cf.name.invalid && cf.name.errors.required">Name is required</div>
+                *ngIf="tf.name && tf.name.touched && tf.name.invalid && tf.name.errors.required">Name is required</div>
               </div>
             </div>
-            <button class=" btn btn-primary" type="submit">
-              Submit
-            </button>
-            <button type="button" class="btn btn-warning" (click)="closeDialog()">Close</button>
-
+            <div class="form-row">
+                <button class=" btn btn-primary" type="button" (click)="templateUpdate()">
+                Submit
+                </button>
+                <button type="button" class="btn btn-warning" (click)="closeDialog()">Close</button>
+            </div>
           </form>
         </div>
       </div>

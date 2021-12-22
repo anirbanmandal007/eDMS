@@ -31,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     MasterRoutingModule,
+    ReactiveFormsModule,
     DataTablesModule,
     MatIconModule,
     MatFormFieldModule,
