@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice.  To 
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## known issue UI
+
+1. UI datatable needs to be destory and create again (template,customer,region page) because it will not reflect immediately
+2. spinner needs to common place
+ 

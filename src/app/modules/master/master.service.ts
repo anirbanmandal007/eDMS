@@ -35,4 +35,44 @@ export class MasterService {
     return this._httpService.post(apiUrl,data);
   }
 /* template service */
+
+/* customer service */
+getCustomerListData() {
+  const apiUrl = "BranchMaster/GetBranchList?UserID=1&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+addUpdateCustomerAPI(data:any){
+  data["CreatedBy"]=this.createdBy;
+  data["User_Token"]=this.userToken;
+  console.log("addUpdateCustomerAPI:"+data);
+  const apiUrl = "BranchMaster/Update"
+  return this._httpService.post(apiUrl,data);
+}
+deleteCustomerAPI(data:any) {
+  data["User_Token"]=this.userToken
+  console.log(data);
+  const apiUrl = "BranchMaster/Delete"
+  return this._httpService.post(apiUrl,data);
+}
+/* customer service */
+
+/* region service */
+getRegionListData() {
+  const apiUrl = "Department/GetList?UserID=1&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+addUpdateRegionAPI(data:any){
+  data["CreatedBy"]=this.createdBy;
+  data["User_Token"]=this.userToken;
+  console.log("addUpdateRegionAPI:"+data);
+  const apiUrl = "Department/Update"
+  return this._httpService.post(apiUrl,data);
+}
+deleteRegionAPI(data:any) {
+  data["User_Token"]=this.userToken
+  console.log(data);
+  const apiUrl = "Department/Delete"
+  return this._httpService.post(apiUrl,data);
+}
+/* region service */
 }

@@ -24,6 +24,13 @@
             <h3>All Templates</h3>
           </div>
           <div class="btn-panel"><button type="button" (click)="createTemplate()">Add Template</button></div>
+          <div *ngIf="loader">
+            <div class="flex items-center justify-center">
+              <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div> 
           <div *ngIf="displayTable">
             <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
@@ -64,20 +71,14 @@
           <form class="needs-validation" novalidate="" [formGroup]="TemplateForm">
             <div class="form-row">
               <div class="col-md-6">
-                <label class="form-control-label" for="TemplateName">
-                  Name
-                </label>
-                <input class="form-control" id="TemplateName" name ="TemplateName" [formControlName]="'TemplateName'" placeholder="Name" type="text"/>
+                <input class="form-control" id="TemplateName" name ="TemplateName" [formControlName]="'TemplateName'" placeholder="enter template name" type="text"/>
 
                 <div class="errorMsg-feedback"
-                *ngIf="tf.name && tf.name.touched && tf.name.invalid && tf.name.errors.required">Required</div>
-
-                <div style="margin-top: .25rem;" class="alert alert-danger"
-                *ngIf="tf.name && tf.name.touched && tf.name.invalid && tf.name.errors.required">Name is required</div>
+                *ngIf="tf.TemplateName && tf.TemplateName.touched && tf.TemplateName.invalid && tf.TemplateName.errors.required">This field is Required</div>
               </div>
             </div>
             <div class="form-row">
-                <button class=" btn btn-primary" type="button" (click)="templateUpdate()">
+                <button class=" btn btn-primary" type="button" [disabled]="tf.TemplateName.invalid" (click)="templateUpdate()">
                 Submit
                 </button>
                 <button type="button" class="btn btn-warning" (click)="closeDialog()">Close</button>

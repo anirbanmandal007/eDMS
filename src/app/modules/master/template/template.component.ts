@@ -14,6 +14,7 @@ export class TemplateComponent implements OnInit {
   @ViewChild('openmenu') toggleButton: ElementRef;
   @ViewChild('data-menu') menu: ElementRef;
   dataSource: any;
+  loader:boolean;
   displayTable: boolean;
   dtOptions: any;
   selectedId: any;
@@ -32,6 +33,7 @@ export class TemplateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loader = false;
     this.TemplateForm = this._formBuilder.group({
       TemplateName: ["", Validators.required],
       id:[0]
@@ -44,6 +46,7 @@ export class TemplateComponent implements OnInit {
   }
   /*Get all the template list */
   geTempList() {
+    this.loader = true;
     this._masterService.getTempListData().subscribe((data: {}) => {     
     this._TemplateList = data;
     console.log(this._TemplateList);
@@ -56,6 +59,7 @@ export class TemplateComponent implements OnInit {
       pageLength:10
     }
     this.displayTable = true;
+    this.loader = false;
     });
   }
   get tf(){
@@ -115,7 +119,7 @@ export class TemplateComponent implements OnInit {
     "id":templateId
   };
   this._masterService.deleteTemplateAPI(data).subscribe(data => {
-    this.toaster.show('success', 'Deleted!', data);
+    this.toaster.show('warning', 'Deleted!', data);
     this.geTempList();
   });   
   }
