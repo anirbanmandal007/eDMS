@@ -55,7 +55,26 @@ deleteCustomerAPI(data:any) {
   return this._httpService.post(apiUrl,data);
 }
 /* customer service */
-
+/* customer Mapping service */
+getCustomerWiseList(userId:any) {
+  const apiUrl = "BranchMapping/GetBranchDetailsUserWise?ID="+userId+"&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+getUserListAPI() {
+  const apiUrl = "Admin/GetList?user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+/* customer Mapping service */
+/* template Mapping service */
+getCustomerWiseTemplateListAPI(userId:any) {
+  const apiUrl = "TemplateMapping/GetTemplateMappingListByUserID?UserID="+userId+"&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+getUserWiseTemplateList(userId:any) {
+  const apiUrl = "TemplateMapping/GetDetails?ID="+userId+"&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+/* template Mapping service */
 /* region service */
 getRegionListData() {
   const apiUrl = "Department/GetList?UserID=1&user_Token="+ this.userToken

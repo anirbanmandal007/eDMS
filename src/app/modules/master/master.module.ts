@@ -15,7 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule} from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DataTablesModule,
     MatIconModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    SharedModule,
+    NgMultiSelectDropDownModule.forRoot()
   ]
 })
-export class MasterModule { }
+export class MasterModule {
+  dtOptions: DataTables.Settings = {};
+ }
