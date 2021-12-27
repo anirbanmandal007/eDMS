@@ -65,45 +65,13 @@
                 </ng-template>
               </ngx-datatable-column>
             </ngx-datatable>
-            <!-- <div *ngIf="!displayTable">
+            <div *ngIf="!displayTable" class="loader-spinner">
               <div class="flex items-center justify-center">
                 <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </div>
-            </div>
-            <div *ngIf="displayTable">
-              <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                <thead>
-                  <tr>
-                    <th>Sr No.</th>
-                    <th>File No</th>
-                    <th>Customer</th>
-                    <th>Template</th>
-                    <th>Is Indexing</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr *ngFor="let data of indexData; let i = index">
-                      <td>{{i+1}}</td>
-                      <td>{{ data.FileNo }}</td>
-                      <td>{{ data.BranchName }}</td>
-                      <td>{{ data.TemplateName }}</td>
-                      <td>N</td>
-                      <td>
-                        <span class="svg-action" (click)="viewIndexing(data)">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                          </svg>
-                        </span>
-                        </td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>   -->
+            </div>  
           </div>
 
     </div>        

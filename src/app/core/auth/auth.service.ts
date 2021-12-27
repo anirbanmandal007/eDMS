@@ -40,6 +40,9 @@ export class AuthService
     removeAccessToen() {
         localStorage.removeItem('User_Token');
         localStorage.removeItem('userData');
+        localStorage.removeItem('token');
+        localStorage.removeItem('_RoleRemark');
+        localStorage.removeItem('_RoleName');
     }
 
     // -----------------------------------------------------------------------------------------------------

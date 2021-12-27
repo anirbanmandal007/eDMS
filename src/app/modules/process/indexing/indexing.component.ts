@@ -48,7 +48,7 @@ export class IndexingComponent implements OnInit {
   }
 
   viewIndexData(row) {
-    this._router.navigate(['./view', row.FileNo], {relativeTo:this._activatedRoute});
+    this._router.navigate(['./view', row.FileNo], {relativeTo:this._activatedRoute, state: { rowData: row }});
   }
 
   ngAfterViewInit(): void {

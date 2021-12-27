@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError, of, switchMap } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from '../user/user.service';
@@ -62,7 +62,25 @@ export class AuthInterceptor implements HttpInterceptor
                 if ( error.error && error.error.Message === 'Invalid token!!!' )
                 {
                     this._authService.removeAccessToen();
-                    this._router.navigate(['sign-in']);
+                    setTimeout(() => {
+                        this._authService.check()
+                        .pipe(
+                            switchMap((authenticated) => {
+
+                            // If the user is not authenticated...
+                            if ( !authenticated ) {
+                                // Redirect to the sign-in page
+                                this._router.navigate(['sign-in']);
+
+                                // Prevent the access
+                                return of(false);
+                                }
+
+                                // Allow the access
+                                return of(true);
+                            })
+                        );
+                    }, 200);
                 }
 
                 return throwError(error);
