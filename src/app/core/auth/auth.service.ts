@@ -4,6 +4,7 @@ import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { environment } from 'environments/environment.prod';
+import { delay } from "rxjs/operators"
 
 @Injectable()
 export class AuthService
@@ -37,12 +38,26 @@ export class AuthService
         return localStorage.getItem('User_Token') ?? '';
     }
 
+    get loggedInUserId(): string {
+        return JSON.parse(localStorage.getItem('userData'))?.sysRoleID || 1;
+    }
+
+    setModuleRights(rights: any) {
+        localStorage.setItem('ModuleRights', JSON.stringify(rights));
+    }
+
+    moduleRights() {
+        return JSON.parse(localStorage.getItem('ModuleRights'));
+    }
+
     removeAccessToen() {
         localStorage.removeItem('User_Token');
         localStorage.removeItem('userData');
         localStorage.removeItem('token');
         localStorage.removeItem('_RoleRemark');
         localStorage.removeItem('_RoleName');
+        localStorage.removeItem('rowData');
+        localStorage.removeItem('ModuleRights');
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -157,8 +172,7 @@ export class AuthService
             switchMap((response: any) => {
                 // Set the authenticated flag to false
                 this._authenticated = false;
-                localStorage.removeItem('User_Token');
-                localStorage.removeItem('userData');
+                this.removeAccessToen();
                 return of(response);
             })
         );
@@ -210,5 +224,10 @@ export class AuthService
 
         // If the access token exists and it didn't expire, sign in using it
         return this.signInUsingToken();
+    }
+
+    getModuleRights() {
+        const url = this.getBaseUrl() + 'Role/GetPageList?user_Token='+this.accessToken+'&ID='+this.loggedInUserId;
+        return this._httpClient.get(url);
     }
 }

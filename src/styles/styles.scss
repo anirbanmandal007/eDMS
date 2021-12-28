@@ -331,3 +331,8 @@ button[disabled]{
     position: absolute;
     left: 50%;
 }
+.fuse-horizontal-navigation-item-disabled,
+.fuse-uturistic-navigation-item-disabled,
+.fuse-compact-navigation-item-disabled {
+    display: none !important;
+}
