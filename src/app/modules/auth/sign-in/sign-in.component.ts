@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { defaultNavigation } from 'app/mock-api/common/navigation/data';
 
 @Component({
     selector     : 'auth-sign-in',
@@ -93,12 +94,19 @@ export class AuthSignInComponent implements OnInit
                     return;
                 }
                 // Get Module Rights
-                this._authService.getModuleRights().subscribe(res => {
+                localStorage.setItem('username', this.signInForm.controls.username.value);
+                this._authService.getModuleRights().subscribe((res: any) => {
                     this._authService.setModuleRights(res);
                     // Set the redirect url.
                     // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
                     // to the correct page after a successful sign in. This way, that url can be set via
                     // routing file and we don't have to touch here.
+
+                    // TODO: Get first module where logged in user has access
+                    // const moduleToRedirect = res.find(el => el.isChecked).page_name;
+                    // console.log(defaultNavigation);
+                    // const urlToRedirect = defaultNavigation.find(el => el.id.toLocaleLowerCase() === moduleToRedirect.toLocaleLowerCase())?.link;
+                    
                     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/dashboard';
 
                     // Navigate to the redirect url

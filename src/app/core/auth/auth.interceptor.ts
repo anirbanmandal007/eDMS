@@ -61,26 +61,9 @@ export class AuthInterceptor implements HttpInterceptor
                 // Catch Invalid token responses
                 if ( error.error && error.error.Message === 'Invalid token!!!' )
                 {
+                    this._authService._authenticated = false;
                     this._authService.removeAccessToen();
-                    setTimeout(() => {
-                        this._authService.check()
-                        .pipe(
-                            switchMap((authenticated) => {
-
-                            // If the user is not authenticated...
-                            if ( !authenticated ) {
-                                // Redirect to the sign-in page
-                                this._router.navigate(['sign-in']);
-
-                                // Prevent the access
-                                return of(false);
-                                }
-
-                                // Allow the access
-                                return of(true);
-                            })
-                        );
-                    }, 200);
+                    this._router.navigate(['sign-in']);
                 }
 
                 return throwError(error);

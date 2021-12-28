@@ -9,7 +9,7 @@ import { delay } from "rxjs/operators"
 @Injectable()
 export class AuthService
 {
-    private _authenticated: boolean = false;
+    _authenticated: boolean = false;
 
     /**
      * Constructor

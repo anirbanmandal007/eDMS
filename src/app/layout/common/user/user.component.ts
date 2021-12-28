@@ -50,6 +50,7 @@ export class UserComponent implements OnInit, OnDestroy
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: User) => {
                 this.user = user;
+                user.email = localStorage.getItem('username');
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();

@@ -54,10 +54,16 @@ export class NavigationMockApi
                             compactNavItem.disabled = !currentPageRight && !hasChildren;
                             compactNavItem.active = !currentPageRight && !hasChildren;
                             if(hasChildren) {
+                                let isAllChildDisabled = true;
                                 defaultNavItem.children.forEach(element => {
                                     const childItemRight = this._authService.moduleRights() && this._authService.moduleRights().find(el => el.page_name.toLocaleLowerCase() === element.id.toLocaleLowerCase())?.isChecked;
                                     element.disabled = !childItemRight;
+                                    if(childItemRight) {
+                                        isAllChildDisabled = false;
+                                    }
                                 });
+                                defaultNavItem.disabled = isAllChildDisabled;
+                                compactNavItem.disabled = isAllChildDisabled;
                             }
                             compactNavItem.children = cloneDeep(defaultNavItem.children);
                         }
@@ -76,10 +82,16 @@ export class NavigationMockApi
                             futuristicNavItem.disabled = !currentPageRight && !hasChildren;
                             futuristicNavItem.active = !currentPageRight && !hasChildren;
                             if(hasChildren) {
+                                let isAllChildDisabled = true;
                                 defaultNavItem.children.forEach(element => {
                                     const childItemRight = this._authService.moduleRights() && this._authService.moduleRights().find(el => el.page_name.toLocaleLowerCase() === element.id.toLocaleLowerCase())?.isChecked;
                                     element.disabled = !childItemRight;
+                                    if(childItemRight) {
+                                        isAllChildDisabled = false;
+                                    }
                                 });
+                                defaultNavItem.disabled = isAllChildDisabled;
+                                futuristicNavItem.disabled = isAllChildDisabled;
                             }
                             futuristicNavItem.children = cloneDeep(defaultNavItem.children);
                         }
@@ -98,10 +110,16 @@ export class NavigationMockApi
                             horizontalNavItem.disabled = !currentPageRight && !hasChildren;
                             horizontalNavItem.active = !currentPageRight && !hasChildren;
                             if(hasChildren) {
+                                let isAllChildDisabled = true;
                                 defaultNavItem.children.forEach(element => {
                                     const childItemRight = this._authService.moduleRights() && this._authService.moduleRights().find(el => el.page_name.toLocaleLowerCase() === element.id.toLocaleLowerCase())?.isChecked;
                                     element.disabled = !childItemRight;
+                                    if(childItemRight) {
+                                        isAllChildDisabled = false;
+                                    }
                                 });
+                                defaultNavItem.disabled = isAllChildDisabled;
+                                horizontalNavItem.disabled = isAllChildDisabled;
                             }
                             horizontalNavItem.children = cloneDeep(defaultNavItem.children);
                         }

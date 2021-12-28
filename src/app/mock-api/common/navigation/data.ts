@@ -223,7 +223,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
-        id   : 'dashboard',
+        id   : 'Dashboard',
         title: 'Dashboard',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
