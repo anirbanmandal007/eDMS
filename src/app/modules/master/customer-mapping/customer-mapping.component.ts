@@ -254,7 +254,7 @@ ngAfterViewInit(): void {
     // I use this.largeDataset as a fallback if no matches are found
     const optionsToShow = filteredOptions.length ? filteredOptions : this.largeDataset;
   
-    this.largeDataset = optionsToShow.slice(0, 500);
+    this.largeDataset = optionsToShow.slice(0, 100);
   }
  
 }
