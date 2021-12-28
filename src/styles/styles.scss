@@ -322,3 +322,12 @@ button[disabled]{
     display: flex;
     cursor: pointer;
 }
+.table-wrap {
+    min-height: 75vh !important;
+}
+
+.loader-spinner {
+    top: 50%;
+    position: absolute;
+    left: 50%;
+}

@@ -1,0 +1,19 @@
+.form-group {
+    label {
+        margin-top: 2em;
+    }
+
+    .form-control {
+        padding: 0;
+    }
+}
+
+.resetsave {
+    position: absolute;
+    bottom: 54px;
+    right: 54px;
+}
+
+.validation-error {
+    color: red;
+}

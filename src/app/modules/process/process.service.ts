@@ -40,4 +40,9 @@ export class ProcessService {
     const apiUrl = "BranchMapping/GetBranchDetailsUserWise?ID=1&user_Token="+ this.userToken;
     return this._httpService.get(apiUrl);
   }
+
+  saveIndexData(data) {
+    const apiUrl = "DataEntry/Create?ID=1&user_Token="+ this.userToken;
+    return this._httpService.post(apiUrl, data);
+  }
 }

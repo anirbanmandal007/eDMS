@@ -17,6 +17,7 @@
                 </svg>Customer Mapping</li>
             </ol>
           </div>
+<<<<<<< HEAD
       </div>
       <!-- CONTENT GOES HERE -->
       <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
@@ -41,6 +42,33 @@
               </div>
               <div>
                   <div class="btn-panel"><button type="button" (click)="createCustomerMapping()">Add Customer Mapping</button></div>
+=======
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <form [formGroup]="BranchMappingForm">
+                        <div class="dataTables_length" id="datatable_length">
+                            <label class=" form-control-label" for="UserIDS">
+                                <select class="form-control form-control-sm" [formControlName]="'UserIDS'" data-toggle="select" id="UserID"
+                                (change)="getCustomerListByUserID($event.target.value)">
+                                    <option value="0">Select User</option>
+                                    <option *ngFor="let _User of _UserL" [value]="_User.id"  >
+                                    {{_User.userid}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <div class="btn-panel"><button type="button" (click)="createCustomerMapping()">Add Customer Mapping</button></div>
+                </div>
+            </div>
+            <hr>
+          <div *ngIf="loader" class="loader-spinner">
+            <div class="flex items-center justify-center">
+              <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                <span class="visually-hidden">Loading...</span>
+>>>>>>> 17dc930e90f1ddaf80eb34feb238688f7a0235c6
               </div>
           </div>
           <hr>

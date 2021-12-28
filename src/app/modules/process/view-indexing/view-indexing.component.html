@@ -39,11 +39,12 @@
             <div class="page-title">
               <h3>View Indexing</h3>
             </div>
-            <div class="grid grid-cols-3 gap-8">
+            <div *ngIf="docLoaded" class="grid grid-cols-3 gap-8">
               <div class="col-span-2">
                   <ngx-doc-viewer
+                    *ngIf="docLoaded"
                     [url]="doc"
-                    viewer="google"
+                    viewer="url"
                     style="width:100%;height:65vh;"
                 ></ngx-doc-viewer>
               </div>
@@ -52,21 +53,145 @@
                   <div>
                     <label class="custom-form-label">
                       Template
-                      <select (change)="getFields()" class="form-control custom-select" formControlName="templateName">
-                        <option *ngFor="let temp of _TemplateList" [value]="temp.TemplateName">{{temp.TemplateName}}</option>
+                      <select (change)="getFields()" class="form-control custom-select" formControlName="TemplateID">
+                        <option *ngFor="let temp of _TemplateList" [value]="temp.TemplateID">{{temp.TemplateName}}</option>
                       </select>
+                      <ng-container *ngIf="!indexForm.controls.TemplateID.valid && indexForm.controls.TemplateID.touched">
+                        <span class="validation-error">This field is required</span>
+                      </ng-container>
                     </label>
                   </div>
 
                   <div>
                     <label>
                       Customer
-                      <select class="form-control custom-select" formControlName="branchName">
+                      <select class="form-control custom-select" formControlName="BranchID">
                         <option *ngFor="let temp of branchList" [value]="temp.BranchID">{{temp.BranchName}}</option>
                       </select>
+                      <ng-container *ngIf="!indexForm.controls.BranchID.valid && indexForm.controls.BranchID.touched">
+                        <span class="validation-error">This field is required</span>
+                      </ng-container>
                     </label>
                   </div>
+                  <div class="form-group"
+                    formGroupName="_ColNameList"
+                    *ngFor="let form_elem of dynamicFIelds"
+                    >
+                      <ng-container [ngSwitch]="form_elem.FieldType">
+                    
+                        <ng-container *ngSwitchCase="'1'">
+                          <label class="form-control-label" for="{{ form_elem.DisplayName }}">
+                            {{ form_elem.DisplayName }}:
+                          </label>
+                          <input
+                          [placeholder]="form_elem.DisplayName"
+                          [name]="form_elem.DisplayName"
+                          [formControlName]="form_elem.IndexField"
+                          [id]="form_elem.IndexField"
+                          type="text"
+                          class="form-control"
+                          minlength="{{ form_elem.MinLenght }}"
+                          maxlength="{{ form_elem.MaxLenght }}"
+                          />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'5'">
+                          <label for="{{ form_elem.DisplayName }}">
+                            {{ form_elem.DisplayName }}:
+                            <input
+                            class="form-control"
+                            [placeholder]="form_elem.DisplayName"
+                            [name]="form_elem.DisplayName"
+                            [formControlName]="form_elem.IndexField"
+                            [id]="form_elem.IndexField"
+                            type="text"
+                            class="form-control"
+                            minlength="{{ form_elem.MinLenght }}"
+                            maxlength="{{ form_elem.MaxLenght }}"
+                            />
+                            <ng-container *ngIf="!dynamicFieldsControl.controls[form_elem.IndexField].valid && dynamicFieldsControl.controls[form_elem.IndexField].touched">
+                              <span class="validation-error">This field is required</span>
+                            </ng-container>
+                          </label>
+                        </ng-container>
+
+
+                        <ng-container *ngSwitchCase="'2'">
+                          <label class="form-control-label" for="{{ form_elem.DisplayName }}">
+                            {{ form_elem.DisplayName }}:
+                          </label>
+                          <input
+                          [placeholder]="form_elem.DisplayName"
+                          [name]="form_elem.DisplayName"
+                          [formControlName]="form_elem.IndexField"
+                          [id]="form_elem.IndexField"
+                          type="number"
+                          class="form-control"
+                          minlength="{{ form_elem.MinLenght }}"
+                          maxlength="{{ form_elem.MaxLenght }}"
+                          />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'3'">
+                          <label class="form-control-label" for="{{ form_elem.DisplayName }}">
+                            {{ form_elem.DisplayName }}:
+                          </label>
+                          <input
+                              [name]="form_elem.DisplayName"
+                              [formControlName]="form_elem.IndexField"
+                              [id]="form_elem.IndexField"
+                              [placeholder]="form_elem.DisplayName"
+                              class="form-control"
+                              bsDatepicker
+                              value="{{ bsValue}}"
+                              [bsValue]="bsValue"
+                              [bsConfig]="{
+                                isAnimated: true,
+                                containerClass: 'theme-red',
+                                dateInputFormat: 'DD-MMM-YYYY'
+                              }"
+                            />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'4'">
+                          <label class="form-control-label" for="{{ form_elem.DisplayName }}">
+                            {{ form_elem.DisplayName }}:
+                          </label>
+                          <select
+                          [name]="form_elem.DisplayName"
+                          [formControlName]="form_elem.IndexField"
+                          [id]="form_elem.IndexField"
+                          class="form-control"
+                          >
+                          <option [value]="0">Select A Value</option>
+                          <option
+                            [value]="opt"
+                            *ngFor="
+                              let opt of form_elem.selectValues;
+                              let i = index
+                            "
+                            >{{ opt }}</option>
+                          </select>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                    <div>
+                      <div class="resetsave">
+                        <div class="resetsavebts">
+                          <button (click)="backToIndex()" class="w-40 bg-transparent hover:bg-red-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                            Back
+                          </button>
+                          <button [disabled]="!this.indexForm.valid" (click)="onSave()" class="w-40 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded ml-4">
+                            Update
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                 </form>
+              </div>
+            </div>
+            <div *ngIf="!docLoaded" class="loader-spinner">
+              <div class="flex items-center justify-center">
+                <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </div>
             </div>
         </div>
