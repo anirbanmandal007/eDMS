@@ -6,6 +6,7 @@ import { MasterService } from '../master.service';
 import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-customer-mapping',
@@ -38,8 +39,12 @@ export class CustomerMappingComponent implements OnInit {
     pageLength:10
   }
   temp: any;
-  columns = [{prop: 'UserName'}, {prop: 'BranchName'}]
+  columns = [{prop: 'UserName'}, {prop: 'BranchName'}];
   @ViewChild('search', { static: false }) search: any;
+  selectedItems: any = [];
+  dropdownSettings:IDropdownSettings;
+  largeDataset: any = [];
+  maxOptions: any;
 
   constructor(
     private toaster: ToasterService,
@@ -62,6 +67,7 @@ export class CustomerMappingComponent implements OnInit {
       SelectItem: [""],
       id: [0],
       UserID: ["", Validators.required],
+      BranchID: ["", Validators.required],
       checkedList: [""],
       RootID:[0],
       checklist: this._formBuilder.array([]),
@@ -70,6 +76,15 @@ export class CustomerMappingComponent implements OnInit {
     });
     this.getUserList();
     this.getCustomerWiseList(0);
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'BranchID',
+      textField: 'BranchName',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
   }
   openMenu(id:any){
     this.selectedId = id;
@@ -93,6 +108,9 @@ export class CustomerMappingComponent implements OnInit {
     this._masterService.getCustomerWiseList(userId).subscribe((data:any) => { 
     this.temp = data;    
     this._CustomerBranchList = data;
+    this.largeDataset = data;
+    this.largeDataset = this.largeDataset.slice(0, 500);
+    console.log(this.largeDataset);
     console.log(this._CustomerBranchList);
     
     this.displayTable = true;
@@ -212,4 +230,31 @@ ngAfterViewInit(): void {
     // Whenever the filter changes, always go back to the first page
     // this.table.offset = 0;
   }
+  // getting already selected items based on user id
+  getCustListById(id:any){
+    this._masterService.getCustomerWiseList(id).subscribe((data:any) => { 
+      this.selectedItems = data;
+    });
+  }
+
+  // functions for selecting items in multiselect dropdown
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+
+  // Function for slicing the resultset after filter
+  handleFilterChange(text: string): void {
+    const filteredOptions = this.largeDataset.filter((option) => option.BranchName
+      .toLowerCase()
+      .includes(text.toLowerCase()),
+    );
+    // I use this.largeDataset as a fallback if no matches are found
+    const optionsToShow = filteredOptions.length ? filteredOptions : this.largeDataset;
+  
+    this.largeDataset = optionsToShow.slice(0, 100);
+  }
+ 
 }
