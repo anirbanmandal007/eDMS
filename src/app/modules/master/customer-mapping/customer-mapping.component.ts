@@ -26,7 +26,7 @@ export class CustomerMappingComponent implements OnInit {
   _UserL:any;
   AddBranchMappingForm: FormGroup;
   BranchMappingForm: FormGroup;
-
+  userFilter:any = { BranchName: '' };
   createmodalopen:boolean = false; 
   _PageTitle:any = "New Customer Mapping";
   _toasterTitle:any = "Mapped!";
@@ -45,6 +45,8 @@ export class CustomerMappingComponent implements OnInit {
   dropdownSettings:IDropdownSettings;
   largeDataset: any = [];
   maxOptions: any;
+  submitted: boolean;
+  __checkedList: string;
 
   constructor(
     private toaster: ToasterService,
@@ -65,9 +67,10 @@ export class CustomerMappingComponent implements OnInit {
     this.AddBranchMappingForm = this._formBuilder.group({
       BranchName: [""],
       SelectItem: [""],
+      User_Token: localStorage.getItem('User_Token') ,
+      CreatedBy: localStorage.getItem('UserID') ,
       id: [0],
       UserID: ["", Validators.required],
-      BranchID: ["", Validators.required],
       checkedList: [""],
       RootID:[0],
       checklist: this._formBuilder.array([]),
@@ -76,15 +79,7 @@ export class CustomerMappingComponent implements OnInit {
     });
     this.getUserList();
     this.getCustomerWiseList(0);
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'BranchID',
-      textField: 'BranchName',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
+    
   }
   openMenu(id:any){
     this.selectedId = id;
@@ -108,8 +103,13 @@ export class CustomerMappingComponent implements OnInit {
     this._masterService.getCustomerWiseList(userId).subscribe((data:any) => { 
     this.temp = data;    
     this._CustomerBranchList = data;
-    this.largeDataset = data;
-    this.largeDataset = this.largeDataset.slice(0, 500);
+    this._CustomerBranchList.forEach(element => {
+
+      element.ischecked = false;
+      this.largeDataset.push(element);
+      
+    });
+    this.filternames(this.largeDataset);
     console.log(this.largeDataset);
     console.log(this._CustomerBranchList);
     
@@ -133,6 +133,7 @@ export class CustomerMappingComponent implements OnInit {
    }
    /*Edit template*/
   editTemplate(template:any) {
+    this.createCustomerMapping();
     this._toasterTitle = "Updated!";
     this._PageTitle = "Edit template";
     this.AddBranchMappingForm = this._formBuilder.group({
@@ -233,28 +234,75 @@ ngAfterViewInit(): void {
   // getting already selected items based on user id
   getCustListById(id:any){
     this._masterService.getCustomerWiseList(id).subscribe((data:any) => { 
-      this.selectedItems = data;
+      data.forEach(element => {
+        this.largeDataset.forEach((ele,index) => {
+          if(element.BranchID == ele.BranchID){
+            this.largeDataset.splice(index,1);
+            ele.ischecked = true;
+            this.largeDataset.splice(index,0,ele);
+          }
+        });
+        
+      });
+
+      console.log(this.largeDataset);
     });
   }
-
-  // functions for selecting items in multiselect dropdown
-  onItemSelect(item: any) {
-    console.log(item);
+  selectedItem(item){
+    this.largeDataset.forEach((ele,index) => {
+      if(item.BranchID == ele.BranchID){
+        this.largeDataset.splice(index,1);
+        ele.ischecked = true;
+        this.largeDataset.splice(index,0,ele);
+      }
+    });
   }
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-
-  // Function for slicing the resultset after filter
-  handleFilterChange(text: string): void {
-    const filteredOptions = this.largeDataset.filter((option) => option.BranchName
-      .toLowerCase()
-      .includes(text.toLowerCase()),
-    );
-    // I use this.largeDataset as a fallback if no matches are found
-    const optionsToShow = filteredOptions.length ? filteredOptions : this.largeDataset;
+  onSubmit() {
+    this.submitted = true;
+    this.__checkedList ="";
+   var _chkstatus =false;
   
-    this.largeDataset = optionsToShow.slice(0, 100);
+    this.AddBranchMappingForm.patchValue({
+      checkedList: this.largeDataset,
+      CreatedBy: this.AddBranchMappingForm.get('UserID').value,
+      UserID: this.AddBranchMappingForm.get('UserID').value,
+    });
+    var objectToSend = {
+      id: 0,
+      User_Token: this.AddBranchMappingForm.get('User_Token').value,
+      UserID: this.AddBranchMappingForm.get('UserID').value,
+      checkedList: this.AddBranchMappingForm.get('checkedList').value,
+      CreatedBy: this.AddBranchMappingForm.get('CreatedBy').value
+    }    
+    
+    this._masterService
+      .createMapping(this.AddBranchMappingForm.value)
+      // .pipe(first())
+
+      .subscribe((data) => {
+        this.toaster.show('success', 'Branch Mapping Done', data);
+        
+      });
+
+     }
+     master_change(){
+      let _bool =this.AddBranchMappingForm.controls['selectAll'].value;
+      this.largeDataset.forEach((ele,index) => {
+        if(_bool == true){
+          ele.ischecked = true;
+        }else
+          ele.ischecked = false;
+         
+      });
+      console.log("this.largeDataset",this.largeDataset);
+     }
+     filternames(mList){
+        this.largeDataset = mList;
+     }
+     searchforBranch(key){
+        if(!key){
+
+        }
+     }
+    
   }
- 
-}

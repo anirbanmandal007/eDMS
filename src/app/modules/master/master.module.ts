@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SharedModule } from 'app/shared/shared.module';
+import { FilterPipeModule } from "ngx-filter-pipe";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SharedModule } from 'app/shared/shared.module';
     MatFormFieldModule,
     MatButtonModule,
     SharedModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    FilterPipeModule
   ]
 })
 export class MasterModule {

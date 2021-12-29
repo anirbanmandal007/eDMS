@@ -40,6 +40,7 @@
     "ng-apexcharts": "1.5.12",
     "ng-multiselect-dropdown": "^0.3.7",
     "ngx-doc-viewer": "^2.0.5",
+    "ngx-filter-pipe": "^2.1.2",
     "ngx-markdown": "13.0.0",
     "ngx-quill": "16.0.1",
     "perfect-scrollbar": "1.5.3",

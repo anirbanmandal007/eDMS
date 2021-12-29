@@ -10,6 +10,9 @@ import { ToasterService } from 'app/shared/toaster/toaster.service';
 import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { fromEvent } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-user',
@@ -23,7 +26,7 @@ export class UserComponent implements OnInit {
   @ViewChild('data-menu') menu: ElementRef;
   
   role_id: string = '';
-  
+  loader:boolean =false;
   recId: any;
   openlist: boolean = false;
   text: string;
@@ -48,7 +51,13 @@ export class UserComponent implements OnInit {
   dataSource:any;
   dtTrigger: Subject<any> = new Subject<any>();
 
+   //ng table data populate
+   temp: any;
+   columns = [{prop: 'name'}, {prop: 'userid'}, {prop: 'email'}, {prop: 'mobile'}, {prop: 'roleName'}];
+   @ViewChild('search', { static: false }) search: any;
+
   ngOnInit(): void {
+    this.loader = false;
     const that = this;
     this.dtOptions = {
       processing: true,
@@ -100,9 +109,13 @@ export class UserComponent implements OnInit {
     this.role_id = event.target.value;
   }
   getUserList() {
+    this.loader = true;
     this._userManagementService.getUsersData().subscribe(data => {
+     
       this.dataSource = data;
-      // this.displayTable = true;
+      this.temp=data;
+      this.displayTable = true;
+      this.loader = false;
     });
   }
   
@@ -311,4 +324,47 @@ deleteUser(userId:any){
       this.openlist = false;
     }
   }
+
+  /* ng table data table populate */
+  ngAfterViewInit(): void {
+    // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    // Add 'implements AfterViewInit' to the class.
+    fromEvent(this.search.nativeElement, 'keydown')
+      .pipe(
+        debounceTime(550),
+        map(x => x['target']['value'])
+      )
+      .subscribe(value => {
+        this.updateFilter(value);
+      });
+  }
+
+updateFilter(val: any) {
+  const value = val.toString().toLowerCase().trim();
+  // get the amount of columns in the table
+  const count = this.columns.length;
+  // get the key names of each column in the dataset
+  const keys = ['name', 'userid','email', 'mobile','roleName'];
+  // assign filtered matches to the active datatable
+  this.dataSource = this.temp.filter(item => {
+    // iterate through each row's column data
+    for (let i = 0; i < count; i++) {
+      // check for a match
+      if (
+        (item[keys[i]] &&
+          item[keys[i]]
+            .toString()
+            .toLowerCase()
+            .indexOf(value) !== -1) ||
+        !value
+      ) {
+        // found match, return true to add to result set
+        return true;
+      }
+    }
+  });
+
+  // Whenever the filter changes, always go back to the first page
+  // this.table.offset = 0;
+}
 }

@@ -4,6 +4,10 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { ToasterService } from 'app/shared/toaster/toaster.service';
 import { MasterService } from '../master.service';
 import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { fromEvent } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 @Component({
   selector: 'app-template-mapping',
   templateUrl: './template-mapping.component.html',
@@ -35,6 +39,17 @@ export class TemplateMappingComponent implements OnInit {
     paging: true,
     pageLength:10
   }
+
+  //ng table data populate
+  temp: any;
+  columns = [{prop: 'UserName'}, {prop: 'TemplateName'}];
+  @ViewChild('search', { static: false }) search: any;
+  //multi select drop down
+  selectedItems: any = [];
+  dropdownSettings:IDropdownSettings;
+  largeDataset: any = [];
+  maxOptions: any;
+
   constructor(
     private toaster: ToasterService,
     private _formBuilder: FormBuilder,
@@ -44,13 +59,32 @@ export class TemplateMappingComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader = false;
-
     this.AddTemplateMappingForm = this._formBuilder.group({
-      UserID: [0, Validators.required],
+      TemplateID:[""],
+      TemplateName: [""],
+      SelectItem: [""],
+      id: [0],
+      UserID: ["", Validators.required],
+      checkedList: [""],
+
+      checklist: this._formBuilder.array([]),
+      selectAll: [false],
     });
     this.TemplateMappingForm = this._formBuilder.group({
-      UserIDS: ["", Validators.required],
+      TemplateName: ["", Validators.required],
+      id: [0],
+      UserIDS: ['', Validators.required],
+      UserID: [0, Validators.required],
     });
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'TemplateID',
+      textField: 'TemplateName',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
     this.getUserList();
     this.getCustomerWiseTemplateList(0);
   }
@@ -80,7 +114,8 @@ export class TemplateMappingComponent implements OnInit {
   getCustomerWiseTemplateList(userId:any) {
     this.loader = true;
     //this._TemplateList =[];
-    this._masterService.getCustomerWiseTemplateListAPI(userId).subscribe((data: {}) => {     
+    this._masterService.getCustomerWiseTemplateListAPI(userId).subscribe((data: {}) => { 
+    this.temp = data;    
     this._TemplateList = data;
     console.log(this._TemplateList);
     
@@ -97,10 +132,8 @@ export class TemplateMappingComponent implements OnInit {
     this._toasterTitle ="Mapped!";
     this.createmodalopen=true;
     this.getUserList();
-    this.TemplateMappingForm = this._formBuilder.group({
-     // TemplateName: ["", Validators.required],
-      //id:[0]
-    });
+    this.getTemplatebyUser(0);
+    this.TemplateMappingForm.controls["UserID"].setValue(0);
    }
    /*Edit template*/
   editTemplate(template:any) {
@@ -154,11 +187,80 @@ export class TemplateMappingComponent implements OnInit {
     this.openlist = false;
     this.createmodalopen = false;
   }
+  // getting already selected items based on user id
+  getTemplatebyUser(id:any){
+    this._masterService.getUserWiseTemplateList(id).subscribe((data:any) => { 
+      this.selectedItems = data;
+    });
+  }
   @HostListener('document:click', ['$event'])
   clickout(event) {
     if(event.target && event.target.innerText !== 'more_vert') {
       this.openlist = false;
     }
   }
+
+  /* ng table data table populate */
+  ngAfterViewInit(): void {
+    // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    // Add 'implements AfterViewInit' to the class.
+    fromEvent(this.search.nativeElement, 'keydown')
+      .pipe(
+        debounceTime(550),
+        map(x => x['target']['value'])
+      )
+      .subscribe(value => {
+        this.updateFilter(value);
+      });
+  }
+
+updateFilter(val: any) {
+  const value = val.toString().toLowerCase().trim();
+  // get the amount of columns in the table
+  const count = this.columns.length;
+  // get the key names of each column in the dataset
+  const keys = ['UserName', 'TemplateName'];
+  // assign filtered matches to the active datatable
+  this._TemplateList = this.temp.filter(item => {
+    // iterate through each row's column data
+    for (let i = 0; i < count; i++) {
+      // check for a match
+      if (
+        (item[keys[i]] &&
+          item[keys[i]]
+            .toString()
+            .toLowerCase()
+            .indexOf(value) !== -1) ||
+        !value
+      ) {
+        // found match, return true to add to result set
+        return true;
+      }
+    }
+  });
+
+  // Whenever the filter changes, always go back to the first page
+  // this.table.offset = 0;
+}
+
+ // functions for selecting items in multiselect dropdown
+ onItemSelect(item: any) {
+  console.log(item);
+}
+onSelectAll(items: any) {
+  console.log(items);
+}
+
+// Function for slicing the resultset after filter
+handleFilterChange(text: string): void {
+  const filteredOptions = this.largeDataset.filter((option) => option.BranchName
+    .toLowerCase()
+    .includes(text.toLowerCase()),
+  );
+  // I use this.largeDataset as a fallback if no matches are found
+  const optionsToShow = filteredOptions.length ? filteredOptions : this.largeDataset;
+
+  this.largeDataset = optionsToShow.slice(0, 100);
+}
 
 }

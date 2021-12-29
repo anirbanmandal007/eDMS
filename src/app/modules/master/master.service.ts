@@ -64,6 +64,12 @@ getUserListAPI() {
   const apiUrl = "Admin/GetList?user_Token="+ this.userToken
   return this._httpService.get(apiUrl);
 }
+createMapping(data:any) {
+  data["User_Token"]=this.userToken
+  console.log(data);
+  const apiUrl = "BranchMapping/Create"
+  return this._httpService.post(apiUrl,data);
+}
 /* customer Mapping service */
 /* template Mapping service */
 getCustomerWiseTemplateListAPI(userId:any) {
@@ -94,4 +100,14 @@ deleteRegionAPI(data:any) {
   return this._httpService.post(apiUrl,data);
 }
 /* region service */
+/* region Mapping service */
+getBranchDetailsRegionWiseAPI(id:any) {
+  const apiUrl = "BranchMapping/GetBranchDetailsRegionWise?ID="+id+"&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+getDepartmentList() {
+  const apiUrl = "Department/GetList?&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+/* region Mapping service */
 }
