@@ -2,6 +2,9 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { reportsService } from '../reports.service';
 import { ToasterService } from 'app/shared/toaster/toaster.service';
+import { fromEvent } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
+
 @Component({
   selector: 'app-logs',
   templateUrl: './logs.component.html',
@@ -29,7 +32,13 @@ export class LogsComponent implements OnInit {
   maxDate = new Date();
   uid: any;
   displayTable:boolean = false;
+  loader:boolean =false;
   dtOptions: { processing: boolean; ordering: boolean; info: boolean; searching: boolean; paging: boolean; pageLength: number; };
+
+  //ng table data populate
+  temp_data: any;
+  columns = [{prop: 'UserName'},{prop: 'FileNo'}, {prop: 'Activity'},{prop: 'LogDate'}];
+  @ViewChild('search', { static: false }) search: any;
 
   constructor(
     private __formBuilder: FormBuilder,
@@ -38,6 +47,7 @@ export class LogsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loader =false;
     let userData = localStorage.getItem('userData');
     this.uid = JSON.parse(userData).id;
     this.LogReportForm = this.__formBuilder.group({
@@ -102,9 +112,10 @@ export class LogsComponent implements OnInit {
     return this.LogReportForm.valid 
   }
 
-  getLogList() {       
-    this.__reportservice.showLog(this.LogReportForm.value)
-    .subscribe( data => {
+  getLogList() {     
+    this.loader = true;  
+    this.__reportservice.showLog(this.LogReportForm.value).subscribe( data => {
+      this.temp_data = data;
       this._StatusList = data;          
       this._FilteredList = data; 
       this.dtOptions = {
@@ -115,9 +126,53 @@ export class LogsComponent implements OnInit {
         paging: true,
         pageLength:10
       } 
+      this.loader = false;
       this.displayTable = true;
 
   });
   } 
 
+  /* ng table data table populate */
+ngAfterViewInit(): void {
+  // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+  // Add 'implements AfterViewInit' to the class.
+  fromEvent(this.search.nativeElement, 'keydown')
+    .pipe(
+      debounceTime(550),
+      map(x => x['target']['value'])
+    )
+    .subscribe(value => {
+      this.updateFilter(value);
+    });
+}
+
+updateFilter(val: any) {
+const value = val.toString().toLowerCase().trim();
+// get the amount of columns in the table
+const count = this.columns.length;
+// get the key names of each column in the dataset
+const keys = ['UserName','FileNo', 'Activity','LogDate'];
+// assign filtered matches to the active datatable
+this._FilteredList = this.temp_data.filter(item => {
+  // iterate through each row's column data
+  for (let i = 0; i < count; i++) {
+    // check for a match
+    if (
+      (item[keys[i]] &&
+        item[keys[i]]
+          .toString()
+          .toLowerCase()
+          .indexOf(value) !== -1) ||
+      !value
+    ) {
+      // found match, return true to add to result set
+      return true;
+    }
+  }
+});
+
+// Whenever the filter changes, always go back to the first page
+// this.table.offset = 0;
+}
+/* ngx table end */
 }

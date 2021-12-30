@@ -130,7 +130,7 @@ export class RegionMappingComponent implements OnInit {
     this._toasterTitle ="Mapped!";
     this.createmodalopen=true;
     this.getRegionList();
-    this.getTemplatebyUser(0);
+    //this.getBranchDetailsRegionWise(0);
     this.RegionMappingForm.controls["DeptIDS"].setValue(0);
    }
    /*Edit template*/

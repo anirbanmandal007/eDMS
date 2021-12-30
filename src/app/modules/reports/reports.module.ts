@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule} from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DataTablesModule,
     MatIconModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

@@ -61,37 +61,36 @@
             </div>
             
           </div>
-          <!--ngx-datatable
-            class="material"
-            [columnMode]="'force'"
-            [headerHeight]="50"
-            [footerHeight]="50"
-            [rowHeight]="'auto'"
-            [limit]="entries != -1 ? entries : undefined"
-            [rows]="_FilteredList"
-            (activate)="onActivate($event)"
-          >
-            <ngx-datatable-column name="SrNo">
-              <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="UserName">
-              <ng-template let-row="row" ngx-datatable-cell-template>{{row.UserName}}</ng-template>
-            </ngx-datatable-column>
-
-            <ngx-datatable-column name="Action">
-              <ng-template let-row="row" ngx-datatable-cell-template>{{row.FileNo}}</ng-template>
-            </ngx-datatable-column>
-
-            
-            <ngx-datatable-column name="Action Type">
-              <ng-template let-row="row" ngx-datatable-cell-template>{{row.Activity}}</ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="LogDate">
-            <ng-template let-row="row" ngx-datatable-cell-template>{{row.LogDate | date : 'short'}}</ng-template>
-          </ngx-datatable-column>
+          <div *ngIf="loader">
+            <div class="flex items-center justify-center">
+              <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div> 
+          <div class="w-full mb-4 text-right">
+            Search: 
+            <input
+              #search
+              id="search"
+              type="text"
+              class="search-table form-control w-60 inline-block"
+              aria-label="Search"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div *ngIf="displayTable">
+            <ngx-datatable *ngIf="_FilteredList.length > 0" class="material w-full" style="height: 500px;" [rows]="_FilteredList" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+              [rowHeight]="50" [limit]="10" [count]="_FilteredList.length" [scrollbarV]="true">
+              
+                <ngx-datatable-column *ngFor="let column of columns; 
+                  let i = index;" name="{{column.prop}}"
+                  prop="{{column.prop}}">
+                </ngx-datatable-column>
+              </ngx-datatable>
+          </div>
           
-          </ngx-datatable-->
-          <div class="pt-9" *ngIf="displayTable">
+          <!--<div class="pt-9" *ngIf="displayTable">
             <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
@@ -113,7 +112,8 @@
                 </tr>
               </tbody>
             </table>
-          </div>  
+          </div> -->
+           
         </div>
     </div>
 </div>

@@ -28,7 +28,7 @@
                 <div>
                     <form [formGroup]="RegionMappingForm">
                         <div class="dataTables_length" id="datatable_length">
-                            <select name="DeptIDS" id="DeptIDS"  class="form-control" formControlName="DeptIDS" (change)="geBranchListByUserID($event.target.value)" >
+                            <select name="DeptIDS" id="DeptIDS"  class="form-control" [formControlName]="'DeptIDS'" (change)="geBranchListByUserID($event.target.value)" >
                               <option value="0">Select Cabinet</option>
                               <option  *ngFor="let _Department of _DepartmentList"  [value]="_Department.id">
                                 {{ _Department.DepartmentName }}
@@ -123,37 +123,26 @@
         <div class=" card-header"><h3 class=" mb-0">{{_PageTitle}}</h3></div>
 
         <div class="card-body">
-          <form class="needs-validation" novalidate="" [formGroup]="AddTemplateMappingForm">
+          <form class="needs-validation" novalidate="" [formGroup]="AddRegionMappingForm">
             <div class="form-row">
                 <div class="col-md-6">
-                    <select class="form-control form-control-sm" [formControlName]="'UserID'" name="UserID" data-toggle="select" id="UserID">
-                    <option value="0"> Select User</option>
-                    <option *ngFor="let _User of _UserL" [value]="_User.id"  >
-                        {{_User.userid}}
-                        </option>
-                    </select>
+                  <select name="DeptID" id="DeptID"class="form-control" [formControlName]="'DeptID'"(change)="getBranchForUser($event.target.value)">
+                    <option value="0">Select Cabinet</option>
+                    <option  *ngFor="let _Department of _DepartmentList" [value]="_Department.id">
+                      {{ _Department.DepartmentName }}
+                    </option>
+                  </select>
                     <div class="errorMsg-feedback"
-                    *ngIf="tf.UserID && tf.UserID.touched && tf.UserID.invalid && tf.UserID.errors.required">This field is Required</div>
+                    *ngIf="tf.DeptID && tf.DeptID.touched && tf.DeptID.invalid && tf.DeptID.errors.required">This field is Required</div>
                 </div>
             </div>
             <div class="form-row">
               <div class="col-md-6">
-                <ng-multiselect-dropdown
-                [formControlName]="'TemplateID'"
-                [placeholder]="'custom placeholder'"
-                [settings]="dropdownSettings"
-                [data]="largeDataset"
-                [(ngModel)]="selectedItems"
-                (onSelect)="onItemSelect($event)"
-                (onSelectAll)="onSelectAll($event)"
-              >
-              </ng-multiselect-dropdown>
-                  <!-- <div class="errorMsg-feedback"
-                  *ngIf="tf.UserID && tf.UserID.touched && tf.UserID.invalid && tf.UserID.errors.required">This field is Required</div> -->
+               
               </div>
           </div>
             <div class="form-row">
-                <button class=" btn btn-primary" type="button" [disabled]="tf.UserID.invalid" (click)="templateUpdate()">
+                <button class=" btn btn-primary" type="button" [disabled]="tf.DeptID.invalid" (click)="templateUpdate()">
                 Submit
                 </button>
                 <button type="button" class="btn btn-warning" (click)="closeDialog()">Close</button>

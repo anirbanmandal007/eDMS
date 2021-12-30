@@ -6,6 +6,8 @@ import { AuthService } from 'app/core/auth/auth.service';
 import { reportsService } from '../reports.service';
 import { ToasterService } from 'app/shared/toaster/toaster.service';
 import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { fromEvent } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-status',
@@ -27,7 +29,7 @@ export class StatusComponent implements OnInit {
   TemplateList:any;
   dtOptions: any;
   displayTable:boolean = false;
- 
+  loader:boolean = false;
   _ColNameList = ["Customer", "Department", "FileNo", "PageCount", "IsIndexing"];
 
   tagItems = ["Bucharest", "Cluj", "Iasi", "Timisoara", "Piatra Neamt"];
@@ -36,7 +38,10 @@ export class StatusComponent implements OnInit {
   bsRangeValue: Date[];
   maxDate = new Date();
   uid: any;
-
+  //ng table data populate
+  temp_data: any;
+  columns = [{prop: 'Department'}, {prop: 'Customer'},{prop: 'FileNo'}, {prop: 'PageCount'},{prop: 'IsIndexing'}];
+  @ViewChild('search', { static: false }) search: any;
   constructor(
     private __formBuilder: FormBuilder,
     private __reportservice:reportsService,
@@ -46,7 +51,7 @@ export class StatusComponent implements OnInit {
    }
   
   ngOnInit(): void {
-
+    this.loader = false;
     let userData = localStorage.getItem('userData');
     this.uid = JSON.parse(userData).id;
 
@@ -68,13 +73,9 @@ export class StatusComponent implements OnInit {
     });
 }
 getStatusList() {  
-
-          
-  this.__reportservice.showStatus(this.StatusReportForm.value)
-  // .pipe(first())
-
-  .subscribe( data => {
-    
+  this.loader =true;     
+  this.__reportservice.showStatus(this.StatusReportForm.value).subscribe( data => {
+    this.temp_data = data;
     this._StatusList = data;          
     this._FilteredList = data;     
     this.dtOptions = {
@@ -85,6 +86,7 @@ getStatusList() {
       paging: true,
       pageLength:10
     }
+    this.loader = false;
     this.displayTable = true;
     console.log(data);
 
@@ -140,4 +142,49 @@ GetHeaderNames()
 isValid() {
   return this.StatusReportForm.valid 
 }
+
+/* ng table data table populate */
+ngAfterViewInit(): void {
+  // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+  // Add 'implements AfterViewInit' to the class.
+  fromEvent(this.search.nativeElement, 'keydown')
+    .pipe(
+      debounceTime(550),
+      map(x => x['target']['value'])
+    )
+    .subscribe(value => {
+      this.updateFilter(value);
+    });
+}
+
+updateFilter(val: any) {
+const value = val.toString().toLowerCase().trim();
+// get the amount of columns in the table
+const count = this.columns.length;
+// get the key names of each column in the dataset
+const keys = ['Department', 'Customer','FileNo', 'PageCount','IsIndexing'];
+// assign filtered matches to the active datatable
+this._FilteredList = this.temp_data.filter(item => {
+  // iterate through each row's column data
+  for (let i = 0; i < count; i++) {
+    // check for a match
+    if (
+      (item[keys[i]] &&
+        item[keys[i]]
+          .toString()
+          .toLowerCase()
+          .indexOf(value) !== -1) ||
+      !value
+    ) {
+      // found match, return true to add to result set
+      return true;
+    }
+  }
+});
+
+// Whenever the filter changes, always go back to the first page
+// this.table.offset = 0;
+}
+/* ngx table end */
+
 }
