@@ -28,6 +28,7 @@ export class RegionMappingComponent implements OnInit {
   RegionMappingForm: FormGroup;
   AddRegionMappingForm: FormGroup;
 
+  userFilter:any = { BranchName: '' };
   createmodalopen:boolean = false; 
   _PageTitle:any = "New Template Mapping";
   _toasterTitle:any = "Mapped!";
@@ -49,6 +50,9 @@ export class RegionMappingComponent implements OnInit {
   dropdownSettings:IDropdownSettings;
   largeDataset: any = [];
   maxOptions: any;
+  _selectedCustId: any;
+  __checkedList: string;
+  submitted: boolean;
 
   constructor(
     private toaster: ToasterService,
@@ -85,6 +89,7 @@ export class RegionMappingComponent implements OnInit {
     };
     this.getRegionList();
     this.getBranchDetailsRegionWise(0);
+    this.getRegionListById(0);
   }
   openMenu(id:any){
     this.selectedId = id;
@@ -156,7 +161,14 @@ export class RegionMappingComponent implements OnInit {
     });
   }
   /*Delete template */
-  deleteTemplate(templateId:any,templateName:any){
+  deleteTemplate(row:any){
+
+    console.log("selected row"+row.BranchID);
+    console.log("selected DepartmentName"+row.DepartmentName);
+    console.log("selected BranchName"+row.BranchName);
+    
+    let templateName ="";
+    let templateId ="";
     const message = `Are you sure you want delete this Template: `+templateName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
@@ -174,9 +186,11 @@ export class RegionMappingComponent implements OnInit {
   }
   deleteTemplateData(templateId:any){
   let data = {
-    "id":templateId
+    "BranchName":"",
+    "id":15225,
+    "DeptIDS":this._selectedCustId
   };
-  this._masterService.deleteTemplateAPI(data).subscribe(data => {
+  this._masterService.deleteRegionAPI(data).subscribe(data => {
     this.toaster.show('warning', 'Deleted!', data);
     this.getBranchDetailsRegionWise(0);
   });   
@@ -260,5 +274,102 @@ handleFilterChange(text: string): void {
 
   this.largeDataset = optionsToShow.slice(0, 100);
 }
+
+  //Mapping add code start
+
+  // getting already selected items based on user id
+  getRegionListById(id:any){
+    this._selectedCustId = id;
+    this.__checkedList = "";
+    this._masterService.getRegionWiseData(id).subscribe((data:any) => { 
+      this.largeDataset = data;
+    });
+  }
+  selectedItem(item){
+    this.selectedItems.push(item.id);
+    console.log("checked item",this.selectedItems);   
+  }
+  onSubmit() {
+    this.submitted = true;
+    this.__checkedList ="";
+    var _chkstatus =false;
+    for (let value of this.largeDataset) {
+      if (value.ischecked)
+      {
+        this.__checkedList +=value.id + "#";
+        _chkstatus = true;
+      }
+    }
+
+    let finalArray = [];
+    let eachObj = {};
+
+    for (let value of this.largeDataset) {
+
+        if(this.selectedItems.indexOf(value.id) > -1){
+          this.__checkedList +=value.id + "#";
+          if(value.ischecked == 1){
+            eachObj = {
+              "id": value.id,
+              "BranchName": value.BranchName,
+              "ischecked": false
+            }
+          }else{
+            eachObj = {
+              "id": value.id,
+              "BranchName": value.BranchName,
+              "ischecked": true
+            }
+          }
+        }else{
+          eachObj = {
+            "id": value.id,
+            "BranchName": value.BranchName,
+            "ischecked": value.ischecked
+          }
+        }  
+      finalArray.push(eachObj);  
+    }
+
+    let body = {
+      "BranchName": "",
+      "SelectItem": "",
+      "id": 0,
+      "DeptID": this._selectedCustId,
+      "checkedList": this.__checkedList,
+      "checklist": finalArray,
+      "selectAll": false
+    }
+
+    this._masterService
+      .createRegionMapping(body)
+      // .pipe(first())
+
+      .subscribe((data) => {
+        this.toaster.show('success', 'Branch Mapping Done', data);
+        this.getRegionListById(this._selectedCustId);
+      });
+
+     }
+     master_change(){
+      let _bool =this.AddRegionMappingForm.controls['selectAll'].value;
+      this.largeDataset.forEach((ele,index) => {
+        if(_bool == true){
+          ele.ischecked = true;
+        }else
+          ele.ischecked = false;
+         
+      });
+      console.log("this.largeDataset",this.largeDataset);
+     }
+     filternames(mList){
+        this.largeDataset = mList;
+     }
+     searchforBranch(key){
+        if(!key){
+
+        }
+     }
+
 
 }

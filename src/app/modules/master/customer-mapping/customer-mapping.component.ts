@@ -47,7 +47,8 @@ export class CustomerMappingComponent implements OnInit {
   maxOptions: any;
   submitted: boolean;
   __checkedList: string;
-
+  _selectedCustId: any;
+  
   constructor(
     private toaster: ToasterService,
     private _formBuilder: FormBuilder,
@@ -75,7 +76,8 @@ export class CustomerMappingComponent implements OnInit {
       RootID:[0],
       checklist: this._formBuilder.array([]),
       selectAll: [false],
-      DeptID: [0],
+      DeptID: [0]
+      
     });
     this.getUserList();
     this.getCustomerWiseList(0);
@@ -173,9 +175,11 @@ export class CustomerMappingComponent implements OnInit {
   }
   deleteTemplateData(templateId:any){
   let data = {
-    "id":templateId
+    "BranchName":"",
+    "id":15225,
+    "UserIDS":this._selectedCustId
   };
-  this._masterService.deleteTemplateAPI(data).subscribe(data => {
+  this._masterService.deleteCustomerMapping(data).subscribe(data => {
     this.toaster.show('warning', 'Deleted!', data);
     this.getCustomerWiseList(0);
   });   
@@ -231,57 +235,80 @@ ngAfterViewInit(): void {
     // Whenever the filter changes, always go back to the first page
     // this.table.offset = 0;
   }
+
+  //Mapping add code start
+
   // getting already selected items based on user id
   getCustListById(id:any){
-    this._masterService.getCustomerWiseList(id).subscribe((data:any) => { 
-      data.forEach(element => {
-        this.largeDataset.forEach((ele,index) => {
-          if(element.BranchID == ele.BranchID){
-            this.largeDataset.splice(index,1);
-            ele.ischecked = true;
-            this.largeDataset.splice(index,0,ele);
-          }
-        });
-        
-      });
-
-      console.log(this.largeDataset);
+    this._selectedCustId = id;
+    this.__checkedList = "";
+    this._masterService.getBranchDetails(id).subscribe((data:any) => { 
+      this.largeDataset = data;
     });
   }
   selectedItem(item){
-    this.largeDataset.forEach((ele,index) => {
-      if(item.BranchID == ele.BranchID){
-        this.largeDataset.splice(index,1);
-        ele.ischecked = true;
-        this.largeDataset.splice(index,0,ele);
-      }
-    });
+    this.selectedItems.push(item.id);
+    console.log("checked item",this.selectedItems);   
   }
   onSubmit() {
     this.submitted = true;
     this.__checkedList ="";
-   var _chkstatus =false;
-  
-    this.AddBranchMappingForm.patchValue({
-      checkedList: this.largeDataset,
-      CreatedBy: this.AddBranchMappingForm.get('UserID').value,
-      UserID: this.AddBranchMappingForm.get('UserID').value,
-    });
-    var objectToSend = {
-      id: 0,
-      User_Token: this.AddBranchMappingForm.get('User_Token').value,
-      UserID: this.AddBranchMappingForm.get('UserID').value,
-      checkedList: this.AddBranchMappingForm.get('checkedList').value,
-      CreatedBy: this.AddBranchMappingForm.get('CreatedBy').value
-    }    
-    
+    var _chkstatus =false;
+    for (let value of this.largeDataset) {
+      if (value.ischecked)
+      {
+        this.__checkedList +=value.id + "#";
+        _chkstatus = true;
+      }
+    }
+
+    let finalArray = [];
+    let eachObj = {};
+
+    for (let value of this.largeDataset) {
+
+        if(this.selectedItems.indexOf(value.id) > -1){
+          this.__checkedList +=value.id + "#";
+          if(value.ischecked == 1){
+            eachObj = {
+              "id": value.id,
+              "BranchName": value.BranchName,
+              "ischecked": false
+            }
+          }else{
+            eachObj = {
+              "id": value.id,
+              "TemplateName": value.TemplateName,
+              "ischecked": true
+            }
+          } 
+        }else{
+          eachObj = {
+            "id": value.id,
+            "BranchName": value.BranchName,
+            "ischecked": value.ischecked
+          }
+        }  
+      finalArray.push(eachObj);  
+    }
+
+    let body = {
+      "BranchName": "",
+      "SelectItem": "",
+      "id": 0,
+      "UserID": this._selectedCustId,
+      "checkedList": this.__checkedList,
+      "checklist": finalArray,
+      "selectAll": false
+    }
+
     this._masterService
-      .createMapping(this.AddBranchMappingForm.value)
+      .createMapping(body)
       // .pipe(first())
 
       .subscribe((data) => {
         this.toaster.show('success', 'Branch Mapping Done', data);
-        
+        this.getCustListById(this._selectedCustId);
       });
 
      }

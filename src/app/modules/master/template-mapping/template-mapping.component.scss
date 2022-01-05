@@ -1,8 +1,37 @@
 .modal-content{
-    width: 40% !important;
-    margin-left: 30%;
-    margin-top: 7%;
+    width: 100% !important;
+    margin-left: 0%;
+    margin-top: 0%;
 }
 .form-row{
     margin-top: 2%;
+}
+.modal-content ul{
+    overflow-y: auto;
+    height: calc(100vh - 270px);
+    flex-wrap: wrap;
+    display: flex;
+    border: 1px solid #17a2b8;
+    padding: 2%;
+}
+.modal-content .box-label {
+    position: absolute;
+    top: 26%;
+    background: #fff;
+    padding: 0.3% 2%;
+    color: #17a2b8;
+    font-size: 18px;
+}
+.modal-content .custom-control-input{
+    color: #17a2b8;
+    font-weight: 700;
+}
+.modal-content ul li{
+    padding: 1%;
+    border-bottom: 1px solid #efefef;
+    flex: 1 0 25%;
+}
+.modal-content ul li label{
+    font-size: 12px;
+    padding-left: 10px;
 }

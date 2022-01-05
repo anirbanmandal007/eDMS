@@ -75,7 +75,7 @@
             <ngx-datatable-column name="Action">
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <div class="action_icon">
-                <svg xmlns="http://www.w3.org/2000/svg" (click)="editTemplate(row)" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" (click)="createCustomerMapping()" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" (click)="deleteTemplate(row.id,row.BranchName)" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,38 +85,6 @@
               </ng-template>
             </ngx-datatable-column>
           </ngx-datatable>
-
-          <!--
-          <table datatable [dtOptions]="dtOptions" class="row-border hover">
-            <thead>
-              <tr>
-                <th class="text-left">Sr No.</th>
-                <th class="text-left">User Name</th>
-                <th class="text-left">Customer</th>
-                <th class="text-left">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let row of _CustomerBranchList; let i = index;" class="data-tr">
-                <td>{{i + 1}}</td>
-                <td>{{row.UserName}}</td>
-                <td>{{row.BranchName}}</td>
-                <td (click)="openMenu(row.id)" class="cursor-pointer"><mat-icon #openmenu >more_vert</mat-icon>
-                  <ul class="data-menu row_icon" *ngIf="openlist && row.id == selectedId">
-                    <li (click)="editTemplate(row)"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                    </svg>Edit</li>
-                    <li (click)="deleteTemplate(row.id,row.BranchName)"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>Delete</li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          -->
-
-
         </div>  
       </div>
   </div>
@@ -164,7 +132,7 @@
                     </label>
                 </li>
                 <li *ngFor="let item of largeDataset | filterBy:userFilter" class="d-flex">
-                  <input type="checkbox" [value]="item.BranchID" [checked]="item.ischecked" (click)="selectedItem(item)">
+                  <input type="checkbox" [value]="item.BranchID" [checked]="item.ischecked == 1" (click)="selectedItem(item)">
                   <label>{{item.BranchName}}</label>
                 </li>
               </ul>

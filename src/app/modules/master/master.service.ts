@@ -60,14 +60,26 @@ getCustomerWiseList(userId:any) {
   const apiUrl = "BranchMapping/GetBranchDetailsUserWise?ID="+userId+"&user_Token="+ this.userToken
   return this._httpService.get(apiUrl);
 }
+getBranchDetails(userId:any) {
+  const apiUrl = "BranchMapping/GetDetails?ID="+userId+"&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
 getUserListAPI() {
   const apiUrl = "Admin/GetList?user_Token="+ this.userToken
   return this._httpService.get(apiUrl);
 }
 createMapping(data:any) {
-  data["User_Token"]=this.userToken
+  data["User_Token"]=this.userToken;
+  data["CreatedBy"]=this.createdBy;
   console.log(data);
   const apiUrl = "BranchMapping/Create"
+  return this._httpService.post(apiUrl,data);
+}
+deleteCustomerMapping(data:any) {
+  data["User_Token"]=this.userToken;
+  data["CreatedBy"]=this.createdBy;
+  console.log(data);
+  const apiUrl = "BranchMapping/Delete"
   return this._httpService.post(apiUrl,data);
 }
 /* customer Mapping service */
@@ -79,6 +91,20 @@ getCustomerWiseTemplateListAPI(userId:any) {
 getUserWiseTemplateList(userId:any) {
   const apiUrl = "TemplateMapping/GetDetails?ID="+userId+"&user_Token="+ this.userToken
   return this._httpService.get(apiUrl);
+}
+createTemplateMapping(data:any) {
+  data["User_Token"]=this.userToken;
+  data["CreatedBy"]=this.createdBy;
+  console.log(data);
+  const apiUrl = "TemplateMapping/Create"
+  return this._httpService.post(apiUrl,data);
+}
+deleteTemplateMapping(data:any) {
+  data["User_Token"]=this.userToken;
+  data["CreatedBy"]=this.createdBy;
+  console.log(data);
+  const apiUrl = "BranchMapping/Delete"
+  return this._httpService.post(apiUrl,data);
 }
 /* template Mapping service */
 /* region service */
@@ -107,6 +133,17 @@ getBranchDetailsRegionWiseAPI(id:any) {
 }
 getDepartmentList() {
   const apiUrl = "Department/GetList?&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+createRegionMapping(data:any) {
+  data["User_Token"]=this.userToken;
+  data["CreatedBy"]=this.createdBy;
+  console.log(data);
+  const apiUrl = "BranchMapping/regionmappingCreate"
+  return this._httpService.post(apiUrl,data);
+}
+getRegionWiseData(id:any){
+  const apiUrl = "BranchMapping/GetDetailsRegion?ID="+id+"&user_Token="+ this.userToken;
   return this._httpService.get(apiUrl);
 }
 /* region Mapping service */

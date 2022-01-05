@@ -27,7 +27,7 @@ export class TemplateMappingComponent implements OnInit {
   _UserL:any;
   TemplateMappingForm: FormGroup;
   AddTemplateMappingForm: FormGroup;
-
+  userFilter:any = { TemplateName: '' };
   createmodalopen:boolean = false; 
   _PageTitle:any = "New Template Mapping";
   _toasterTitle:any = "Mapped!";
@@ -49,6 +49,10 @@ export class TemplateMappingComponent implements OnInit {
   dropdownSettings:IDropdownSettings;
   largeDataset: any = [];
   maxOptions: any;
+  _selectedCustId: any;
+  __checkedList: string;
+  submitted: boolean;
+  largeDatasetForMap: any;
 
   constructor(
     private toaster: ToasterService,
@@ -87,6 +91,7 @@ export class TemplateMappingComponent implements OnInit {
     };
     this.getUserList();
     this.getCustomerWiseTemplateList(0);
+    this.getTemplateListById(0);
   }
   openMenu(id:any){
     this.selectedId = id;
@@ -96,15 +101,12 @@ export class TemplateMappingComponent implements OnInit {
   getUserList() {
     this._masterService.getUserListAPI().subscribe((data: {}) => {
       this._UserL = data;
-      this.AddTemplateMappingForm.controls["UserID"].setValue(0);
-      this.TemplateMappingForm.controls["UserIDS"].setValue(0);
     });
   }
   getUserWiseTemplateList(userid: number){
     this._masterService.getUserWiseTemplateList(userid).subscribe((data: {}) => {
-      this._UserL = data;
-      this.AddTemplateMappingForm.controls["UserID"].setValue(0);
-      this.TemplateMappingForm.controls["UserIDS"].setValue(0);
+      this.largeDataset = data;
+     
     });
   }
   getCustomerListByUserID(userid: number) {
@@ -175,10 +177,12 @@ export class TemplateMappingComponent implements OnInit {
     });
   }
   deleteTemplateData(templateId:any){
-  let data = {
-    "id":templateId
-  };
-  this._masterService.deleteTemplateAPI(data).subscribe(data => {
+    let data = {
+      "TemplateName":"",
+      "id":15225,
+      "UserIDS":this._selectedCustId
+    };
+  this._masterService.deleteTemplateMapping(data).subscribe(data => {
     this.toaster.show('warning', 'Deleted!', data);
     this.getCustomerWiseTemplateList(0);
   });   
@@ -263,4 +267,99 @@ handleFilterChange(text: string): void {
   this.largeDataset = optionsToShow.slice(0, 100);
 }
 
+  //Mapping add code start
+
+  // getting already selected items based on user id
+  getTemplateListById(id:any){
+    this._selectedCustId = id;
+    this.__checkedList = "";
+    this._masterService.getUserWiseTemplateList(id).subscribe((data:any) => { 
+      this.largeDatasetForMap = data;
+    });
+  }
+  selectedItem(item){
+    this.selectedItems.push(item.id);
+    console.log("checked item",this.selectedItems);   
+  }
+  onSubmit() {
+    this.submitted = true;
+    this.__checkedList ="";
+    var _chkstatus =false;
+    for (let value of this.largeDataset) {
+      if (value.ischecked)
+      {
+        this.__checkedList +=value.id + "#";
+        _chkstatus = true;
+      }
+    }
+
+    let finalArray = [];
+    let eachObj = {};
+
+    for (let value of this.largeDatasetForMap) {
+
+        if(this.selectedItems.indexOf(value.id) > -1){
+          this.__checkedList +=value.id + "#";
+          if(value.ischecked == 1){
+            eachObj = {
+              "id": value.id,
+              "TemplateName": value.BranchName,
+              "ischecked": false
+            }
+          }else{
+            eachObj = {
+              "id": value.id,
+              "TemplateName": value.TemplateName,
+              "ischecked": true
+            }
+          }  
+        }else{
+          eachObj = {
+            "id": value.id,
+            "TemplateName": value.TemplateName,
+            "ischecked": value.ischecked
+          }
+        }  
+      finalArray.push(eachObj);  
+    }
+
+    let body = {
+      "TemplateName": "",
+      "SelectItem": "",
+      "id": 0,
+      "UserID": this._selectedCustId,
+      "checkedList": this.__checkedList,
+      "checklist": finalArray,
+      "selectAll": false
+    }
+
+    this._masterService
+      .createTemplateMapping(body)
+      // .pipe(first())
+
+      .subscribe((data) => {
+        this.toaster.show('success', 'Branch Mapping Done', data);
+        this.getTemplateListById(this._selectedCustId);
+      });
+
+     }
+     master_change(){
+      let _bool =this.AddTemplateMappingForm.controls['selectAll'].value;
+      this.largeDataset.forEach((ele,index) => {
+        if(_bool == true){
+          ele.ischecked = true;
+        }else
+          ele.ischecked = false;
+         
+      });
+      console.log("this.largeDataset",this.largeDataset);
+     }
+     filternames(mList){
+        this.largeDataset = mList;
+     }
+     searchforBranch(key){
+        if(!key){
+
+        }
+     }
 }
