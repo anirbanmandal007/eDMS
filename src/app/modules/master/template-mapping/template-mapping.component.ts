@@ -101,6 +101,7 @@ export class TemplateMappingComponent implements OnInit {
   getUserList() {
     this._masterService.getUserListAPI().subscribe((data: {}) => {
       this._UserL = data;
+      this.TemplateMappingForm.controls["UserIDS"].setValue(0);
     });
   }
   getUserWiseTemplateList(userid: number){
@@ -128,8 +129,8 @@ export class TemplateMappingComponent implements OnInit {
   get tf(){
     return this.AddTemplateMappingForm.controls;
   }
-  /*Create Customer Mapping */
-  createCustomerMapping(){
+  /*Create template Mapping */
+  createTemplateMapping(){
     this._PageTitle = "New Template Mapping";
     this._toasterTitle ="Mapped!";
     this.createmodalopen=true;
@@ -138,14 +139,13 @@ export class TemplateMappingComponent implements OnInit {
     this.TemplateMappingForm.controls["UserID"].setValue(0);
    }
    /*Edit template*/
-  editTemplate(template:any) {
+  editTemplateMapping() {
     this._toasterTitle = "Updated!";
     this._PageTitle = "Edit template";
-    this.TemplateMappingForm = this._formBuilder.group({
-   // TemplateName: [template.TemplateName, Validators.required],
-    //id:template.id
-    });
     this.createmodalopen=true;
+    this.getUserList();
+    this.getTemplatebyUser(0);
+    this.TemplateMappingForm.controls["UserID"].setValue(0);
   }
   /* Create and update the template*/
   templateUpdate(){
@@ -160,7 +160,11 @@ export class TemplateMappingComponent implements OnInit {
     });
   }
   /*Delete template */
-  deleteTemplate(templateId:any,templateName:any){
+  deleteTemplate(data:any){
+    console.log("delete data",data);
+    let templateName= data.TemplateName;
+    let templateId=data.id;
+
     const message = `Are you sure you want delete this Template: `+templateName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
@@ -179,7 +183,7 @@ export class TemplateMappingComponent implements OnInit {
   deleteTemplateData(templateId:any){
     let data = {
       "TemplateName":"",
-      "id":15225,
+      "id":templateId,
       "UserIDS":this._selectedCustId
     };
   this._masterService.deleteTemplateMapping(data).subscribe(data => {
@@ -333,13 +337,11 @@ handleFilterChange(text: string): void {
       "selectAll": false
     }
 
-    this._masterService
-      .createTemplateMapping(body)
-      // .pipe(first())
-
-      .subscribe((data) => {
-        this.toaster.show('success', 'Branch Mapping Done', data);
+    this._masterService.createTemplateMapping(body).subscribe((data) => {
+        this.toaster.show('success', 'Template Mapping Done', data);
         this.getTemplateListById(this._selectedCustId);
+        this.createmodalopen = false;
+        this.getCustomerWiseTemplateList(0);
       });
 
      }

@@ -30,7 +30,7 @@ export class RegionMappingComponent implements OnInit {
 
   userFilter:any = { BranchName: '' };
   createmodalopen:boolean = false; 
-  _PageTitle:any = "New Template Mapping";
+  _PageTitle:any = "New Region Mapping";
   _toasterTitle:any = "Mapped!";
   dtOptions:any = {
     processing: true,
@@ -53,6 +53,7 @@ export class RegionMappingComponent implements OnInit {
   _selectedCustId: any;
   __checkedList: string;
   submitted: boolean;
+  custId: number;
 
   constructor(
     private toaster: ToasterService,
@@ -111,6 +112,7 @@ export class RegionMappingComponent implements OnInit {
     });
   }
   geBranchListByUserID(id: number) {
+    this.custId = id;
     this.getBranchDetailsRegionWise(id);
   }
   /*Get all the customerWise template list */
@@ -129,24 +131,23 @@ export class RegionMappingComponent implements OnInit {
   get tf(){
     return this.AddRegionMappingForm.controls;
   }
-  /*Create Customer Mapping */
-  createCustomerMapping(){
-    this._PageTitle = "New Template Mapping";
+  /*Create region Mapping */
+  createRegionMapping(){
+    this._PageTitle = "New Region Mapping";
     this._toasterTitle ="Mapped!";
     this.createmodalopen=true;
     this.getRegionList();
     //this.getBranchDetailsRegionWise(0);
     this.RegionMappingForm.controls["DeptIDS"].setValue(0);
    }
-   /*Edit template*/
-  editTemplate(template:any) {
+   /*Edit region mapping*/
+  editRegionMapping() {
     this._toasterTitle = "Updated!";
-    this._PageTitle = "Edit template";
-    this.RegionMappingForm = this._formBuilder.group({
-   // TemplateName: [template.TemplateName, Validators.required],
-    //id:template.id
-    });
+    this._PageTitle = "Edit Region Mapping";
     this.createmodalopen=true;
+    this.getRegionList();
+    //this.getBranchDetailsRegionWise(0);
+    this.RegionMappingForm.controls["DeptIDS"].setValue(0);
   }
   /* Create and update the template*/
   templateUpdate(){
@@ -161,14 +162,7 @@ export class RegionMappingComponent implements OnInit {
     });
   }
   /*Delete template */
-  deleteTemplate(row:any){
-
-    console.log("selected row"+row.BranchID);
-    console.log("selected DepartmentName"+row.DepartmentName);
-    console.log("selected BranchName"+row.BranchName);
-    
-    let templateName ="";
-    let templateId ="";
+  deleteTemplate(templateId:any,templateName:any){
     const message = `Are you sure you want delete this Template: `+templateName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
@@ -184,17 +178,7 @@ export class RegionMappingComponent implements OnInit {
       }
     });
   }
-  deleteTemplateData(templateId:any){
-  let data = {
-    "BranchName":"",
-    "id":15225,
-    "DeptIDS":this._selectedCustId
-  };
-  this._masterService.deleteRegionAPI(data).subscribe(data => {
-    this.toaster.show('warning', 'Deleted!', data);
-    this.getBranchDetailsRegionWise(0);
-  });   
-  }
+  
   closeDialog(){
     this.openlist = false;
     this.createmodalopen = false;
@@ -341,13 +325,10 @@ handleFilterChange(text: string): void {
       "selectAll": false
     }
 
-    this._masterService
-      .createRegionMapping(body)
-      // .pipe(first())
-
-      .subscribe((data) => {
-        this.toaster.show('success', 'Branch Mapping Done', data);
+    this._masterService.createRegionMapping(body).subscribe((data) => {
+        this.toaster.show('success', 'Region Mapping Done', data);
         this.getRegionListById(this._selectedCustId);
+        this.createmodalopen=false;
       });
 
      }
@@ -370,6 +351,16 @@ handleFilterChange(text: string): void {
 
         }
      }
-
+ deleteTemplateData(templateId:any){
+  let data = {
+    "BranchName":"",
+    "id":templateId,
+    "DeptIDS":this.custId
+  };
+  this._masterService.deleteRegionAPI(data).subscribe(data => {
+    this.toaster.show('warning', 'Deleted!', data);
+    this.getBranchDetailsRegionWise(0);
+  });   
+  }
 
 }

@@ -147,4 +147,15 @@ getRegionWiseData(id:any){
   return this._httpService.get(apiUrl);
 }
 /* region Mapping service */
+/* Custom form service */
+getAllData() {
+  const apiUrl = "Template/GetTemplate?&user_Token="+ this.userToken
+  return this._httpService.get(apiUrl);
+}
+getDataByTemplateId(TempID:any) {
+  const apiUrl = "CustomForms/GetDetails?ID="+ TempID +"&user_Token="+ this.userToken;
+  return this._httpService.get(apiUrl);
+}
+
+/* Custom form service */
 }

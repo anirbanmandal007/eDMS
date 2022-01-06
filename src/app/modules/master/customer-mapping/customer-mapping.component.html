@@ -98,7 +98,7 @@
       <div class="card-body">
         <form class="needs-validation" novalidate="" [formGroup]="AddBranchMappingForm" (ngSubmit)="onSubmit()">
           <div class="form-row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                   <select class="form-control form-control-sm" [formControlName]="'UserID'" name="UserID" data-toggle="select" id="UserID" (change)="getCustListById($event.target.value)">
                   <option value="0"> Select User</option>
                   <option *ngFor="let _User of _UserL" [value]="_User.id"  >
@@ -109,7 +109,7 @@
                   *ngIf="tf.UserID && tf.UserID.touched && tf.UserID.invalid && tf.UserID.errors.required">This field is Required</div>
               </div>
               <div class="col-md-6">
-                <input type="text" [(ngModel)]="userFilter.BranchName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(BranchName)" placeholder="Search by Customer Name"/>
+                <input type="text" class="search-box" [(ngModel)]="userFilter.BranchName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(BranchName)" placeholder="Search by Customer Name"/>
               </div>
           </div>
           <div class="form-row">

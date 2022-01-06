@@ -106,14 +106,14 @@ export class CustomerMappingComponent implements OnInit {
     this.temp = data;    
     this._CustomerBranchList = data;
     this._CustomerBranchList.forEach(element => {
-
+      
       element.ischecked = false;
       this.largeDataset.push(element);
       
     });
     this.filternames(this.largeDataset);
     console.log(this.largeDataset);
-    console.log(this._CustomerBranchList);
+    
     
     this.displayTable = true;
     this.loader = false;
@@ -158,7 +158,7 @@ export class CustomerMappingComponent implements OnInit {
   }
   /*Delete template */
   deleteTemplate(templateId:any,templateName:any){
-    const message = `Are you sure you want delete this Template: `+templateName+`?`;
+    const message = `Are you sure you want delete this customer: `+templateName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -176,12 +176,14 @@ export class CustomerMappingComponent implements OnInit {
   deleteTemplateData(templateId:any){
   let data = {
     "BranchName":"",
-    "id":15225,
+    "id":templateId,
     "UserIDS":this._selectedCustId
   };
   this._masterService.deleteCustomerMapping(data).subscribe(data => {
     this.toaster.show('warning', 'Deleted!', data);
     this.getCustomerWiseList(0);
+    this.AddBranchMappingForm.controls["UserID"].setValue(0);
+    this.BranchMappingForm.controls["UserIDS"].setValue(0);
   });   
   }
   closeDialog(){
@@ -302,13 +304,11 @@ ngAfterViewInit(): void {
       "selectAll": false
     }
 
-    this._masterService
-      .createMapping(body)
-      // .pipe(first())
-
-      .subscribe((data) => {
+    this._masterService.createMapping(body).subscribe((data) => {
+        this.createmodalopen = false;
         this.toaster.show('success', 'Branch Mapping Done', data);
         this.getCustListById(this._selectedCustId);
+        this.getCustomerWiseList(0);
       });
 
      }
