@@ -156,6 +156,23 @@ getDataByTemplateId(TempID:any) {
   const apiUrl = "CustomForms/GetDetails?ID="+ TempID +"&user_Token="+ this.userToken;
   return this._httpService.get(apiUrl);
 }
-
+getAllfields(indexID:any) {
+  const apiUrl = "CustomForms/GetListFields?ID="+ indexID +"&user_Token="+ this.userToken;
+  return this._httpService.get(apiUrl);
+}
+createFields(data:any) {
+  data["User_Token"]=this.userToken;
+  data["CreatedBy"]=this.createdBy;
+  console.log(data);
+  const apiUrl = "CustomForms/Create"
+  return this._httpService.post(apiUrl,data);
+}
+deleteField(data:any) {
+  data["User_Token"]=this.userToken;
+  data["CreatedBy"]=this.createdBy;
+  console.log(data);
+  const apiUrl = "CustomForms/Delete"
+  return this._httpService.post(apiUrl,data);
+}
 /* Custom form service */
 }

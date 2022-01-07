@@ -29,10 +29,19 @@ export class CustomFormComponent implements OnInit {
   entries: any;
   selected: any;
   activeRow: any;
-  Reset: boolean;
   largeDataset: any;
   createmodalopen:boolean = false;
   displayTable:boolean = true;
+  AddCustomForm: FormGroup; 
+  submitted = false;
+  Reset: boolean = false;     
+  sMsg: string = '';
+  BranchForm: FormGroup;
+  _TempID: any =0;
+  _IndexID: any =0;
+  _IndexFieldData:any; 
+  templateId: any;
+  _PageTitle: string;
   
   constructor(
     private toaster: ToasterService,
@@ -51,6 +60,22 @@ export class CustomFormComponent implements OnInit {
       id:[0],
       TemplateID:['0', Validators.required],
     }); 
+    this.AddCustomForm = this._formBuilder.group({
+      TemplateID: [0, Validators.required],
+      IndexField: ['', Validators.compose([Validators.required])],
+      DisplayName: ['', Validators.required],      
+      MinLenght: ['', Validators.required],        
+      //CloginPass: ['', Validators.required],
+      MaxLenght: ['', Validators.required],
+      FieldType: [0, Validators.required],    
+      ListData: [''],
+      IsMandatory: [''],
+      IsAuto: [''], 
+      User_Token: localStorage.getItem('User_Token') ,
+      CreatedBy: localStorage.getItem('UserID') ,
+      id:[0]
+    });
+   
     
     this.getTempList(0);
     this.getTemplate();
@@ -76,9 +101,10 @@ getTempList(TempID: number) {
     });
 }
 
-geTemplateNameListByTempID(userid:number) {          
+geTemplateNameListByTempID(templateId:number) {          
 
-  this.getTempList(userid);      
+    this.templateId = templateId
+  this.getTempList(templateId);      
   }
 
   entriesChange($event) {
@@ -112,22 +138,123 @@ geTemplateNameListByTempID(userid:number) {
   OnReset() {
     this.Reset = true;
     this.ViewCustomeForm.reset();
+    this.AddCustomForm.reset();
+    this.createmodalopen = false;
+  }
+  
+    filternames(mList){
+        this.largeDataset = mList;
+    }
+    searchforBranch(key){
+        if(!key){
+        }
+    }
+    
+    onSubmit() {
+      this.submitted = true;
+     // console.log(this.AddCustomForm);
+      if (this.AddCustomForm.invalid) {
+        alert("Please Fill the Fields");
+        return;
+      }
+      let _IsAuto =0;
+      
+      if (this.AddCustomForm.get("IsAuto").value)
+      {
+        _IsAuto =1;
+      }
+  
+      let _IsMandatory =0;    
+      if (this.AddCustomForm.get("IsMandatory").value)
+      {
+        _IsMandatory =1;
+      }
+  
+      this.AddCustomForm.patchValue({
+        id: this._IndexID ,
+        User_Token: localStorage.getItem('User_Token') ,           
+        CreatedBy:localStorage.getItem('UserID') ,
+        });
+  
+        this.AddCustomForm.patchValue({
+          id: this._IndexID ,
+          User_Token: localStorage.getItem('User_Token') ,           
+          CreatedBy:localStorage.getItem('UserID') ,
+          IsMandatory:_IsMandatory,
+          IsAuto:_IsAuto
+          });
+
+      
+      this._masterService.createFields(this.AddCustomForm.value).subscribe((data: {}) => {     
+    
+       
+       this.OnReset();
+       this.createmodalopen = false;
+       this.getTempList(0);
+       this.getTemplate();
+      });
+  
+    }
+    getindexListData(val:any) { 
+      
+      this.templateId = val;
+      this._masterService.getAllfields(val).subscribe((data: {}) => {     
+      var that = this;
+      that._IndexFieldData =data;
+
+      this.AddCustomForm.controls['TemplateID'].setValue(that._IndexFieldData.TemplateID);
+      this.AddCustomForm.controls['IndexField'].setValue(that._IndexFieldData.IndexField);
+      this.AddCustomForm.controls['DisplayName'].setValue(that._IndexFieldData.DisplayName);
+      this.AddCustomForm.controls['FieldType'].setValue(that._IndexFieldData.FieldType);
+      this.AddCustomForm.controls['MinLenght'].setValue(that._IndexFieldData.MinLenght);
+      this.AddCustomForm.controls['MaxLenght'].setValue(that._IndexFieldData.MaxLenght);
+      this.AddCustomForm.controls['ListData'].setValue(that._IndexFieldData.ListData);
+      this.AddCustomForm.controls['IsMandatory'].setValue(that._IndexFieldData.IsMandatory);
+      this.AddCustomForm.controls['IsAuto'].setValue(that._IndexFieldData.IsAuto);
+  
+      that._IndexFieldData="";
+      localStorage.setItem('_TempID','0') ;
+      this.createmodalopen = true;
+      });
+    }     
+    addFields(){
+      this._PageTitle = "Add Fields";
+      this.createmodalopen = true;
+    }
+    RedirectToEdit(val:any){
+      this._PageTitle = "Edit Fields";
+      this.getindexListData(val);
+    }
+
+    deleteField(fieldId:any,fieldName:any){
+      const message = `Are you sure you want delete this Field: `+fieldName+`?`;
+      const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
+  
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        maxWidth: "0",
+        data: dialogData
+      });
+  
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if(dialogResult) {
+        this.deleteTemplateData(fieldId);
+        } else {
+        }
+      });
+    }
+    deleteTemplateData(fieldId:any){
+    let data = {
+      "TemplateName":"",
+      "id":fieldId,
+      "TemplateID":this.templateId
   }
 
-  
-
-  RedirectToEdit(_TempID: any)
-  {  
-    
-  } 
-  
-     filternames(mList){
-        this.largeDataset = mList;
-     }
-     searchforBranch(key){
-        if(!key){
-
+  console.log("data",data);
+    this._masterService.deleteField(data).subscribe(data => {
+      this.toaster.show('warning', 'Deleted!', data);
+      this.getTempList(0);
+      this.getTemplate();
+    });   
     }
-  }    
-
+    
 }

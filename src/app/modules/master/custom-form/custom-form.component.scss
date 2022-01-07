@@ -35,3 +35,12 @@
     font-size: 12px;
     padding-left: 10px;
 }
+.form-group {
+    max-width: 50%;
+    width: 100%;
+    padding: 0 5% 3%;
+}
+.form-wrap{
+    display: flex;
+    flex-wrap: wrap;
+}
