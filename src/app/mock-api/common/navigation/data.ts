@@ -123,6 +123,39 @@ export const defaultNavigation: FuseNavigationItem[] = [
         ]
     },
     {
+        id   : 'Upload',
+        title: 'Upload',
+        type : 'aside',
+        icon : 'heroicons_outline:upload',
+        disabled: false,
+        children: [
+            {
+                id   : 'File Upload',
+                title: 'File Upload',
+                type : 'basic',
+                icon : 'heroicons_outline:cloud-upload',
+                link : '/upload/file-upload',
+                disabled: false,
+            },
+            {
+                id   : 'CSV Upload',
+                title: 'CSV Upload',
+                type : 'basic',
+                icon : 'heroicons_outline:upload',
+                link : '/upload/data-upload',
+                disabled: false,
+            },
+            {
+                id   : 'SFTP Upload',
+                title: 'SFTP Upload',
+                type : 'basic',
+                icon : 'heroicons_outline:upload',
+                link : '/upload/sftpupload',
+                disabled: false,
+            }
+        ]
+    },
+    {
         id   : 'Report',
         title: 'Reports',
         type : 'aside',
@@ -324,6 +357,39 @@ export const horizontalNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_outline:location-marker',
                 link : '/master/region-mapping',
+                disabled: false,
+            }
+        ]
+    },
+    {
+        id   : 'Upload',
+        title: 'Upload',
+        type : 'aside',
+        icon : 'heroicons_outline:upload',
+        disabled: false,
+        children: [
+            {
+                id   : 'File Upload',
+                title: 'File Upload',
+                type : 'basic',
+                icon : 'heroicons_outline:cloud-upload',
+                link : '/upload/file-upload',
+                disabled: false,
+            },
+            {
+                id   : 'CSV Upload',
+                title: 'CSV Upload',
+                type : 'basic',
+                icon : 'heroicons_outline:upload',
+                link : '/upload/data-upload',
+                disabled: false,
+            },
+            {
+                id   : 'SFTP Upload',
+                title: 'SFTP Upload',
+                type : 'basic',
+                icon : 'heroicons_outline:upload',
+                link : '/upload/sftpupload',
                 disabled: false,
             }
         ]

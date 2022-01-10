@@ -1,0 +1,129 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="row nav_direction">
+            <div class="col-12">
+              <ol class="breadcrumb">
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>Upload</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>SFTP Upload</li>
+              </ol>
+            </div>
+        </div>
+        <!-- CONTENT GOES HERE -->
+        <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+          <div class="page-title">
+            <h3>SFTP File Upload</h3>
+          </div>
+            <div class="w-full">
+              <form [formGroup]="sftpuploadForm" class="flex">
+                  <div class="dataTables_length w-3/6" id="datatable_length">
+                    <label class=" form-control-label w-full px-4" for="TemplateName">
+                        <select name="DeptID" id="DeptID" class="form-control form-control-sm" style="width: 75%;" formControlName="DeptID"  (change)="geBranchListByUserID($event.target.value)" >
+                        (change)="geTemplateNameListByTempID($event.target.value)">
+                        <option value=0>Select Template</option>
+                        <option *ngFor="let _Department of _DepartmentList" [value]="_Department.id"  >  
+                            {{_Department.DepartmentName}}  
+                        </option>
+                      </select>
+                      </label>
+                  </div>
+                  <div class="dataTables_length w-3/6 text-center" id="datatable_length">
+                   
+                    <div class="custom-file">
+                        <button type="button" class="btn btn-primary" style="font-size: 15px" (click)="GetFileCount()">
+                            Search <i class="fa-refresh"></i> 
+                        </button>
+                        <button type="button" class="btn btn-primary" style="font-size: 15px" (click)="onSubmit()">
+                            Sync All Files <i class=" fas fa-file-upload"></i>
+                        </button>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          <div *ngIf="loader">
+            <div class="flex items-center justify-center">
+              <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div> 
+          <div class="w-full mb-4 text-right">
+            Search: 
+            <input
+              #search
+              id="search"
+              type="text"
+              class="search-table form-control w-60 inline-block"
+              aria-label="Search"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div>
+            <ngx-datatable
+            class="material"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="entries != -1 ? entries : undefined"
+            [rows]="_FilteredList"
+            (activate)="onActivate($event)"
+          >
+            <ngx-datatable-column name="SrNo">
+              <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Cabinet">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.DepartmentName}}</ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Template">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.TemplateName}}</ng-template>
+            </ngx-datatable-column>
+
+            
+
+            <ngx-datatable-column name="FOLDER">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.BranchName}}</ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="SUBFOLDER">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.SubfolderName}}</ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="File Count">
+              <ng-template let-row="row" ngx-datatable-cell-template>{{row.FileCount}}</ng-template>
+            </ngx-datatable-column>
+            
+            <ngx-datatable-column name="Action" sortable="false" prop="id">
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+               
+                <button type="button" style="padding:0 0 5px 1px" class="btn btn-icon btn-danger btn-icon-only rounded-circle">
+                  <span class="btn-inner--icon"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M5 12a1 1 0 102 0V6.414l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L5 6.414V12zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z" />
+                  </svg></span>
+                </button>
+                <button type="button" style="padding:0 0 5px 1px" class="btn btn-icon btn-danger btn-icon-only rounded-circle">
+                  <span class="btn-inner--icon"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                  </svg></span>
+                </button>
+          </ng-template>
+            </ngx-datatable-column>
+
+           
+          </ngx-datatable> 
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  
