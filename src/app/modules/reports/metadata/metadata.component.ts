@@ -116,10 +116,7 @@ export class MetadataComponent implements OnInit {
 
       console.log("this.MetaDataForm.value",this.MetaDataForm.value);
              
-    this.__reportservice.GetMetaDataReport(this.MetaDataForm.value)
-    // .pipe(first())
-
-    .subscribe( data => {
+    this.__reportservice.GetMetaDataReport(this.MetaDataForm.value).subscribe( data => {
       this._StatusList = data;     
       this._FilteredList = data;     
       this.GetHeaderNames();
@@ -143,9 +140,9 @@ export class MetadataComponent implements OnInit {
   GetDisplayField(TID:number) {  
 
     this.__reportservice.GetFieldsName(TID).subscribe((data: {}) => {     
-    
      this._ColNameList = data;
      this.displayTable = true;
+     console.log(this._ColNameList);
 });
 }
 

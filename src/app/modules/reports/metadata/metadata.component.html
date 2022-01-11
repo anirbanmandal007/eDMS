@@ -13,15 +13,15 @@
                   </svg>
                 Reports</li>
                 <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
-                  </svg>Status Report</li>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                </svg>Meta Data</li>
               </ol>
             </div>
         </div>
         <!-- CONTENT GOES HERE -->
         <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
           <div class="page-title flex">
-              <h3>Status Report</h3>
+              <h3>Meta Data</h3>
           </div>
           <div class="btn-panel"> <button class="btn" [disabled]="!isValid()" (click)="onSearch()"> Search</button>
             <button class="btn" [disabled]="!isValid()" (click)="onDownload()"> Download</button>    </div>
@@ -31,8 +31,7 @@
                     <form class="needs-validation"  [formGroup]="MetaDataForm">
                         <div class="grid grid-cols-2 gap-4">
                             <div >
-                                <div class=" form-group">
-                                    <label  for="TemplateID" class=" form-control-label">  Select Template </label>      
+                                <div class=" form-group">    
                                     <select name="DeptID" id="DeptID" class="form-control form-control-sm" formControlName="DeptID" (change)="geBranchListByUserID($event.target.value)" >
                                       <option value=0>Select Cabinet</option>   
                                       <option *ngFor="let _Department of _DepartmentList" [value]="_Department.id"  >  
@@ -42,8 +41,7 @@
                                   </div>
                             </div>
                             <div >
-                                <div class=" form-group">
-                                    <label  for="_Flag" class=" form-control-label">  Select Template </label>      
+                                <div class=" form-group">   
                                     <select name="TemplateID" id="TemplateID" class="form-control form-control-sm" formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
                                       <option value=0>Select Template</option>   
                                       <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  

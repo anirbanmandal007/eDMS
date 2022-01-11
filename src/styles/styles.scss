@@ -108,7 +108,7 @@
     font-weight: 700;
     font-size: 27px;
     border-bottom: 2px solid #3f414b;
-    margin: 0 0 30px 0px;
+    margin: 0 0 20px 0px;
 }
 .prefix-css .datatable-header-cell{
     background: #0d4f6e;
@@ -352,4 +352,10 @@ thead{
 }
 .p-fileupload-row {
     background: #dce5f1;
+}
+
+.page-title + .btn-panel,.btn-poistion {
+    position: absolute;
+    right: 58px;
+    top: 118px;
 }
