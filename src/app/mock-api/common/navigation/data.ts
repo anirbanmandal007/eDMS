@@ -171,6 +171,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 disabled: false,
             }
         ]
+    },
+    {
+        id   : 'Search',
+        title: 'Search',
+        type : 'aside',
+        icon : 'heroicons_outline:search',
+        disabled: false,
+        children: [
+            {
+                id   : 'Quick Search',
+                title: 'Content Search',
+                type : 'basic',
+                icon : 'heroicons_outline:document-search',
+                link : '/search/content-search',
+                disabled: false,
+            }
+        ]
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -374,6 +391,23 @@ export const horizontalNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_outline:document-text',
                 link : '/process/indexing',
+                disabled: false,
+            }
+        ]
+    },
+    {
+        id   : 'Search',
+        title: 'Search',
+        type : 'aside',
+        icon : 'heroicons_outline:search',
+        disabled: false,
+        children: [
+            {
+                id   : 'Quick Search',
+                title: 'Content Search',
+                type : 'basic',
+                icon : 'heroicons_outline:document-search',
+                link : '/search/content-search',
                 disabled: false,
             }
         ]

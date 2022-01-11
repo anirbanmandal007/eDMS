@@ -63,7 +63,9 @@ export class AuthInterceptor implements HttpInterceptor
                 {
                     this._authService._authenticated = false;
                     this._authService.removeAccessToen();
-                    this._router.navigate(['sign-in']);
+                    this._router.navigate(['sign-in']).then(() => {
+                        window.location.reload();
+                    });
                 }
 
                 return throwError(error);
