@@ -96,6 +96,7 @@ export const appRoutes: Route[] = [
             {path: 'reports', loadChildren: () => import('app/modules/reports/reports.module').then(m => m.ReportsModule)},
             {path: 'process', loadChildren: () => import('app/modules/process/process.module').then(m => m.ProcessModule)},
             {path: 'search', loadChildren: () => import('app/modules/search/search.module').then(m => m.SearchModule)},
+            {path: 'upload', loadChildren: () => import('app/modules/upload/upload.module').then(m => m.UploadModule)}
         ]
     },
 ];

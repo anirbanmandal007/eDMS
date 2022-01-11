@@ -108,7 +108,7 @@
     font-weight: 700;
     font-size: 27px;
     border-bottom: 2px solid #3f414b;
-    margin: 0 0 30px 0px;
+    margin: 0 0 20px 0px;
 }
 .prefix-css .datatable-header-cell{
     background: #0d4f6e;
@@ -304,8 +304,15 @@ button[disabled]{
 .svg-action {
     cursor: pointer;
 }
+thead{
+    border-bottom: 1px solid #111;
+    background: rgb(1, 15, 80);
+    color: rgb(255, 255, 255);
+}
 .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
     border-bottom: 1px solid #111;
+    background: rgb(1, 15, 80);
+    color: rgb(255, 255, 255);
 }
 .search-table {
     border: 1px solid #aaa;
@@ -342,4 +349,13 @@ button[disabled]{
     margin-top: 0.5%;
     padding: 10px;
     width: 50%;
+}
+.p-fileupload-row {
+    background: #dce5f1;
+}
+
+.page-title + .btn-panel,.btn-poistion {
+    position: absolute;
+    right: 58px;
+    top: 118px;
 }

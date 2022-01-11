@@ -1,0 +1,136 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="row nav_direction">
+            <div class="col-12">
+              <ol class="breadcrumb">
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>Upload</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>File Upload</li>
+              </ol>
+            </div>
+        </div>
+        <!-- CONTENT GOES HERE -->
+        <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+          <div class="page-title">
+            <h3>File Upload</h3>
+          </div>
+          <div class="">
+            <form [formGroup]="FileUPloadForm">
+                  <div class="position-relative row form-group">  
+                    
+                    <div class="dataTables_length flex" id="datatable_length">
+                        <div class="w-3/6">
+                            <label class=" form-control-label w-full px-4" for="UserIDS">
+                                <select name="BranchID" id="BranchID" class="form-control" formControlName="BranchID" >
+                                    <option value='0'>Select Folder</option>   
+                                    <option *ngFor="let _Bracnch of BranchList" [value]="_Bracnch.BranchID"  >  
+                                    {{_Bracnch.BranchName}}  
+                                    </option>
+                                  </select>
+                            </label>
+                        </div>
+                       <div class="w-3/6">
+                        <label class=" form-control-label w-full px-4" for="UserIDS">
+                            <select name="TemplateID" id="TemplateID" class="form-control" formControlName="TemplateID"
+                              (change)="geTemplateNameListByTempID($event.target.value)">
+                              <option value=0>Select Template</option>
+                              <option *ngFor="let _Temp of _TemplateList" [value]="_Temp.TemplateID">
+                                {{_Temp.TemplateName}}
+                              </option>
+                            </select>
+                            </label>
+                       </div>
+                    </div>
+                    <div class="w-full px-4 py-8">
+                      <p-fileUpload #fileUpload (onSelect)="getFileDetails($event)" customUpload="true" (uploadHandler)="uploadFiles(fileUpload)"
+                        multiple="multiple" maxFileSize="1000000" invalidFileSizeMessageSummary accept=".xlsx,.pdf,.csv,.xls" invalidFileTypeMessageSummary>
+                        <ng-template pTemplate="content">
+                            <ul *ngIf="myFiles.length">
+                                
+                            </ul>
+                        </ng-template>
+                      </p-fileUpload>
+                    </div>
+                 
+              
+                
+              <div class="dataTables_wrapper py-4" style="display: none;">
+                <div class="row">
+                  <div class="col-sm-12 col-md-4">
+                    <div class="dataTables_length" id="datatable_length">
+                      <label>
+                        Show
+                        <select
+                          name="datatable_length"
+                          aria-controls="datatable"
+                          class="form-control form-control-sm"
+                          (change)="entriesChange($event)"
+                        >
+                          <option value="10" [selected]="entries == 10">10</option>
+                          <option value="25" [selected]="entries == 25">25</option>
+                          <option value="50" [selected]="entries == 50">50</option>
+                          <option value="-1" [selected]="entries == -1">All</option>
+                        </select>
+                        entries
+                      </label>
+                    </div>
+                  </div>
+      
+                  <div class="col-sm-12 col-md-4"></div>
+      
+                  <div class="col-sm-12 col-md-4">
+                    <div id="datatable_filter" class="dataTables_filter">
+                      <label>
+                        <input
+                          type="search"
+                          class="form-control form-control-sm"
+                          placeholder="Search records"
+                          aria-controls="datatable"
+                          (keyup)="filterTable($event)"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <ngx-datatable
+                  class="material"
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="entries != -1 ? entries : undefined"
+                  [rows]="myFiles"
+                  (activate)="onActivate($event)"
+                >
+                  <ngx-datatable-column name="SrNo">
+                    <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="File Name">
+                    <ng-template let-row="row" ngx-datatable-cell-template>{{row.name}}</ng-template>
+                  </ngx-datatable-column>
+      
+                  <ngx-datatable-column name="File Size">
+                    <ng-template let-row="row" ngx-datatable-cell-template>{{row.size}}</ng-template>
+                  </ngx-datatable-column>
+      
+                  <ngx-datatable-column name="File Type">
+                    <ng-template let-row="row" ngx-datatable-cell-template>{{row.type}}</ng-template>
+                  </ngx-datatable-column> 
+                </ngx-datatable>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>  
+        
+    </div>
+</div>
+
