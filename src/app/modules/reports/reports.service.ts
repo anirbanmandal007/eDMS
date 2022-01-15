@@ -11,12 +11,14 @@ export class reportsService {
   userToken: string;
   private rolesChanged = new BehaviorSubject(new Date().getTime());
   isRoleChanged = this.rolesChanged.asObservable();
+  createdBy: any;
 
   constructor(
     private _httpService: HttpService,
     private _authService: AuthService
   ) {
     this.userToken = this._authService.accessToken;
+    this.createdBy = JSON.parse(localStorage.getItem('userData')).id;
   }
 
   /** Status Api */
@@ -48,28 +50,32 @@ export class reportsService {
   }
   /** Log Api */
   /** MetaData Api */
-  GetRootByUserID($uid) {
+  getRootByUserID($uid) {
     const apiUrl = "RootMaster/GetRootByUserID?UserID="+ $uid + "&user_Token="+ this.userToken;
     return this._httpService.get(apiUrl);
   }
-  GetBranchByDeptIDANDUserwise($uid,$deptId) {
+  getBranchByDeptIDANDUserwise($uid,$deptId) {
     const apiUrl = "BranchMaster/GetBranchByDeptIDANDUserwise?UserID="+ $uid+"&DeptID="+$deptId + "&user_Token="+ this.userToken;
     return this._httpService.get(apiUrl);
   }
-  GetDepartmentByUserID($uid,$roleId) {
+  getDepartmentByUserID($uid,$roleId) {
     const apiUrl = "Department/?UserID="+ $uid+"&RoleID="+$roleId + "&user_Token="+ this.userToken;
     return this._httpService.get(apiUrl);
   }
-  GetTemplateMappingListByUserID($uid) {
-    const apiUrl = "TemplateMapping/GetTemplateMappingListByUserID?UserID="+ $uid + "&user_Token="+ this.userToken;
+  getTemplateMappingListByUserID() {
+    const apiUrl = "TemplateMapping/GetTemplateMappingListByUserID?UserID="+ this.createdBy + "&user_Token="+ this.userToken;
     return this._httpService.get(apiUrl);
   }
-  GetMetaDataReport(data) {
-   
+  getCustomerByUserID() {
+    const apiUrl = "BranchMapping/GetBranchDetailsUserWise?ID="+ this.createdBy + "&user_Token="+ this.userToken;
+    return this._httpService.get(apiUrl);
+  }
+  getMetaDataReport(data) {
+    data["User_Token"]=this.userToken;
     const apiUrl = "Status/GetMetaDataReport"
     return this._httpService.post(apiUrl,data);
   }
-  GetFieldsName($uid) {
+  getFieldsName($uid) {
     const apiUrl = "DataUpload/GetFieldsName?ID="+ $uid + "&user_Token="+ this.userToken;
     return this._httpService.get(apiUrl);
   }
