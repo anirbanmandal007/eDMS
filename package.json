@@ -40,6 +40,7 @@
     "moment": "2.29.1",
     "ng-apexcharts": "1.5.12",
     "ng-multiselect-dropdown": "^0.3.7",
+    "ngx-captcha": "^7.0.1",
     "ngx-doc-viewer": "^2.0.5",
     "ngx-filter-pipe": "^2.1.2",
     "ngx-markdown": "13.0.0",
