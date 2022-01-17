@@ -8,11 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContentSearchComponent } from './content-search/content-search.component';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
+import { DeleteFilesComponent } from './delete-files/delete-files.component';
+import { BulkDownloadComponent } from './bulk-download/bulk-download.component';
 
 @NgModule({
   declarations: [
     SearchComponent,
-    ContentSearchComponent
+    ContentSearchComponent,
+    DeleteFilesComponent,
+    BulkDownloadComponent
   ],
   imports: [
     RouterModule.forChild(searchRoutes),

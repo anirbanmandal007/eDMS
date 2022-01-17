@@ -75,7 +75,9 @@
                         Password is required
                     </mat-error>
                 </mat-form-field>
-
+                <ngx-recaptcha2 #captchaElem siteKey="6LfS3OYdAAAAAP7Xt5GrMYQsGhTItjfTYtUaxBzB" (success)="handleSuccess($event)" [size]="size"
+                  [hl]="lang" [theme]="theme" [type]="type" formControlName="recaptcha">
+                </ngx-recaptcha2>
                 <!-- Actions -->
                 <div class="inline-flex items-end justify-between w-full mt-1.5">
                     <mat-checkbox
@@ -94,7 +96,7 @@
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
                     [color]="'primary'"
-                    [disabled]="signInForm.disabled"
+                    [disabled]="!signInForm.valid"
                     (click)="signIn()">
                     <span *ngIf="!signInForm.disabled">
                         Sign in

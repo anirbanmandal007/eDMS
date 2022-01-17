@@ -219,6 +219,22 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon : 'heroicons_outline:document-search',
                 link : '/search/content-search',
                 disabled: false,
+            },
+            {
+                id   : 'BulkDownlaod',
+                title: 'Bulk Downlaod',
+                type : 'basic',
+                icon : 'heroicons_outline:cloud-download',
+                link : '/search/bulk-download',
+                disabled: false,
+            },
+            {
+                id   : 'DeleteFiles',
+                title: 'Delete Files',
+                type : 'basic',
+                icon : 'heroicons_outline:trash',
+                link : '/search/delete-files',
+                disabled: false,
             }
         ]
     }
@@ -474,6 +490,22 @@ export const horizontalNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_outline:document-search',
                 link : '/search/content-search',
+                disabled: false,
+            },
+            {
+                id   : 'BulkDownlaod',
+                title: 'Bulk Downlaod',
+                type : 'basic',
+                icon : 'heroicons_outline:cloud-download',
+                link : '/search/bulk-download',
+                disabled: false,
+            },
+            {
+                id   : 'DeleteFiles',
+                title: 'Delete Files',
+                type : 'basic',
+                icon : 'heroicons_outline:trash',
+                link : '/search/delete-files',
                 disabled: false,
             }
         ]

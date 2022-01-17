@@ -23,6 +23,17 @@ export class AuthSignInComponent implements OnInit
     signInForm: FormGroup;
     showAlert: boolean = false;
 
+    public captchaIsLoaded = false;
+    public captchaSuccess = false;
+    public captchaIsExpired = false;
+    public captchaResponse?: string;
+
+    public theme: 'light' | 'dark' = 'light';
+    public size: 'compact' | 'normal' = 'normal';
+    public lang = 'en';
+    public type: 'image' | 'audio';
+    
+
     /**
      * Constructor
      */
@@ -48,6 +59,7 @@ export class AuthSignInComponent implements OnInit
         this.signInForm = this._formBuilder.group({
             username     : ['', [Validators.required]],
             password  : ['', Validators.required],
+            recaptcha: ['', Validators.required],
             rememberMe: ['']
         });
     }
@@ -114,5 +126,9 @@ export class AuthSignInComponent implements OnInit
                 });
             }
         );
+    }
+
+    handleSuccess(data) {
+        console.log(data);
     }
 }
