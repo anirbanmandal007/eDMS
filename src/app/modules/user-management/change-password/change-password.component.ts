@@ -33,12 +33,14 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.changepasswordform = this._formBuilder.group({
-      pwd: ["", Validators.required],
+      pwd: ["", [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
       confirmPass: ["", Validators.required],
       recaptcha: ["", Validators.required],       
     });
   }
-
+  get f(){
+    return this.changepasswordform.controls;
+  }
   onSubmit(){
     this.submitted = true;
     let body = {

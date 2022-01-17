@@ -16,6 +16,8 @@ import { UserManagementComponent } from './modules/user-management/user-manageme
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToasterContainerComponent } from './shared/toaster/toaster-container.component';
 import { ToasterComponent } from './shared/toaster/toaster.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -27,7 +29,8 @@ const routerConfig: ExtraOptions = {
         AppComponent,
         UserManagementComponent,
         ToasterContainerComponent,
-        ToasterComponent
+        ToasterComponent,
+        DashboardComponent
     ],
     imports     : [
         BrowserModule,
@@ -47,7 +50,8 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
-        MatSnackBarModule
+        MatSnackBarModule,
+        NgxChartsModule
     ],
     bootstrap   : [
         AppComponent
