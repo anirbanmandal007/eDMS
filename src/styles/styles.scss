@@ -359,3 +359,32 @@ thead{
     right: 58px;
     top: 118px;
 }
+
+.from-green-200 {
+    --tw-gradient-from: #a7f3d0;
+    --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to, rgba(167, 243, 208, 0));
+}
+
+.from-pink-200 {
+    --tw-gradient-from: #fbcfe8;
+    --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to, rgba(251, 207, 232, 0));
+}
+
+.from-yellow-200 {
+    --tw-gradient-from: #fde68a;
+    --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to, rgba(253, 230, 138, 0));
+}
+
+.from-gray-300 {
+    --tw-gradient-from: #d1d5db;
+    --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to, rgba(209, 213, 219, 0));
+}
+
+.from-blue-200 {
+    --tw-gradient-from: #bfdbfe;
+    --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to, rgba(191, 219, 254, 0));
+}
+
+.to-blue-100 {
+    --tw-gradient-to: #dbeafe;
+}

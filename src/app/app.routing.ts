@@ -3,6 +3,8 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { LandingHomeComponent } from './modules/landing/home/home.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -77,7 +79,7 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children   : [
-            {path: 'dashboard', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
+            {path: 'dashboard', component: DashboardComponent},
         ]
     },
 

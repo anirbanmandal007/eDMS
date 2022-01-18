@@ -175,8 +175,17 @@
           <input name="pwd" id="loginPass" [formControlName]="'pwd'" required minlength="8" placeholder="Password" type="password" class="form-control">
           <div class="errorMsg-feedback" *ngIf="f.pwd && f.pwd.touched && f.pwd.hasError('required')">Password Required</div>
           
-          <div class="errorMsg-feedback"
-          *ngIf="f.pwd && f.pwd.touched && f.pwd.errors &&f.pwd.errors.minlength">Password should be 8 character</div>
+          <!-- <div class="errorMsg-feedback"
+          *ngIf="f.pwd && f.pwd.touched && f.pwd.errors &&f.pwd.errors.minlength">Password should be 8 character</div> -->
+          <div style="float: left; font-size: 14px; margin-bottom: 20px;" class="errorMsg-feedback"
+            *ngIf="f.pwd.touched && f.pwd.errors && f.pwd.value !== ''">Password should meet the following criteria:
+              <ul style="list-style-type:circle;padding-left: 24px;">
+                <li>Contain at least 8 characters</li>
+                <li>Contain at least 1 number</li>
+                <li>Contain at least 1 lowercase character (a-z)</li>
+                <li>Contain at least 1 uppercase character (A-Z)</li>
+              </ul>
+          </div>
         </div>
         <div class="col-md-6 mb-3">
           <label class="form-control-label" for="confirmPass">
@@ -184,10 +193,9 @@
           </label>
 
           <input name="confirmPass" id="confirmPass" [formControlName]="'confirmPass'" placeholder="Confirm Password" type="password" class="form-control">
-          <div class="errorMsg-feedback" *ngIf="f.confirmPass && f.confirmPass.touched && f.confirmPass.hasError('required')">Confirm Password Required</div>
-          <div class="errorMsg-feedback" *ngIf="f.confirmPass && f.confirmPass.touched && f.confirmPass.invalid && f.confirmPass.errors.confirmedValidator" >
+          <!-- <div class="errorMsg-feedback" *ngIf="f.confirmPass && f.confirmPass.touched && f.confirmPass.hasError('required')">Confirm Password Required</div> -->
+          <div class="errorMsg-feedback" *ngIf="f.confirmPass && f.confirmPass.touched && f.confirmPass.value !== f.pwd.value" >
             Password and Confirm Password must be match.</div>
-       
         </div>
       </div> 
       <div class=" form-row">
@@ -197,11 +205,11 @@
             Role*
           </label>
           <select name="role" data-toggle="select" id="sysRoleID" class="form-control" placeholder="role" (change)="selectRole($event)">
-            <option value="0"> Select Role Name </option>
+            <option value=""> Select Role Name </option>
             <option *ngFor="let role of roleList" [value]="role.id">{{role.roleName}}</option>
           </select>
           <!--<input name="role" id="loginPass" [formControlName]="'role'" required minlength="8" placeholder="Role" type="text" class="form-control">-->
-          <div class="errorMsg-feedback" *ngIf="f.sysRoleID && f.sysRoleID.touched && f.sysRoleID.hasError('required')">Role Required</div>
+          <div class="errorMsg-feedback" style="float: left; font-size: 14px; margin-bottom: 20px;" *ngIf="f.sysRoleID && f.sysRoleID.touched && f.sysRoleID.hasError('required')">Role Required</div>
          
         </div>
         <div class="col-md-6 mb-3">
@@ -213,7 +221,7 @@
         </div>
       </div>
       <div class=" form-row">
-        <button class="btn btn-primary" type="submit" (click)="editRowdata()">
+        <button class="btn btn-primary" [disabled]="editform.invalid || f.confirmPass.value !== f.pwd.value" type="submit" (click)="editRowdata()">
           Submit
         </button>
         <button type="button" class="btn btn-warning" (click)="closeeditDialog()">Close</button>
@@ -264,7 +272,7 @@
             Email*
           </label>
 
-          <input id="email" [formControlName]="'email'" placeholder="Email" type="email" class="form-control"/>
+          <input id="email" formControlName="email" placeholder="Email" type="email" class="form-control"/>
           <div class="errorMsg-feedback" *ngIf="cf.email && cf.email.touched && cf.email.hasError('required')">Email Id Required</div>
           <div class="errorMsg-feedback" *ngIf="cf.email && cf.email.touched && cf.email.errors?.pattern">Please Enter Valid Email Id</div>
         </div>
@@ -286,7 +294,7 @@
           <input name="pwd" id="loginPass" [formControlName]="'pwd'" required minlength="8" placeholder="Password" type="password" class="form-control">
           <div class="errorMsg-feedback" *ngIf="cf.pwd && cf.pwd.touched && cf.pwd.hasError('required')">Password Required</div>
           
-          <div class="errorMsg-feedback"
+          <div class="errorMsg-feedback" style="float: left; font-size: 14px; margin-bottom: 20px;" 
           *ngIf="cf.pwd && cf.pwd.touched && cf.pwd.errors &&cf.pwd.errors.minlength">Password should be 8 character</div>
         </div>
         <div class="col-md-6 mb-3">
@@ -295,8 +303,8 @@
           </label>
 
           <input name="confirmPass" id="confirmPass" [formControlName]="'confirmPass'" placeholder="Confirm Password" type="password" class="form-control">
-          <div class="errorMsg-feedback" *ngIf="cf.confirmPass && cf.confirmPass.touched && cf.confirmPass.hasError('required')">Confirm Password Required</div>
-          <div class="errorMsg-feedback" *ngIf="cf.confirmPass && cf.confirmPass.touched && cf.confirmPass.invalid && cf.confirmPass.errors.confirmedValidator" >
+          <!-- <div class="errorMsg-feedback" *ngIf="cf.confirmPass && cf.confirmPass.touched && cf.confirmPass.hasError('required')">Confirm Password Required</div> -->
+          <div class="errorMsg-feedback" style="float: left; font-size: 14px; margin-bottom: 20px;" *ngIf="cf.confirmPass && cf.confirmPass.touched && cf.confirmPass.value !== cf.pwd.value" >
             Password and Confirm Password must be match.</div>
        
         </div>
@@ -307,8 +315,8 @@
           <label class="form-control-label" for="sysRoleID">
             Role*
           </label>
-          <select name="role" data-toggle="select" id="sysRoleID" class="form-control" placeholder="role" (change)="selectRole($event)">
-            <option value="0"> Select Role Name </option>
+          <select name="role" data-toggle="select" [formControlName]="'role'" id="sysRoleID" class="form-control" placeholder="role" (change)="selectRole($event)">
+            <option value=""> Select Role Name </option>
             <option *ngFor="let role of roleList" [value]="role.id">{{role.roleName}}</option>
           </select>
          <!-- <input name="role" id="loginPass" [formControlName]="'sysRoleID'" required minlength="8" placeholder="Role" type="text" class="form-control">-->
@@ -323,7 +331,7 @@
         </div>
       </div>
       <div class="form-row">
-        <button class="btn btn-primary" type="button" (click)="createRowData()">
+        <button class="btn btn-primary" [disabled]="AddUserForm.invalid || cf.confirmPass.value !== cf.pwd.value" type="button" (click)="createRowData()">
           Submit
         </button>
         <button type="button" class="btn btn-warning" (click)="closeDialog()">Close</button>

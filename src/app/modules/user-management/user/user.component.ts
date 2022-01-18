@@ -80,7 +80,7 @@ export class UserComponent implements OnInit {
       id: [""],
       username: ["", Validators.required],
       userid: ["", Validators.required],
-      pwd: ["", Validators.required],
+      pwd: ["", [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
       confirmPass: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
       ]],
@@ -177,8 +177,9 @@ export class UserComponent implements OnInit {
       confirmPass: this.AddUserForm.controls.confirmPass.value,
       email: this.AddUserForm.controls.email.value,
       mobile:String(this.AddUserForm.controls.mobile.value),
-      sysRoleID:this.role_id,
-      Remarks: this.AddUserForm.controls.Remarks.value
+      role: this.AddUserForm.controls.role.value,
+      Remarks: this.AddUserForm.controls.Remarks.value,
+      User_Token: localStorage.getItem('User_Token'),
     }
     console.log(body)
   
@@ -201,16 +202,17 @@ editRow(userId:any){
 
   this._userManagementService.getUsersDataById(userId).subscribe(data => {
     console.log(data)
-    this.editform = this._formBuilder.group({
-      id: [data.id],
-      name: new FormControl(data.name, [Validators.required]),
-      userid: [data.userid, Validators.required],
-      pwd: [data.pwd, Validators.required],
-      email: [data.email, [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-      ]],
-      mobile: [data.mobile],
-      role: [data.role, Validators.required],
-      Remarks: [data.Remarks]
+    this.editform.setValue({
+      id: data.id,
+      name: data.name,
+      userid: data.userid,
+      pwd: data.pwd,
+      confirmPass: '',
+      email: data.email,
+      mobile: data.mobile,
+      role: data.roleName,
+      Remarks: data.remarks,
+      User_Token: localStorage.getItem('User_Token'),
     });
     
   });
@@ -232,7 +234,8 @@ editRowdata(){
     email: this.editform.controls.email.value,
     mobile:String(this.editform.controls.mobile.value),
     sysRoleID:this.role_id,
-    Remarks: this.editform.controls.Remarks.value
+    Remarks: this.editform.controls.Remarks.value,
+    role: this.editform.controls.role.value
   }
 
   console.log("update body",body);
