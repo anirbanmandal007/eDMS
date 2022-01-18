@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit {
   FileUploadCount:0;
   UserCount:0;
   _ActivityList :any;
-  activityChartData:any;
   firstChartData:any;
   firstChartDataFU:any;
   
@@ -49,10 +48,10 @@ export class DashboardComponent implements OnInit {
   _DepartmentList:any;
   EntityList:any;
 
-  view: any[] = [700, 350];
+  view: any[] = [750, 350];
 
   // options
-  legend: boolean = true;
+  legend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -62,6 +61,7 @@ export class DashboardComponent implements OnInit {
   xAxisLabel: string = 'Date';
   yAxisLabel: string = 'Upload Count';
   timeline: boolean = true;
+  gradient = false;
   dataUploadChartData: any = [{
     "name": "Data Upload Count",
     "series": []
@@ -70,8 +70,12 @@ export class DashboardComponent implements OnInit {
     "name": "File Upload Count",
     "series": []
   }];
+  activityChartData: any = [];
+  logChartData: any = [];
   showDataUploadChart = false;
   showFileUploadChart = false;
+  showActivityChart = false;
+  showLogChart = false;
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
@@ -101,6 +105,8 @@ export class DashboardComponent implements OnInit {
    this.getRootList();
    this.GetUploadList();
    this.GetFileUploadList();
+   this.GetActivityList();
+   this.GetActivityLog();
   // this.BindFileUpload();
 
 
@@ -489,15 +495,22 @@ export class DashboardComponent implements OnInit {
   }
 
   public GetActivityList() {
-    this.activityChartData=[];
-      this.dashboardService.GetActivityCount().subscribe((data: {}) => {     
-      this._ActivityList =data;
-        this._ActivityList.forEach( (activity) => {
-          this.activityChartData.push({activityname: activity.ActivityName,count:activity.Cnt});
-        }, this);
-        this.chartActivity.data = this.activityChartData;
+    // this.activityChartData=[];
+      this.dashboardService.GetActivityCount().subscribe((data: any) => {     
+      // this._ActivityList =data;
+      //   this._ActivityList.forEach( (activity) => {
+      //     this.activityChartData.push({activityname: activity.ActivityName,count:activity.Cnt});
+      //   }, this);
+      //   this.chartActivity.data = this.activityChartData;
+      data.forEach(element => {
+        this.activityChartData.push({
+          "name": element.ActivityName,
+          "value": element.Cnt
+        })
+      });
+      this.showActivityChart = true;
     });
-   return  this.activityChartData;
+    
   }
     
 
@@ -610,13 +623,20 @@ public GetFileUploadList() {
 
 public GetActivityLog() {
   this.activitylogChartData=[];
-    this.dashboardService.GetActivityUserLog().subscribe((data: {}) => {     
-    this._ActivityLog =data;
-   // console.log("AL" , data);
-      this._ActivityLog.forEach( (activity) => {
-        this.activitylogChartData.push({activityname: activity.ActivityName,count:activity.Cnt});
-      }, this);
-      this.chartActivityLog.data=this.activitylogChartData;
+    this.dashboardService.GetActivityUserLog().subscribe((data: any) => {     
+      //   this._ActivityLog =data;
+      //  // console.log("AL" , data);
+      //     this._ActivityLog.forEach( (activity) => {
+      //       this.activitylogChartData.push({activityname: activity.ActivityName,count:activity.Cnt});
+      //     }, this);
+      //     this.chartActivityLog.data=this.activitylogChartData;
+      data.forEach(element => {
+        this.logChartData.push({
+          "name": element.ActivityName,
+          "value": element.Cnt
+        })
+      });
+      this.showLogChart = true;
   });
  return  this.activitylogChartData;
 }
