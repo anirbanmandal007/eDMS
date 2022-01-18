@@ -1,1 +1,71 @@
-<p>delete-files works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+
+  <!-- Main content-->
+  <div class="flex-auto p-6 sm:p-10">
+      <div class="row nav_direction">
+          <div class="col-12">
+            <ol class="breadcrumb">
+              <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  Search</li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                  Delete Files</li>
+            </ol>
+          </div>
+      </div>
+
+      <!-- CONTENT GOES HERE -->
+      <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+        <div class="page-title">
+          <h3>Delete Files</h3>
+        </div>
+        <h2>Please <strong style="cursor: pointer;color: blue;"  (click)="downloadFile()">Click Here</strong> to download template file for deleteing</h2>
+        <div class="container-fluid mt--6 w-2/4 m-auto" *ngIf="shwfrm">
+          <form class="needs-validation" novalidate="" [formGroup]="DeleteFilesForm">
+            <div class="w-full mt-4 flex">
+                          
+                <select name="TemplateID" id="TemplateID" class="form-control form-control-sm mr-4" formControlName="TemplateID" (change)="geTemplateNameListByTempID()">
+                    <option  value="0">Select Template</option>   
+                    <option *ngFor="let _Temp of _TemplateList" [value]="_Temp.TemplateID"  >  
+                    {{_Temp.TemplateName}}  
+                    </option>   
+                </select>
+                <select name="DeleteID" id="DeleteID" class="form-control form-control-sm" formControlName="DeleteID" (change)="geTemplateNameListByTempID()">
+                    <option  value="0">Select File Type to Delete</option>   
+                    <!-- <option *ngFor="let _Temp of _TemplateList" [value]="_Temp.TemplateID"  >  
+                    {{_Temp.TemplateName}}  
+                    </option>    -->
+                </select> 
+                
+            </div>
+            <div class="w-full mt-8">
+                <div class="row flex">
+                    
+                    <div class="custom-file" style="width: 52%;"> 
+                        <label class="select-btn">Select Templated CSV File</label>
+                        <input type="file" name="csvReader" id="csvReader" (change)="uploadListener($event)" accept=".csv" />                
+                        <label style="width: 97%;" class=" custom-file-label" for="csvReader">
+                        <span class="selected-file-name"></span>    
+                        </label> 
+                    </div>
+                    <button type="button" class="btn btn-warning flex px-6 h-9 delete-btn" (click)="DeleteFiles()">
+                        Delete Files <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </button>
+                      
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>

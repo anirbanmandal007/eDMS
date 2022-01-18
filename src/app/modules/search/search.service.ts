@@ -1,6 +1,8 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from 'app/core/auth/auth.service';
 import { HttpService } from 'app/core/service/http.service';
+import { environment } from 'environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -13,6 +15,7 @@ export class SearchService {
   isRoleChanged = this.rolesChanged.asObservable();
   userId = JSON.parse(localStorage.getItem('userData'))?.id;
   constructor(
+    private http: HttpClient,
     private _httpService: HttpService,
     private _authService: AuthService
   ) {
@@ -164,4 +167,30 @@ export class SearchService {
     const apiUrl = "Status/GetMetaDataFileNo"
     return this._httpService.post(apiUrl,data);
   }
+
+  /*Start Bulk download API */
+  getTemplateAPI() {
+    const apiUrl = 'TemplateMapping/GetTemplateMappingListByUserID?UserID='+this.userId+'&user_Token='+this.userToken;
+    return this._httpService.get(apiUrl);
+  }
+  bulkDownloadTemplateWiseAPI(data:any){
+    data['user_Token']=this.userToken;
+    data['UserID']=String(this.userId);
+    data['CreatedBy']=String(this.userId);
+    const apiUrl = environment.baseUrl+'SearchFileStatus/DLoadBulkFiles';
+    const headers = new HttpHeaders().set('Content-Type', 'application/octet-stream');
+    return this.http.post(apiUrl, data,{ responseType: "blob" });
+  }
+  public downloadDocAPI(data:any) {
+    const apiUrl = environment.baseUrl+'SearchFileStatus/SearchBulkFile?ID='+this.userId+ "&_fileName= " +data +'&user_Token='+this.userToken;
+     return this.http.get(apiUrl, { responseType: "blob" });
+   }
+  /*End Bulk download API */
+  /**Start Delete files API */
+  DeleteBulkFiles(data) {
+    data["User_Token"]=this.userToken
+    const apiUrl = "SearchFileStatus/DeleteBulkFiles"
+    return this._httpService.post(apiUrl,data);
+  }
+  /**End Delete Files API */
 }
