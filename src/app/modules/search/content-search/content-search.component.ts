@@ -145,9 +145,9 @@ export class ContentSearchComponent implements OnInit {
       // });
 
 
-//this.geBranchList();
+this.getBranchList();
 //this.getDepartmnet();
-this.getRootList();
+// this.getRootList();
 // this.filteredOptions = this.myControl.valueChanges.pipe(
 //   startWith(''),
 //   map(value => this._filter(value)),
@@ -362,20 +362,14 @@ this.getRootList();
       }
 
 
-      // geBranchList() {
-      //   //const apiUrl=this._global.baseAPIUrl+'BranchMapping/GetList?user_Token=123123'
-      //   const apiUrl =
-      //     this._global.baseAPIUrl +
-      //     "BranchMapping/GetBranchDetailsUserWise?ID=" +
-      //     localStorage.getItem('UserID') +
-      //     "&user_Token=" +
-      //     this.ContentSearchForm.get("User_Token").value;
-      //   this._onlineExamService.getAllData(apiUrl).subscribe((data: any) => {
-      //     this.BranchList = data;
-      //   //  this._FilteredList = data;
-      //     //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
-      //   });
-      // }
+      getBranchList() {
+        //const apiUrl=this._global.baseAPIUrl+'BranchMapping/GetList?user_Token=123123'
+        this.searchService.getBranchList().subscribe((data: any) => {
+          this.BranchList = data;
+        //  this._FilteredList = data;
+          //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
+        });
+      }
 
       getTemplate() {    
         // const apiUrl = this._global.baseAPIUrl + 'Template/GetTemplate?user_Token=' + this.FileStorageForm.get('User_Token').value

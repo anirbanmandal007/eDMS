@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
   _DepartmentList:any;
   EntityList:any;
 
-  view: any[] = [750, 350];
+  view: any[] = [];
 
   // options
   legend: boolean = false;
