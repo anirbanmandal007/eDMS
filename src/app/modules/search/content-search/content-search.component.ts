@@ -192,10 +192,6 @@ this.getBranchList();
     }
 
     DownloadFileAll(_FileNo: any,_File:any) {
-
-
-    
-
       const fileExt = _File.filePath.substring(_File.filePath.lastIndexOf('.'), _File.filePath.length);
       this.searchService.DownloadFileFromDB(_FileNo).subscribe(res => {
         if (res) {
@@ -816,7 +812,9 @@ this.getBranchList();
       this.GetFullFile(row.AccNo);
 
     }
-
+    ViewEditDocument(Row: any) {
+      this.router.navigate(['/process/indexing/view/'+Row.AccNo]);
+    }
 
     GetFullFile(FileNo:any) {
 

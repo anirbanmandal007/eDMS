@@ -10,6 +10,7 @@ import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
 import { DeleteFilesComponent } from './delete-files/delete-files.component';
 import { BulkDownloadComponent } from './bulk-download/bulk-download.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BulkDownloadComponent } from './bulk-download/bulk-download.component';
     ReactiveFormsModule,
     SharedModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    MatMenuModule
   ]
 })
 export class SearchModule { }
