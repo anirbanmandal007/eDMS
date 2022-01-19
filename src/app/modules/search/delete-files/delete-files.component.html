@@ -29,7 +29,7 @@
         <div class="page-title">
           <h3>Delete Files</h3>
         </div>
-        <h2>Please <strong style="cursor: pointer;color: blue;"  (click)="downloadFile()">Click Here</strong> to download template file for deleteing</h2>
+        <h2 style="text-align: center;">Please <strong style="cursor: pointer;color: blue;"  (click)="downloadFile()">Click Here</strong> to download template file for deleteing</h2>
         <div class="container-fluid mt--6 w-2/4 m-auto" *ngIf="shwfrm">
           <form class="needs-validation" novalidate="" [formGroup]="DeleteFilesForm">
             <div class="w-full mt-4 flex">
@@ -42,9 +42,8 @@
                 </select>
                 <select name="DeleteID" id="DeleteID" class="form-control form-control-sm" formControlName="DeleteID" (change)="geTemplateNameListByTempID()">
                     <option  value="0">Select File Type to Delete</option>   
-                    <!-- <option *ngFor="let _Temp of _TemplateList" [value]="_Temp.TemplateID"  >  
-                    {{_Temp.TemplateName}}  
-                    </option>    -->
+                    <option value=1>Image</option>   
+                    <option value=2>Both (Image and Metadata)</option>   
                 </select> 
                 
             </div>
