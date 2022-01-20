@@ -91,8 +91,9 @@ export class SearchService {
   }
 
   DownloadFileFromDB(_FileNo) {
-    const apiUrl = 'SearchFileStatus/DownloadFileFromDB?ID=' + this.userId + '&FileNo= ' + _FileNo + ' &user_Token=' + this.userToken;
-    return this._httpService.get(apiUrl);
+    const apiUrl = environment.baseUrl+'SearchFileStatus/DownloadFileFromDB?ID=' + this.userId + '&FileNo= ' + _FileNo + ' &user_Token=' + this.userToken;
+    return this.http.get(apiUrl, { responseType: "blob" });
+    //return this._httpService.get(apiUrl);
   }
 
   DownloadTagFile(row) {
@@ -108,6 +109,7 @@ export class SearchService {
 
   DeleteFile(data) {
     data["User_Token"]=this.userToken
+    data["userID"]=this.userId;
     const apiUrl = "SearchFileStatus/Delete"
     return this._httpService.post(apiUrl,data);
   }
