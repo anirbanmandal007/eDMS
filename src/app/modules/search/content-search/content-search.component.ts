@@ -9,6 +9,8 @@ import { HttpEventType, HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { SearchService } from "../search.service";
 import { ToasterService } from "app/shared/toaster/toaster.service";
+import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 declare var $: any;
 
@@ -78,6 +80,7 @@ export class ContentSearchComponent implements OnInit {
   @Output() public onUploadFinished = new EventEmitter();
       
     constructor(
+      private dialog: MatDialog,
       private searchService: SearchService,
       private formBuilder: FormBuilder,
       private http: HttpClient,
@@ -192,10 +195,6 @@ this.getBranchList();
     }
 
     DownloadFileAll(_FileNo: any,_File:any) {
-
-
-    
-
       const fileExt = _File.filePath.substring(_File.filePath.lastIndexOf('.'), _File.filePath.length);
       this.searchService.DownloadFileFromDB(_FileNo).subscribe(res => {
         if (res) {
@@ -613,7 +612,31 @@ this.getBranchList();
       }
     
       DeleteFile(Row: any) {
-        // TODO
+      const message = `Are you sure you want delete?`;
+      const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
+
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        maxWidth: "0",
+        data: dialogData
+      });
+
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if(dialogResult) {
+          this.deleteFile(Row);
+        } else {
+        }
+      });
+        
+      }
+      deleteFile(Row:any){
+        this.ContentSearchForm.patchValue({
+          ACC: Row.AccNo,
+          DocID: Row.DocID
+        });
+        this.searchService.DeleteFile(this.ContentSearchForm.value).subscribe( data => {
+          this.toaster.show('success', 'Deleted!', 'File deleted successfully!');
+           });
+// TODO
         // swal
         //   .fire({
         //     title: "Are you sure?",
@@ -651,7 +674,6 @@ this.getBranchList();
         //   });
        
       }
-
       // Model Popup For Docuemnt Inserstion 
     
       showModal(Row: any): void {
@@ -816,7 +838,9 @@ this.getBranchList();
       this.GetFullFile(row.AccNo);
 
     }
-
+    ViewEditDocument(Row: any) {
+      this.router.navigate(['/process/indexing/view/'+Row.AccNo]);
+    }
 
     GetFullFile(FileNo:any) {
 
