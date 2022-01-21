@@ -10,13 +10,17 @@ import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
 import { DeleteFilesComponent } from './delete-files/delete-files.component';
 import { BulkDownloadComponent } from './bulk-download/bulk-download.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { FileStorageComponent } from './file-storage/file-storage.component';
 
 @NgModule({
   declarations: [
     SearchComponent,
     ContentSearchComponent,
     DeleteFilesComponent,
-    BulkDownloadComponent
+    BulkDownloadComponent,
+    AdvancedSearchComponent,
+    FileStorageComponent
   ],
   imports: [
     RouterModule.forChild(searchRoutes),

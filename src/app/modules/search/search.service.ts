@@ -193,4 +193,10 @@ export class SearchService {
     return this._httpService.post(apiUrl,data);
   }
   /**End Delete Files API */
+
+  OnDynamicFilterData(data) {
+    data["User_Token"]=this.userToken
+    const apiUrl = "SearchFileStatus/OnDynamicFilterData"
+    return this._httpService.post(apiUrl,data);
+  }
 }
