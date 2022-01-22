@@ -201,4 +201,31 @@ export class SearchService {
     const apiUrl = "SearchFileStatus/OnDynamicFilterData"
     return this._httpService.post(apiUrl,data);
   }
+
+  /**File storage API */
+  GetFileInfoAPI(fileInfo:any,templateId:any){
+    //const apiUrl =  'Status/GetFileStorageData?UserID=' + this.userId + '&FileNo=' + fileInfo.fileNo + '&parentFileNo=' + fileInfo.parentFileNo + '&user_Token=' +this.userToken+ '&TemplateID=' + templateId;
+    const apiUrl =  'Status/GetFileStorageData?UserID=' + this.userId + '&FileNo='+'&user_Token=' +this.userToken+ '&TemplateID=' + templateId;
+    return this._httpService.get(apiUrl);
+  }
+  GetTemplateAPI(){
+
+    const apiUrl = 'TemplateMapping/GetTemplateMappingListByUserID?UserID='+this.userId+'&user_Token='+this.userToken;
+    return this._httpService.get(apiUrl);
+  }
+  GetMetadataFieldAPI(teplateId:any){
+    const apiUrl='DataUpload/GetFieldsName?ID='+ teplateId +'&user_Token='+ this.userToken ;
+    return this._httpService.get(apiUrl);
+  }
+  getSearchResultAPI(teplateId:any){
+    const apiUrl ='Status/GetTreeStructure?UserID=' + this.userId + '&user_Token=' + this.userToken + '&TemplateID=' + teplateId;
+    return this._httpService.get(apiUrl);
+  }
+  DownloadMetadataAPI(data){
+    data["User_Token"]=this.userToken;
+    data["userID"]=this.userId;
+    const apiUrl = "Status/GetMetaDataFileNo";
+    return this._httpService.post(apiUrl,data);
+  }
+   /**File storage API */
 }
