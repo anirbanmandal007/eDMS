@@ -134,7 +134,7 @@ export class AdvancedSearchComponent implements OnInit {
 
     //  this.GetEntityList();
       //this.getSearchResult(0);
-  //  this.getSearchParameterList(0);
+   this.getSearchParameterList(0);
       //this.getDoctypeListByTempID(1);
       this._isDownload =localStorage.getItem('Download');
       this._isDelete =localStorage.getItem('Delete');
@@ -144,7 +144,7 @@ export class AdvancedSearchComponent implements OnInit {
       this._isDocView= localStorage.getItem('Document View');
 
 
-//this.geBranchList();
+this.geBranchList();
 //this.getDepartmnet();
 
 // this.getRootList();
@@ -192,12 +192,12 @@ export class AdvancedSearchComponent implements OnInit {
 
   
        // alert(this.ContentSearchForm.get('TemplateID').value);
-        var VarTempIDList =this.ContentSearchForm.get('TemplateID').value;
+        // var VarTempIDList =this.ContentSearchForm.get('TemplateID').value;
         //var TempIDList =[];
         let selectedFileNames = '';
-        VarTempIDList.forEach(el => {
-        selectedFileNames += el['TemplateID'] + ',';
-        })
+        // VarTempIDList.forEach(el => {
+        // selectedFileNames += el['TemplateID'] + ',';
+        // })
 
         this.ContentSearchForm.patchValue({
         TempIDList: selectedFileNames,
@@ -231,15 +231,14 @@ export class AdvancedSearchComponent implements OnInit {
     //   this.geBranchList(userid);
     // }
   
-    // geBranchList(userid: any) {
-    //   //const apiUrl=this._global.baseAPIUrl+'BranchMapping/GetList?user_Token=123123'
-    //   const apiUrl = this._global.baseAPIUrl + "BranchMaster/GetBranchByDeptIDANDUserwise?UserID=" +localStorage.getItem('UserID')+"&DeptID="+userid+ "&user_Token="+localStorage.getItem('User_Token');
-    //   this._onlineExamService.getAllData(apiUrl).subscribe((data: any) => {
-    //     this.BranchList = data;
-    //   //  this._FilteredList = data;
-    //     //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
-    //   });
-    // }
+    geBranchList() {
+      //const apiUrl=this._global.baseAPIUrl+'BranchMapping/GetList?user_Token=123123'
+      this.searchService.getBranchList().subscribe((data: any) => {
+        this.BranchList = data;
+      //  this._FilteredList = data;
+        //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
+      });
+    }
 
   //   getDepartmnet(RootID: any) {
 
@@ -363,26 +362,24 @@ export class AdvancedSearchComponent implements OnInit {
       //   window.location.reload(); 
       // } 
 
-      // getSearchParameterList(TID:any) {
+      getSearchParameterList(TID:any) {
 
-      //   //alert(TID);
-    
-      //   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/getSearchParameterList?ID=' + TID + '&user_Token='+ localStorage.getItem('User_Token')
-    
-      //   //  const apiUrl=this._global.baseAPIUrl+'SearchFileStatus/getSearchParameterList?user_Token=123123'
-      //   this._onlineExamService.getAllData(apiUrl).subscribe((data: {}) => {
-      //     this._SearchByList = data;
+        //alert(TID);
+      
+        //  const apiUrl=this._global.baseAPIUrl+'SearchFileStatus/getSearchParameterList?user_Token=123123'
+        this.searchService.getSearchParameterList(TID).subscribe((data: {}) => {
+          this._SearchByList = data;
           
-      //   this.ContentSearchForm.controls['SearchByID'].setValue(0);
+        this.ContentSearchForm.controls['SearchByID'].setValue(0);
         
-      //  // alert('Hi');
-      //   console.log(data);
+       // alert('Hi');
+        console.log(data);
 
-      //   //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
-      //   });
+        //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
+        });
 
 
-      // }
+      }
 
 //       getDoctypeListByTempID(TID:any) {
     
