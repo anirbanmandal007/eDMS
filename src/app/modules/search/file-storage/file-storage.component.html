@@ -31,7 +31,7 @@
           <form [formGroup]="FileStorageForm">  
           <div class="flex flex-wrap">
             <div class="w-full md:w-3/12 xl:w-3/12 p-6">
-              <h3 class="py-3">Document Structure</h3>
+              <h3 class="py-3 doc-header">Document Structure</h3>
               <p-tree class="tree_box" [value]="treeFiles" [filter]="true" [(selection)]="selectedFiles" selectionMode="single" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
                <!-- <mdb-card class="mb-3" borderColor="border-dark" style="max-width: 20rem">
                 <mdb-card-header style="background:linear-gradient(40deg, #FFD86F, #FC6262);">Document Structure</mdb-card-header>
@@ -42,56 +42,64 @@
             </div>
             <div class="w-full md:w-9/12 xl:w-9/12 p-6">
                 <div style="width: 30%;">
-                  <div *ngIf="_isDownload == 'true'" >
+
+                  <div *ngIf="_isDownload" >
                     <button type="button" tooltip="Download Files" style="padding:1px 1px 1px 1px;float: left"
                       class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadBulkFiles()" >
-                      Download
-                      <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-download actionIcon"></i></span>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                     </button> 
                   </div>
-                    <div *ngIf="_ShareLink == 'true'" >
+
+                  <div *ngIf="_ShareLink" >
                     <button type="button" tooltip="Share link" style="padding:1px 1px 1px 1px;float: left"
                     class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="ShareLink(ShareLinkFormPopup)" >
-                    Share
-                    <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-share-alt actionIcon"></i></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
                   </button>
                   </div>
-                  <div *ngIf="_isEmail == 'true'" >
-                  <button type="button" tooltip="Send E-Mail" style="padding:1px 1px 1px 1px;float: left"
-                  class="btn btn-icon btn-secondary btn-icon-only rounded-circle"   (click)="SendBulkEmail(EmailFormPopup)">
-                  Email
-                  <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-envelope actionIcon"></i></span>
-                </button>
-                </div>
+
+                  <div *ngIf="_isEmail" >
+                    <button type="button" tooltip="Send E-Mail" style="padding:1px 1px 1px 1px;float: left"
+                      class="btn btn-icon btn-secondary btn-icon-only rounded-circle"   (click)="SendBulkEmail(EmailFormPopup)">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </button>
+                  </div>
+
                 <div>
                   <button type="button" tooltip="Download Metadata" style="padding:1px 1px 1px 1px;float: left; position: relative;
                       bottom: 3px;left: 3px;"
                       class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadMetadata()" >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd" />
                       </svg>
                   </button>
                 </div>
             </div>
-              <div style="width: 67%; float: right;">    
-                <div class="reresh-table" style="width: 30px;float:right;text-align: right;cursor: pointer;">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-10" viewBox="0 0 20 20" fill="currentColor" (click)="GetFileInfo('')">
-                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
-                  </svg>
-                </div>  
-                <select name="TemplateID" id="TemplateID" style="width: 45%;float: right;
-                position: relative;
-                bottom: 8px;" class="form-control"  formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
-                  <option value="0">Select Template</option>   
-                  <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
-                  {{_Temp.TemplateName}}  
-                  </option>   
-                </select>
-                <label style="width: auto; float: right; position: relative;
-                top: 3px;
-                right: 8px;" for="TemplateID" class=" form-control-label">  Select Template </label>
-              </div>
-              <diV style="margin-top: 5%;">
+            <div style="width: 67%; float: right;">    
+              <div class="reresh-table" style="width: 30px;float:right;text-align: right;cursor: pointer;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-10" viewBox="0 0 20 20" fill="currentColor" (click)="GetFileInfo('')">
+                  <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                </svg>
+              </div>  
+              <select name="TemplateID" id="TemplateID" style="width: 45%;float: right;
+              position: relative;
+              bottom: 8px;" class="form-control"  formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
+                <option value="0">Select Template</option>   
+                <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
+                {{_Temp.TemplateName}}  
+                </option>   
+              </select>
+              <label style="width: auto; float: right; position: relative;
+              top: 3px;
+              right: 8px;" for="TemplateID" class=" form-control-label">  Select Template </label>
+            </div>
+
+              <diV style="margin-top: 5%; font-size: 13px;">
                 <p-table #tt selectionMode="single" style="width: 100%;" [autoLayout]="true" [paginator]="true" [rows]="10" [columns]="tableHeader" [value]="formattedData"  (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]" [loading]="loading" [(first)]="first" (onPage)="paginate($event)" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
                 <ng-template pTemplate="caption">
                     <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
@@ -118,61 +126,31 @@
                         <td *ngFor="let col of columns">
                             {{doc[col.field]}}
                         </td>
-                        <td [style.width]="'190px'" style="display: none;">
-                                <button type="button" tooltip="View Index Data"  style="padding:1px 1px 1px 1px;float: left"
-                                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"
-                                    data-toggle="modal" data-target="#myModal"  (click)="MetaData(MetaDataFormPopup,doc)">
-                                <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-eye"></i></span>
-                                </button>
-                                
-                                <button type="button" tooltip="Edit Index Data" *ngIf="_isEdit == 'true'" style="padding:1px 1px 1px 1px;float: left"
-                                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"
-                                    (click)="EditRowData(doc)">
-                                <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-edit"></i></span>
-                                </button>
-
-                                <button type="button" tooltip="Download File" *ngIf="_isDownload == 'true'"   style="padding:1px 1px 1px 1px;float: left" Tooltip="Click Download File"
-                                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"
-                                    (click)="DownloadFileAll(doc)">
-                                <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-download"></i></span>
-                                </button>
-                              
-                            <button type="button" *ngIf="_isEmail == 'true'" tooltip="Send Mail" style="padding:1px 1px 1px 1px;float: left"
-                            class="btn btn-icon btn-secondary  btn-icon-only rounded-circle"
-                            (click)="SendEmail(EmailFormPopup,doc)">
-                        <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-envelope"></i></span>
-                        </button>
-                          <button type="button" *ngIf="_isDelete == 'true'" tooltip="Delete File"  style="padding:1px 1px 1px 1px;float: left"
-                              class="btn btn-icon btn-secondary  btn-icon-only rounded-circle"
-                              (click)="DeleteFullFile(doc)">
-                          <span class="btn-inner--icon"><i id="actionIcon" class="fa fa-trash"></i></span>
-                          </button>
-                        </td>
                         <td class="mat-action-items">
                           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="cl">
                             <mat-icon>more_vert</mat-icon>
                           </button>
                           <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="ViewDocument(ImageViewFormPopup,doc,MetaDataFormPopup)">
+                              <button mat-menu-item (click)="ViewEditDocument(doc)">
                                   <i class="material-icons">preview</i>
-                                  <span>Document View</span>
+                                  <span>Document View & Edit</span>
                                 </button>
-
-                              <button mat-menu-item (click)="EditRowData(doc)" *ngIf="_isEdit == 'true'">
+                              <!--
+                              <button mat-menu-item (click)="EditRowData(doc)" *ngIf="_isEdit">
                                 <i class="material-icons">edit</i>
                                 <span>Edit Index Data</span>
-                              </button>
-                              <button mat-menu-item (click)="DownloadFileFromDB(doc)" *ngIf="_isDownload == 'true'">
+                              </button>-->
+                              <button mat-menu-item (click)="DownloadFileFromDB(doc)" *ngIf="_isDownload">
                                 <i class="material-icons">file_download</i>
                                 <span>Download File</span>
                               </button>                                            
-                              <button mat-menu-item (click)="SendEmail(EmailFormPopup,doc)" *ngIf="_isEmail == 'true'">
+                              <button mat-menu-item (click)="SendEmail(EmailFormPopup,doc)" *ngIf="_isEmail">
                                 <i class="material-icons">mail_outline</i>
                                 <span>Send Email</span>
                               </button>
                             
                             
-                              <button mat-menu-item (click)="DeleteFullFile(doc)" *ngIf="_isDelete == 'true'">
+                              <button mat-menu-item (click)="DeleteFullFile(doc)" *ngIf="_isDelete">
                                 <i class="material-icons">delete</i>
                                 <span>Delete File</span>
                               </button>
@@ -184,6 +162,77 @@
                 </p-table>
               </diV>
             </div>
+          </div>
+          
+          <div class="overlay" *ngIf="modalopen"></div>
+          <div class="modal-content" *ngIf="ShareLinkFormPopup" style="width: 50%;margin-left: 25%;margin-top: 3%;">
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                <div class=" card">
+                  <div class=" card-header"><h3 class=" mb-0">Share Link</h3></div>
+                  <div class="card-body">
+                    <div class="form-row">
+                        
+                        <div class="w-full">
+                            <label class="form-control-label" for="ToEmailID">
+                              To 
+                            </label>
+                            <input formControlName="ToEmailID" placeholder="Email" type="email" class="form-control"/>
+                                                                                              
+                        </div>
+                        <div class="w-full" style="margin-top: 1%;">
+                            <label class="form-control-label" for="ValidDate">
+                              Expire On
+                            </label>
+                            <input type="text" formControlName="ValidDate"  placeholder="Valid Date" class="form-control"  bsDatepicker [bsValue]="bsValue"
+                            [bsConfig]="{
+                              isAnimated: true,
+                              containerClass: 'theme-red'
+                            }"
+                            [minDate]="today"
+                          />  
+                        
+                        </div>                            
+    
+                        
+                      </div>
+                      <div class=" col-md-8" style="padding-top: 32px">  
+                        <button class="btn btn-primary" (click)="onSendEmailByShare()"> Send</button>
+                        <button class="btn btn-primary"  (click)="closeShareLinkPopUp()"> Close</button>
+                        
+                      </div>
+                      <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="overlay" *ngIf="modalopen"></div>
+          <div class="modal-content" *ngIf="EmailFormPopup" style="width: 50%;margin-left: 25%;">
+              <div class="modal-body">
+                <div class=" card">
+                  <div class=" card-header"><h3 class=" mb-0">Send Email</h3></div>
+                  <div class="card-body">
+                    <div class="form-row">
+                        
+                        <div class="w-full">
+                            <label class="form-control-label" for="ToEmailID">
+                              To 
+                            </label>
+                            <input formControlName="ToEmailID" placeholder="Email" type="email" class="form-control"/>                  
+                        </div>      
+                      </div>
+                      <div class=" col-md-8" style="padding-top: 32px">  
+                        <button class="btn btn-primary" (click)="onSendEmail()"> Send</button>
+                        <button class="btn btn-primary"  (click)="closeEmailPopUp()"> Close</button>
+                        
+                      </div>
+                      <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
+          
+                  </div>
+                </div>
+              </div>
           </div>
           </form>
         </div>

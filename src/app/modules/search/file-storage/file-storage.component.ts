@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent, ConfirmDialogModel } from 'app/shared/conf
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 //import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import { TreeNode } from 'primeng/api';
+import { SharedService } from "app/shared/shared.service";
 
 export enum SelectionType {
   single = "single",
@@ -137,8 +138,15 @@ export class FileStorageComponent implements OnInit {
   metadataList: any;
   immutableFormattedData: any;
   loading: boolean = true;
+//pop up modal
+modalopen: boolean = false;
+EmailFormPopup: boolean =  false;
+ShareLinkFormPopup: boolean =  false;
 
   constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private shareService: SharedService,
     private searchService: SearchService,
     private formBuilder: FormBuilder,
     public toaster: ToasterService,
@@ -168,8 +176,29 @@ export class FileStorageComponent implements OnInit {
     });
     this.getTemplate();
     this.GetFileInfo('');
+    this.getRights(JSON.parse(localStorage.getItem("userData"))?.id);
   }
-
+  getRights(id: any) {
+    this.shareService.getAllRights(id).subscribe((data) => {
+      console.log(data);
+      this._isDownload = data.filter(
+        (el) => el.page_right === "Download"
+      )[0]?.isChecked;
+      this._isDelete =  data.filter(
+        (el) => el.page_right === "Delete"
+      )[0]?.isChecked;
+      this._isEmail = data.filter(
+        (el) => el.page_right === "Email"
+      )[0]?.isChecked;
+      this._ShareLink =  data.filter(
+        (el) => el.page_right === "Link"
+      )[0]?.isChecked;
+      
+      this._isEdit = data.filter(
+        (el) => el.page_right === "Edit"
+      )[0]?.isChecked;
+    });
+  }
   getTemplate() {
     //const apiUrl = this._global.baseAPIUrl + 'TemplateMapping/GetTemplateMappingListByUserID?UserID='+localStorage.getItem('UserID')+'&user_Token='+localStorage.getItem('User_Token');
     this.searchService.GetTemplateAPI().subscribe((data: {}) => {
@@ -497,9 +526,84 @@ GetHeaderNames(){
   onHeaderCheckboxToggle(event) {
     console.log("event",event);
  }
- paginate(e) {
+ selectRow(e, row) {
+  this.selectAllRows = false;
+  e.originalEvent.stopPropagation();
+  if (e.checked) {
+    this.selectedRows.push(row.fileNo);
+  } else {
+    var index = this.selectedRows.indexOf(row.fileNo);
+    this.selectedRows.splice(index, 1);
+  }
+//  console.log("Row Value",this.selectedRows.indexOf(row.fileNo));
+ // console.log("this.selectedRows",this.selectedRows);
+}
+
+selectAllRow(e) {
+  this.selectedRows = [];
+  if (e.checked) {
+    this.selectAllRows = true;
+    this.formattedData.forEach((el, index) => {
+      if(index >= this.first && index < this.first + this.rows) {
+        this.selectedRows.push(el.fileNo);
+        el.selected = true;
+      }
+    })
+  } else {
+    this.selectAllRows = false;
+    this.selectedRows = [];
+    this.formattedData.filter(el => el.selected).forEach(element => {
+      element.selected = false;
+    });
+  }
+
+ // alert('Hi');
+//  console.log("E", e);
+
+}
+
+paginate(e) {
   this.first = e.first;
   this.rows = e.rows;
+}
+
+onRowSelect(row, e) {
+  if(e.target.classList.contains('mat-icon')) {
+    return;
+  }
+  // console.log("RowData", row);
+  //var _fileNo=  row.fileNo;
+  this.getSearchResultByFileNo(row.fileNo);
+  this.getActivityList(row.fileNo);
+ 
+  // this.GetTemplateIDByFileNo(row.fileNo);
+ 
+  //this.FileStorageForm.controls['TemplateID'].setValue(0);
+
+ // this.GetDisplayField(this.FileStorageForm.get('TemplateID').value);
+ // this.getMetdataListByID(row.fileNo);
+  
+ //this.GetTemplateIDByFileNo(row.fileNo);
+
+}
+getSearchResultByFileNo(_FileNo: any) {
+  //const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/getSearchDataFSByFileNo?FileNo=' + _FileNo + '&UserID=' + localStorage.getItem('UserID') + '&user_Token=' + localStorage.getItem('User_Token')
+
+  // const apiUrl="https://demo2993066.mockable.io/getAllData";
+
+    this.searchService.getSearchDataFSByFileNo(_FileNo).subscribe((data: [any]) => {
+    this._IndexList = data;
+    this._FilteredList = data;
+  });
+  //this.FileTaggingForm.controls['DocID'].setValue(0);
+}
+getActivityList(Fileno: any) {
+
+ // const apiUrl = this._global.baseAPIUrl + 'Status/GetActivityReportByFileNo?FileNo=' + Fileno + '&user_Token=' + localStorage.getItem('User_Token')
+  this.searchService.GetActivityReportByFileNo(Fileno).subscribe((data: {}) => {
+    this._LogList = data;
+    this._LogFilteredList = data;
+  });
 }
 filterFolderTable($event) {
   // console.log($event.target.value);
@@ -524,5 +628,174 @@ filterFolderTable($event) {
     this.formattedData = filteredArr;
     this.loading = false;
   }
+}
+
+DownloadBulkFiles() {
+  if (this.selectedRows.length <= 25) {
+    let _CSVData = "";
+    for (let j = 0; j < this.selectedRows.length; j++) {
+      _CSVData += this.selectedRows[j] + ",";
+      // headerArray.push(headers[j]);
+      // console.log("CSV Data", _CSVData);
+    }
+    // console.log("CSV Data", _CSVData);
+    this.downloadBulkFileBYCSV(_CSVData);
+  } else {
+    this.ShowErrormessage(
+      "You can not select more than 25 files to download"
+    );
+  }
+}
+downloadBulkFileBYCSV(_CSVData: any) {
+  this.FileStorageForm.patchValue({
+    ACC: _CSVData,
+  });
+
+  // BulkDownload
+  //   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/SearchBulkFile?ID=' + localStorage.getItem('UserID') + '&_fileName= '+  _CSVData +' &user_Token='+ localStorage.getItem('User_Token');
+  //  this._onlineExamService.downloadDoc(apiUrl).subscribe(res => {
+  this.searchService.downloadBulkFileBYCSV(this.FileStorageForm.value).subscribe((res) => {
+      if (res) {
+        saveAs(res, "Bulk Files" + ".zip");
+      }
+      // console.log("Final FP-- res ", res);
+    });
+}
+ShareLink(template: TemplateRef<any>) {
+  var that = this;
+  ///console.log("Email", this.selectedRows);
+  let _CSVData = "";
+  for (let j = 0; j < this.selectedRows.length; j++) {
+    _CSVData += this.selectedRows[j] + ",";
+    // headerArray.push(headers[j]);
+    // console.log("CSV Data", _CSVData);
+  }
+  this.FileStorageForm.controls["ACC"].setValue(_CSVData);
+  this.FileStorageForm.controls["FileNo"].setValue(_CSVData);
+  this.modalopen=true;
+  this.ShareLinkFormPopup=true;
+  // if (_CSVData != null) {
+
+  // }
+
+  //TODO
+  // this.modalRef = this.modalService.show(template);
+}
+
+onSendEmailByShare() {
+  this.searchService.SendEmailBulkFiles(this.FileStorageForm.value).subscribe((data) => {
+      this.toaster.show("success", "Success!", "Email send successfully");
+      this.modalopen=false;
+      this.ShareLinkFormPopup=false;
+    });
+}
+SendBulkEmail(template: TemplateRef<any>) {
+  var that = this;
+  //console.log("Email", this.selectedRows);
+  let _CSVData = "";
+  for (let j = 0; j < this.selectedRows.length; j++) {
+    _CSVData += this.selectedRows[j] + ",";
+    // headerArray.push(headers[j]);
+    // console.log("CSV Data", _CSVData);
+  }
+  this.FileStorageForm.controls["ACC"].setValue(_CSVData);
+  this.FileStorageForm.controls["FileNo"].setValue(_CSVData);
+
+  this.modalopen = true;
+  this.EmailFormPopup = true;
+
+  // if (_CSVData != null) {
+
+  // }
+  //TODO
+  // 
+}
+SendEmail(template: TemplateRef<any>, row: any) {
+  var that = this;
+
+  if (row != null) {
+
+    this.FileStorageForm.controls['ACC'].setValue(row.fileNo);
+    this.FileStorageForm.controls['FileNo'].setValue(row.fileNo);
+  }
+
+  this.modalopen = true;
+  this.EmailFormPopup = true;
+}
+onSendEmail() {
+  if (this.selectedRows.length <= 10) {
+    //  const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/SendBulkTagFileOnMail?ID='+localStorage.getItem('UserID')+'&DocID='+1+'&_fileName='+ this.ContentSearchForm.controls['FileNo'].value +'&user_Token='+localStorage.getItem('User_Token');
+
+    this.searchService.SendEmail(this.FileStorageForm.value).subscribe((data) => {
+        this.toaster.show("success", "Success!", "Email sent successfully");
+        //TODO
+        this.modalopen=false;
+        this.EmailFormPopup=false;
+      });
+    
+  } else {
+    this.ShowErrormessage("You can not send more than 10 files on mails.");
+  }
+}
+closeEmailPopUp() {
+  this.modalopen=false;
+  this.EmailFormPopup=false;
+}
+closeShareLinkPopUp(){
+  this.modalopen=false;
+  this.ShareLinkFormPopup=false;
+}
+
+DownloadFileFromDB(Row: any) {
+
+  console.log("Row**",Row);
+  const fileExt = Row.FilePath.substring(Row.FilePath.lastIndexOf('.'), Row.FilePath.length);
+  //const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/DownloadFileFromDB?ID=' + localStorage.getItem('UserID') + '&FileNo= ' + Row.fileNo + ' &user_Token=' + localStorage.getItem('User_Token');
+  this.searchService.DownloadFileFromDB(Row.fileNo).subscribe(res => {
+    if (res) {
+
+      //      var __FilePath = _TempFilePath ;    
+      // console.log("Final FP-- res ", res);
+      saveAs(res,Row.fileNo + fileExt);
+
+    }
+  });
+  
+}
+DeleteFullFile(Row: any) {
+  const message = `Are you sure you want delete?`;
+  const dialogData = new ConfirmDialogModel(
+    "Confirm Deletion",
+    message,
+    "Delete",
+    "Cancel"
+  );
+
+  const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+    maxWidth: "0",
+    data: dialogData,
+  });
+
+  dialogRef.afterClosed().subscribe((dialogResult) => {
+    if (dialogResult) {
+      this.deleteFile(Row);
+    } else {
+    }
+  });
+}
+deleteFile(Row: any) {
+  this.FileStorageForm.patchValue({
+    ACC: Row.AccNo,
+    DocID: Row.DocID,
+  });
+  this.searchService.DeleteFullFile(this.FileStorageForm.value).subscribe((data) => {
+      this.toaster.show("success", "Deleted!", "File deleted successfully!");
+    });
+}
+ViewEditDocument(Row: any) {
+  this.router.navigate(["/process/indexing/view/" + Row.fileNo]);
+}
+ShowErrormessage(data: any) {
+  this.toaster.show("error", "Validation!", data);
 }
 }

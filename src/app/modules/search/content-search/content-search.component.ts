@@ -664,42 +664,6 @@ export class ContentSearchComponent implements OnInit {
       .subscribe((data) => {
         this.toaster.show("success", "Deleted!", "File deleted successfully!");
       });
-    // TODO
-    // swal
-    //   .fire({
-    //     title: "Are you sure?",
-    //     text: "You won't be able to revert this!",
-    //     type: "warning",
-    //     showCancelButton: true,
-    //     buttonsStyling: false,
-    //     confirmButtonClass: "btn btn-danger",
-    //     confirmButtonText: "Yes, delete it!",
-    //     cancelButtonClass: "btn btn-secondary",
-    //   })
-    //   .then((result) => {
-    //     if (result.value) {
-    //       this.ContentSearchForm.patchValue({
-    //         ACC: Row.AccNo,
-    //         User_Token: localStorage.getItem('User_Token'),
-    //         userID: localStorage.getItem('UserID'),
-    //         DocID: Row.DocID
-    //       });
-
-    //       const that = this;
-    //       this.searchService.DeleteFile(this.ContentSearchForm.value)
-    //       .subscribe( data => {
-    //           swal.fire({
-    //             title: "Deleted!",
-    //             text: "Doc Type has been deleted.",
-    //             type: "success",
-    //             buttonsStyling: false,
-    //             confirmButtonClass: "btn btn-primary",
-    //           });
-    //           that.getSearchResult(that.ContentSearchForm.get('TemplateID').value);
-    //         });
-
-    //     }
-    //   });
   }
   // Model Popup For Docuemnt Inserstion
 
@@ -958,30 +922,6 @@ export class ContentSearchComponent implements OnInit {
     this.first = e.first;
     this.rows = e.rows;
   }
-
-  // DownloadBulkFiles() {
-
-  //   let _CSVData= "";
-  //   for (let j = 0; j < this.selectedRows.length; j++) {
-  //     _CSVData += this.selectedRows[j] + ',';
-  //     // headerArray.push(headers[j]);
-  //    // console.log("CSV Data", _CSVData);
-  //   }
-  //  // console.log("CSV Data", _CSVData);
-  //   this.downloadBulkFileBYCSV(_CSVData) ;
-  // }
-
-  // downloadBulkFileBYCSV(_CSVData:any) {
-
-  //   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/SearchBulkFile?ID=' + localStorage.getItem('UserID') + '&_fileName= '+  _CSVData +' &user_Token='+ localStorage.getItem('User_Token');
-  //   this._onlineExamService.downloadDoc(apiUrl).subscribe(res => {
-  //     if (res) {
-  //     saveAs(res, "Files" + '.zip');
-  //     }
-  //      console.log("Final FP-- res ", res);
-  //   });
-
-  // }
   _HeaderList: any;
   GetHeaderNames() {
     this._HeaderList = "";
@@ -1015,8 +955,6 @@ export class ContentSearchComponent implements OnInit {
   downloadBulkFileBYCSV(_CSVData: any) {
     this.ContentSearchForm.patchValue({
       ACC: _CSVData,
-      User_Token: localStorage.getItem("User_Token"),
-      userID: localStorage.getItem("UserID"),
     });
 
     // BulkDownload

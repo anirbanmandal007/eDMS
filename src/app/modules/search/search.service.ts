@@ -42,8 +42,14 @@ export class SearchService {
     return this._httpService.get(apiUrl);
   }
 
-
-
+  getSearchDataFSByFileNo(_FileNo) {
+    const apiUrl = 'SearchFileStatus/getSearchDataFSByFileNo?FileNo=' + _FileNo + '&UserID=' + this.userId + '&user_Token=' + this.userToken;
+    return this._httpService.get(apiUrl);
+  }
+  GetActivityReportByFileNo(Fileno) {
+    const apiUrl = 'Status/GetActivityReportByFileNo?FileNo=' + Fileno + '&user_Token=' + this.userToken;
+    return this._httpService.get(apiUrl);
+  }
 
   getBranchByDept(deptId) {
     const apiUrl = "BranchMapping/GetBranchByDeptUserWise?ID="+this.userId+"&user_Token="+this.userToken+"&DeptID="+deptId;
@@ -106,7 +112,12 @@ export class SearchService {
     const apiUrl = "SearchFileStatus/Setfavourite"
     return this._httpService.post(apiUrl,data);
   }
-
+  DeleteFullFile(data) {
+    data["User_Token"]=this.userToken
+    data["userID"]=this.userId;
+    const apiUrl = "SearchFileStatus/DeleteFullFile"
+    return this._httpService.post(apiUrl,data);
+  }
   DeleteFile(data) {
     data["User_Token"]=this.userToken
     data["userID"]=this.userId;
@@ -142,6 +153,7 @@ export class SearchService {
 
   downloadBulkFileBYCSV(data) {
     data["User_Token"]=this.userToken
+    data["userID"]=this.userId
     const apiUrl = "SearchFileStatus/DLoadBulkFiles";
     return this.http.post(apiUrl, { responseType: "blob" });
     //return this._httpService.post(apiUrl,data);
