@@ -30,15 +30,17 @@
           </div>
           <form [formGroup]="FileStorageForm">  
           <div class="flex flex-wrap">
-            <div class="w-full md:w-2/12 xl:w-2/12 p-6">
-               <!--<mdb-card class="mb-3" borderColor="border-dark" style="max-width: 20rem">
+            <div class="w-full md:w-3/12 xl:w-3/12 p-6">
+              <h3 class="py-3">Document Structure</h3>
+              <p-tree class="tree_box" [value]="treeFiles" [filter]="true" [(selection)]="selectedFiles" selectionMode="single" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+               <!-- <mdb-card class="mb-3" borderColor="border-dark" style="max-width: 20rem">
                 <mdb-card-header style="background:linear-gradient(40deg, #FFD86F, #FC6262);">Document Structure</mdb-card-header>
                 <mdb-card-body style="padding: .5rem;">
                  <p-tree class="tree_box" [value]="treeFiles" [filter]="true" [(selection)]="selectedFiles" selectionMode="single" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
                 </mdb-card-body>
-              </mdb-card>-->
+              </mdb-card> -->
             </div>
-            <div class="w-full md:w-10/12 xl:w-10/12 p-6">
+            <div class="w-full md:w-9/12 xl:w-9/12 p-6">
                 <div style="width: 30%;">
                   <div *ngIf="_isDownload == 'true'" >
                     <button type="button" tooltip="Download Files" style="padding:1px 1px 1px 1px;float: left"

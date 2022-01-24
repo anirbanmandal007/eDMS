@@ -256,7 +256,7 @@ export class FileStorageComponent implements OnInit {
   const parsedData = rootFolder;
   parsedData.forEach(el => {
     let elData = {
-      "label": el.rootFolderName + ' (' + el.dept.length + ')',
+      "label": el.rootFolderName ? el.rootFolderName + ' (' + el.dept.length + ')' : 'Root' + ' (' + el.dept.length + ')',
       "data": el.rootFolderName,
       "expandedIcon": "fa fa-folder-open",
       "collapsedIcon": "fa fa-folder",
