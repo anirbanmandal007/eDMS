@@ -13,6 +13,7 @@ import { BulkDownloadComponent } from './bulk-download/bulk-download.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { FileStorageComponent } from './file-storage/file-storage.component';
 import {MatMenuModule} from '@angular/material/menu';
+import {TreeModule} from 'primeng/tree';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatMenuModule} from '@angular/material/menu';
     SharedModule,
     TableModule,
     CheckboxModule,
-    MatMenuModule
+    MatMenuModule,
+    TreeModule
   ]
 })
 export class SearchModule { }

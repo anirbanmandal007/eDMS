@@ -205,8 +205,9 @@ export class SearchService {
 
   /**File storage API */
   GetFileInfoAPI(fileInfo:any,templateId:any){
+    const fileNo = fileInfo? fileInfo.fileNo : '';
     //const apiUrl =  'Status/GetFileStorageData?UserID=' + this.userId + '&FileNo=' + fileInfo.fileNo + '&parentFileNo=' + fileInfo.parentFileNo + '&user_Token=' +this.userToken+ '&TemplateID=' + templateId;
-    const apiUrl =  'Status/GetFileStorageData?UserID=' + this.userId + '&FileNo='+'&user_Token=' +this.userToken+ '&TemplateID=' + templateId;
+    const apiUrl =  'Status/GetFileStorageData?UserID=' + this.userId + '&FileNo='+fileNo+'&user_Token=' +this.userToken+ '&TemplateID=' + templateId;
     return this._httpService.get(apiUrl);
   }
   GetTemplateAPI(){
