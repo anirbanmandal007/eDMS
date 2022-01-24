@@ -178,7 +178,7 @@
                             <!-- TODO -->
                             <mat-menu #menu="matMenu">
                               
-                              <button mat-menu-item (click)="ViewEditDocument(car)" *ngIf="_isDocView == 'true'">
+                              <button mat-menu-item (click)="ViewEditDocument(car)" *ngIf="_isDocView">
                                 <i class="material-icons">preview</i>
                                 <span>Document View & Edit</span>
                               </button>
@@ -188,12 +188,12 @@
                               </button>-->
                             
                             
-                              <button mat-menu-item (click)="DownloadFileAll(car.AccNo,car)" *ngIf="_isDownload == 'true'">
+                              <button mat-menu-item (click)="DownloadFileAll(car.AccNo,car)" *ngIf="_isDownload">
                                 <i class="material-icons">cloud_download</i>
                                 <span>Download  Files</span>
                               </button>
                             
-                              <button mat-menu-item (click)="DeleteFile(car)" *ngIf="_isDelete == 'true'">
+                              <button mat-menu-item (click)="DeleteFile(car)" *ngIf="_isDelete">
                                 <i class="material-icons">delete</i>
                                 <span>Delete File</span>
                               </button>

@@ -166,7 +166,8 @@ export class SearchService {
   }
 
   GetMetaDataFileNo(data) {
-    data["User_Token"]=this.userToken
+    data["User_Token"]=this.userToken;
+    data["userID"]=this.userId;
     const apiUrl = "Status/GetMetaDataFileNo"
     return this._httpService.post(apiUrl,data);
   }

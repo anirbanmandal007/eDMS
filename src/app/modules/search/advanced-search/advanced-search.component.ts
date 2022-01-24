@@ -8,6 +8,7 @@ import { ToasterService } from "app/shared/toaster/toaster.service";
 import { SearchService } from "../search.service";
 import { ConfirmationDialogComponent, ConfirmDialogModel } from "app/shared/confirmation-dialog/confirmation-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
+import { SharedService } from "app/shared/shared.service";
 
 declare var $: any;
 
@@ -73,7 +74,10 @@ export class AdvancedSearchComponent implements OnInit {
   _FileDetails:string [][] = [];
   dropdownList = [];
   selectedItems = [];
-  
+  //pop up modal
+  modalopen: boolean = false;
+  EmailFormPopup: boolean =  false;
+  ShareLinkFormPopup: boolean =  false;
 
   range = new FormGroup({
     start: new FormControl(),
@@ -95,6 +99,7 @@ export class AdvancedSearchComponent implements OnInit {
       private toaster: ToasterService,
       private searchService: SearchService,
       private dialog: MatDialog,
+      private shareService: SharedService
     ) { }
   
     ngOnInit() {
@@ -136,20 +141,38 @@ export class AdvancedSearchComponent implements OnInit {
       //this.getSearchResult(0);
    this.getSearchParameterList(0);
       //this.getDoctypeListByTempID(1);
-      this._isDownload =localStorage.getItem('Download');
-      this._isDelete =localStorage.getItem('Delete');
-      this._isEmail= localStorage.getItem('Email');
-      this._ShareLink= localStorage.getItem('Link');
-      this._isEdit= localStorage.getItem('Edit');
-      this._isDocView= localStorage.getItem('Document View');
-
+    
 
 this.geBranchList();
 //this.getDepartmnet();
 
 // this.getRootList();
+this.getRights(JSON.parse(localStorage.getItem("userData"))?.id);
     }
-
+    getRights(id: any) {
+      this.shareService.getAllRights(id).subscribe((data) => {
+        console.log(data);
+        this._isDownload = data.filter(
+          (el) => el.page_right === "Download"
+        )[0]?.isChecked;
+        this._isDelete =  data.filter(
+          (el) => el.page_right === "Delete"
+        )[0]?.isChecked;
+        this._isEmail = data.filter(
+          (el) => el.page_right === "Email"
+        )[0]?.isChecked;
+        this._ShareLink =  data.filter(
+          (el) => el.page_right === "Link"
+        )[0]?.isChecked;
+        
+        this._isEdit = data.filter(
+          (el) => el.page_right === "Edit"
+        )[0]?.isChecked;
+        this._isDocView = data.filter(
+          (el) => el.page_right === "Document View"
+        )[0]?.isChecked;
+      });
+    }
 
     onAddFilterRow() {
       let fg = this.formBuilder.group({
@@ -661,8 +684,6 @@ this.geBranchList();
     
       }
         
-      
-    
       DeleteFile(Row: any) {
         const message = `Are you sure you want delete this file?`;
         const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
@@ -995,29 +1016,7 @@ this.geBranchList();
     this.rows = e.rows;
   }
 
-  // DownloadBulkFiles() {
-    
-  //   let _CSVData= "";
-  //   for (let j = 0; j < this.selectedRows.length; j++) {          
-  //     _CSVData += this.selectedRows[j] + ',';
-  //     // headerArray.push(headers[j]);  
-  //    // console.log("CSV Data", _CSVData);
-  //   }
-  //  // console.log("CSV Data", _CSVData);
-  //   this.downloadBulkFileBYCSV(_CSVData) ;
-  // }
-
-  // downloadBulkFileBYCSV(_CSVData:any) {
-       
-  //   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/SearchBulkFile?ID=' + localStorage.getItem('UserID') + '&_fileName= '+  _CSVData +' &user_Token='+ localStorage.getItem('User_Token');
-  //   this._onlineExamService.downloadDoc(apiUrl).subscribe(res => {
-  //     if (res) {      
-  //     saveAs(res, "Files" + '.zip');         
-  //     }
-  //      console.log("Final FP-- res ", res);  
-  //   });
-
-  // }
+ 
   _HeaderList: any;
   GetHeaderNames()
 {
@@ -1049,19 +1048,15 @@ this.geBranchList();
 }
 
 downloadBulkFileBYCSV(_CSVData:any) {
-
-
   this.ContentSearchForm.patchValue({
-    ACC: _CSVData,
-    User_Token: localStorage.getItem('User_Token'),
-    userID: localStorage.getItem('UserID')
+    ACC: _CSVData
   });
 
  // BulkDownload  
   // const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/DLoadBulkFiles';   
 //   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/SearchBulkFile?ID=' + localStorage.getItem('UserID') + '&_fileName= '+  _CSVData +' &user_Token='+ localStorage.getItem('User_Token');
 //  this._onlineExamService.downloadDoc(apiUrl).subscribe(res => {
-  this.searchService.bulkDownloadTemplateWiseAPI(this.ContentSearchForm.value).subscribe( res => {
+  this.searchService.downloadBulkFileBYCSV(this.ContentSearchForm.value).subscribe( res => {
     if (res) {      
     saveAs(res, "Bulk Files" + '.zip');         
     }
@@ -1093,44 +1088,7 @@ GetFilterData(tempID:any) {
      });
    }
 
-  // DownloadMetadata() {
-  //   let _CSVData = "";
-  //   for (let j = 0; j < this.selectedRowsForMetadata.length; j++) {          
-  //     _CSVData += this.selectedRowsForMetadata[j] + ',';
-  //   }
-  //   const apiUrl = this._global.baseAPIUrl + 'Status/GetMetaDataReportByFileNo?FileNo=' + _CSVData + '&user_Token=' + localStorage.getItem('User_Token')+'&UserID='+localStorage.getItem('UserID')
-  //   //const apiUrl = this._global.baseAPIUrl + 'Status/GetMetaDataReportByFileNo?FileNo=' + _CSVData + '&user_Token=' + localStorage.getItem('User_Token')
   
-  
-  //   this._onlineExamService.getAllData(apiUrl).subscribe((data: {}) => {
-  //     this._MDList = data;
-  //     this.GetHeaderNames();
-  //     let csvData = this._HeaderList; 
-  //     // alert(this._HeaderList);
-  //     // console.log("Data",csvData) 
-  //     let blob = new Blob(['\ufeff' + csvData], { 
-  //         type: 'text/csv;charset=utf-8;'
-  //     }); 
-  //     let dwldLink = document.createElement("a"); 
-  //     let url = URL.createObjectURL(blob);
-      
-  //     let isSafariBrowser =-1;
-  //     // let isSafariBrowser = navigator.userAgent.indexOf( 'Safari') != -1 & amp; & amp; 
-  //     // navigator.userAgent.indexOf('Chrome') == -1; 
-      
-  //     //if Safari open in new window to save file with random filename. 
-  //     if (isSafariBrowser) {  
-  //         dwldLink.setAttribute("target", "_blank"); 
-  //     } 
-  //     dwldLink.setAttribute("href", url); 
-  //     dwldLink.setAttribute("download", 'Metadata dump' + ".csv"); 
-  //     dwldLink.style.visibility = "hidden"; 
-  //     document.body.appendChild(dwldLink); 
-  //     dwldLink.click(); 
-  //     document.body.removeChild(dwldLink);
-  //   });
-
-  // }
 
 
   DownloadMetadata() {
@@ -1141,9 +1099,7 @@ GetFilterData(tempID:any) {
 
 
     this.ContentSearchForm.patchValue({
-      ACC: _CSVData,
-      User_Token: localStorage.getItem('User_Token'),
-      userID: localStorage.getItem('UserID')
+      ACC: _CSVData
     });
 
     // const apiUrl = this._global.baseAPIUrl + 'Status/GetMetaDataFileNo';
@@ -1198,9 +1154,9 @@ GetFilterData(tempID:any) {
     // if (_CSVData != null) {
      
     // }
-//TODO
-    // this.modalRef = this.modalService.show(template);
-
+  //TODO
+    this.modalopen=true;
+    this.ShareLinkFormPopup=true;
   }
 
   onSendEmailByShare() {
@@ -1210,7 +1166,8 @@ GetFilterData(tempID:any) {
     this.searchService.SendEmailBulkFiles(this.ContentSearchForm.value)
       .subscribe(data => {
         this.toaster.show('success', 'Success!', 'Email sent successfully!');
-        
+        this.modalopen=false;
+       this.ShareLinkFormPopup=false;
 
       });
       //TODO 
@@ -1235,7 +1192,8 @@ GetFilterData(tempID:any) {
      
     // }
     //TODO
-    // this.modalRef = this.modalService.show(template);
+    this.modalopen=true;
+    this.EmailFormPopup=true;
 
   }
 
@@ -1249,7 +1207,8 @@ GetFilterData(tempID:any) {
     this.searchService.SendEmail(this.ContentSearchForm.value)
       .subscribe(data => {
         this.toaster.show('success', 'Success!', 'Email sent successfully!');
-
+        this.modalopen=false;
+        this.EmailFormPopup=false;
       }); 
       //TODO
       // this.modalRef.hide();
@@ -1261,7 +1220,14 @@ GetFilterData(tempID:any) {
       this.ShowErrormessage("You can not send more than 10 files on mails.");
     }
   }
-
+  closeEmailPopUp() {
+    this.modalopen=false;
+    this.EmailFormPopup=false;
+  }
+  closeShareLinkPopUp(){
+    this.modalopen=false;
+    this.ShareLinkFormPopup=false;
+  }
   ExporttoExcel()
   {
 
@@ -1387,5 +1353,8 @@ ShowErrormessage(data:any)
 
 }
   
-      
+ViewEditDocument(Row: any) {
+  this.router.navigate(["/process/indexing/view/" + Row.AccNo]);
+}
+
 }
