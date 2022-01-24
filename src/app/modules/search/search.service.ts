@@ -142,8 +142,9 @@ export class SearchService {
 
   downloadBulkFileBYCSV(data) {
     data["User_Token"]=this.userToken
-    const apiUrl = "SearchFileStatus/DLoadBulkFiles"
-    return this._httpService.post(apiUrl,data);
+    const apiUrl = "SearchFileStatus/DLoadBulkFiles";
+    return this.http.post(apiUrl, { responseType: "blob" });
+    //return this._httpService.post(apiUrl,data);
   }
 
   getSearchDataByFilter(data) {
