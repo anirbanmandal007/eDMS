@@ -122,7 +122,7 @@ export class AdvancedSearchComponent implements OnInit {
       MFileNo: [''],
       DocuemntType: [''],
       AccNo: [''],     
-      ToEmailID:[''],
+      ToEmailID:['', Validators.required],
       ValidDate:[''],
       IsAttachment:[''],
       BranchID:['0'],
@@ -1356,5 +1356,7 @@ ShowErrormessage(data:any)
 ViewEditDocument(Row: any) {
   this.router.navigate(["/process/indexing/view/" + Row.AccNo]);
 }
-
+get cf(){
+  return this.ContentSearchForm.controls;
+}
 }

@@ -124,7 +124,7 @@ export class ContentSearchComponent implements OnInit {
       MFileNo: [""],
       DocuemntType: [""],
       AccNo: [""],
-      ToEmailID: [""],
+      ToEmailID: ["", Validators.required],
       ValidDate: [""],
       IsAttachment: [""],
       BranchID: ["0"],
@@ -1240,5 +1240,8 @@ export class ContentSearchComponent implements OnInit {
 
   ShowErrormessage(data: any) {
     this.toaster.show("error", "Validation!", data);
+  }
+  get cf(){
+    return this.ContentSearchForm.controls;
   }
 }

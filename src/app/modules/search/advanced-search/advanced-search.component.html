@@ -89,12 +89,21 @@
                     </div>   -->
                     
                     
-                    <div class="col-md-3 w-2/3 float-right text-right">                
-                        <button type="button" class="btn btn-primary" (click)="onAddFilterRow()">Add</button>
-                        <button type="button" class="btn btn-primary" (click)="onFilterSubmited()">Search</button>
-                        <button type="button" class="btn btn-primary" (click)="OnLoad()">Refresh
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-        
+                    <div class="col-md-3 w-2/3 flex flex-row-reverse">                
+                        <button type="button" class="flex btn btn-primary" (click)="onAddFilterRow()">Add
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                              </svg>
+                        </button>
+                        <button type="button" class="flex btn btn-success" (click)="onFilterSubmited()">Search
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                              </svg>
+                        </button>
+                        <button type="button" class="flex btn btn-info" (click)="OnLoad()">Refresh
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                              </svg>
                         </button>
                     </div>
             
@@ -315,7 +324,7 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th [style.width]="'35px'">
-                                <p-checkbox (onChange)="selectAllRow($event, doc)" #e></p-checkbox>
+                                <p-checkbox [(ngModel)]="doc" [binary]="true" [ngModelOptions]="{standalone: true}" (onChange)="selectAllRow($event, doc)" #e></p-checkbox>
                             </th>
                             <th *ngFor="let col of headerList; let i = index;"  [ngStyle]="i==0 && {'width': '4%'}">
                                 {{col.header}}
@@ -550,8 +559,10 @@
                                   <label class="form-control-label" for="ToEmailID">
                                     To 
                                   </label>
-                                  <input formControlName="ToEmailID" placeholder="Email" type="email" class="form-control"/>
-                                                                                                    
+                                  <input [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/>
+                                    <div class="errorMsg-feedback"
+                                  *ngIf="cf.ToEmailID && cf.ToEmailID.touched && cf.ToEmailID.invalid && cf.ToEmailID.errors.required">This field is Required</div>                                                                 
+                                                                                         
                               </div>
                               <div class="w-full" style="margin-top: 1%;">
                                   <label class="form-control-label" for="ValidDate">
@@ -565,13 +576,11 @@
                                   [minDate]="today"
                                 />  
                               
-                              </div>                            
-          
-                              
+                              </div> 
                             </div>
                             <div class=" col-md-8" style="padding-top: 32px">  
-                              <button class="btn btn-primary" (click)="onSendEmailByShare()"> Send</button>
-                              <button class="btn btn-primary"  (click)="closeShareLinkPopUp()"> Close</button>
+                              <button class="btn btn-primary" [disabled]="cf.ToEmailID.invalid"  (click)="onSendEmailByShare()"> Send</button>
+                              <button class="btn btn-warning"  (click)="closeShareLinkPopUp()"> Close</button>
                               
                             </div>
                             <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
@@ -593,12 +602,15 @@
                                   <label class="form-control-label" for="ToEmailID">
                                     To 
                                   </label>
-                                  <input formControlName="ToEmailID" placeholder="Email" type="email" class="form-control"/>                  
+                                  <input [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/>                  
+                                  <div class="errorMsg-feedback"
+                                  *ngIf="cf.ToEmailID && cf.ToEmailID.touched && cf.ToEmailID.invalid && cf.ToEmailID.errors.required">This field is Required</div>
+                              
                               </div>      
                             </div>
                             <div class=" col-md-8" style="padding-top: 32px">  
-                              <button class="btn btn-primary" (click)="onSendEmail()"> Send</button>
-                              <button class="btn btn-primary"  (click)="closeEmailPopUp()"> Close</button>
+                              <button class="btn btn-primary" [disabled]="cf.ToEmailID.invalid" (click)="onSendEmail()"> Send</button>
+                              <button class="btn btn-warning"  (click)="closeEmailPopUp()"> Close</button>
                               
                             </div>
                             <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
@@ -615,8 +627,5 @@
      
           </div>
         </div>
-        
-
-
     </div>
 </div>

@@ -258,7 +258,7 @@ button[disabled]{
     letter-spacing: .025em;
     font-size: .875rem;
     will-change: transform;
-    padding: 1% 2%;
+    padding: 2% 2%;
     border-radius: 5px;
     margin-right: 15px;
 }
@@ -276,6 +276,22 @@ button[disabled]{
     border-color: #fb6340;
 }
 .btn-warning {
+    box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+.btn-success, .btn-success:hover {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.btn-success {
+    box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+.btn-info, .btn-info:hover {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+.btn-info {
     box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 .nav_direction {
@@ -387,4 +403,31 @@ thead{
 
 .to-blue-100 {
     --tw-gradient-to: #dbeafe;
+}
+
+.p-datatable .p-datatable-header {
+    border-bottom: 1px solid #111;
+    background: #4757a1;
+    color: #fff !important;
+    border: 1px solid #4757a1;
+    border-width: 1px 0 1px 0;
+    padding: 1rem 1rem;
+    font-weight: 600;
+}
+.p-datatable .p-datatable-thead > tr > th {
+    font-size: 12px;
+    border-bottom: 1px solid #111;
+    background: #010f50;
+    text-align: left;
+    padding: 1rem 1rem;
+    border-width: 0 0 1px 0;
+    font-weight: 600;
+    color: #ffffff;
+    transition: box-shadow 0.2s;
+}
+.p-datatable .p-datatable-tbody > tr:nth-child(even) {
+    background: #eef0fb;
+    color: #495057;
+    transition: box-shadow 0.2s;
+    outline-color: #a6d5fa;
 }

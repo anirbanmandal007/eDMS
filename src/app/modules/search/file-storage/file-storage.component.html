@@ -108,7 +108,7 @@
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th [style.width]="'35px'">
-                          <p-checkbox (onChange)="selectAllRow($event, doc)" #e></p-checkbox>
+                          <p-checkbox  [(ngModel)]="doc" [binary]="true" [ngModelOptions]="{standalone: true}" (onChange)="selectAllRow($event, doc)" #e></p-checkbox>
                         </th>
                         <th *ngFor="let col of columns;" [pSortableColumn]="col.field" [pSortableColumnDisabled]="col.field != 'fileNo'">
                         {{col.header}}
@@ -177,8 +177,9 @@
                             <label class="form-control-label" for="ToEmailID">
                               To 
                             </label>
-                            <input formControlName="ToEmailID" placeholder="Email" type="email" class="form-control"/>
-                                                                                              
+                            <input  id="ToEmailID" name ="ToEmailID" [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/> 
+                            <div class="errorMsg-feedback"
+                *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>
                         </div>
                         <div class="w-full" style="margin-top: 1%;">
                             <label class="form-control-label" for="ValidDate">
@@ -197,8 +198,8 @@
                         
                       </div>
                       <div class=" col-md-8" style="padding-top: 32px">  
-                        <button class="btn btn-primary" (click)="onSendEmailByShare()"> Send</button>
-                        <button class="btn btn-primary"  (click)="closeShareLinkPopUp()"> Close</button>
+                        <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmailByShare()"> Send</button>
+                        <button class="btn btn-warning"  (click)="closeShareLinkPopUp()"> Close</button>
                         
                       </div>
                       <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
@@ -220,12 +221,14 @@
                             <label class="form-control-label" for="ToEmailID">
                               To 
                             </label>
-                            <input formControlName="ToEmailID" placeholder="Email" type="email" class="form-control"/>                  
+                            <input  id="ToEmailID" name ="ToEmailID" [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/> 
+                            <div class="errorMsg-feedback"
+                *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>                 
                         </div>      
                       </div>
                       <div class=" col-md-8" style="padding-top: 32px">  
-                        <button class="btn btn-primary" (click)="onSendEmail()"> Send</button>
-                        <button class="btn btn-primary"  (click)="closeEmailPopUp()"> Close</button>
+                        <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmail()"> Send</button>
+                        <button class="btn btn-warning"  (click)="closeEmailPopUp()"> Close</button>
                         
                       </div>
                       <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->

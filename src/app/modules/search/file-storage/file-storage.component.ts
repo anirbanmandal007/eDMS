@@ -170,7 +170,7 @@ ShareLinkFormPopup: boolean =  false;
       ACC: [''],
       MFileNo: [''],
       DocuemntType: [''],
-      ToEmailID:[''],
+      ToEmailID:['',Validators.required],
       ValidDate:[''],
       IsAttachment:[''],
     });
@@ -527,6 +527,7 @@ GetHeaderNames(){
     console.log("event",event);
  }
  selectRow(e, row) {
+   console.log(e)
   this.selectAllRows = false;
   e.originalEvent.stopPropagation();
   if (e.checked) {
@@ -540,6 +541,8 @@ GetHeaderNames(){
 }
 
 selectAllRow(e) {
+  console.log(e)
+  console.log(e.checked)
   this.selectedRows = [];
   if (e.checked) {
     this.selectAllRows = true;
@@ -797,5 +800,8 @@ ViewEditDocument(Row: any) {
 }
 ShowErrormessage(data: any) {
   this.toaster.show("error", "Validation!", data);
+}
+get tf(){
+  return this.FileStorageForm.controls;
 }
 }
