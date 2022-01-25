@@ -150,6 +150,7 @@ ShareLinkFormPopup: boolean =  false;
     private searchService: SearchService,
     private formBuilder: FormBuilder,
     public toaster: ToasterService,
+    private _activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -825,7 +826,8 @@ deleteFile(Row: any) {
     });
 }
 ViewEditDocument(Row: any) {
-  this.router.navigate(["/process/indexing/view/" + Row.fileNo]);
+  // this.router.navigate(["/process/indexing/view/" + Row.fileNo]);
+  this.router.navigate(['/process/indexing/view/', Row.fileNo], {relativeTo:this._activatedRoute, state: { rowData: Row }});
 }
 ShowErrormessage(data: any) {
   this.toaster.show("error", "Validation!", data);

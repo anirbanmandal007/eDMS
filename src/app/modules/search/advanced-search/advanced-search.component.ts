@@ -99,7 +99,8 @@ export class AdvancedSearchComponent implements OnInit {
       private toaster: ToasterService,
       private searchService: SearchService,
       private dialog: MatDialog,
-      private shareService: SharedService
+      private shareService: SharedService,
+      private _activatedRoute: ActivatedRoute
     ) { }
   
     ngOnInit() {
@@ -1354,7 +1355,8 @@ ShowErrormessage(data:any)
 }
   
 ViewEditDocument(Row: any) {
-  this.router.navigate(["/process/indexing/view/" + Row.AccNo]);
+  // this.router.navigate(["/process/indexing/view/" + Row.AccNo]);
+  this.router.navigate(['/process/indexing/view/', Row.AccNo], {relativeTo:this._activatedRoute, state: { rowData: Row }});
 }
 get cf(){
   return this.ContentSearchForm.controls;

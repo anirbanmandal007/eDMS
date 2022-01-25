@@ -100,7 +100,8 @@ export class ContentSearchComponent implements OnInit {
     public toaster: ToasterService,
     private route: ActivatedRoute,
     private router: Router,
-    private shareService: SharedService
+    private shareService: SharedService,
+    private _activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -815,6 +816,7 @@ export class ContentSearchComponent implements OnInit {
   }
   ViewEditDocument(Row: any) {
     this.router.navigate(["/process/indexing/view/" + Row.AccNo]);
+    this.router.navigate(['/process/indexing/view/', Row.AccNo], {relativeTo:this._activatedRoute, state: { rowData: Row }});
   }
 
   GetFullFile(FileNo: any) {

@@ -67,7 +67,7 @@ export class ViewIndexingComponent implements OnInit {
     this._processService.getTemplates().subscribe((data: any) => {
       this._TemplateList = data;
       this.selectedTemplate = data[0]?.TemplateName;
-      const selectedTemp = data.find(el => el.TemplateName === this.rowData.TemplateName)?.TemplateID || 0;
+      const selectedTemp = data.find(el => el.TemplateName === this.rowData.TemplateName)?.TemplateID || 1;
       this.indexForm.controls['TemplateID'].setValue(selectedTemp);
       if(selectedTemp) {
         this.getFields();
