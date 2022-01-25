@@ -246,6 +246,16 @@ ShareLinkFormPopup: boolean =  false;
             branch.Accounts.push(Account)
             branch.documentCount += 1
           } else {
+           // let account = branch.Accounts.find(b => b.AccNo == row.AccNo)
+           // let inDocTypesArray = account.DocTypes.some(b => b.DocType == row.DocType)
+            // if (!inDocTypesArray) {
+            //   let files = []
+            //   let DocTypes = { DocType: row.DocType, documentCount: row.DocCount, Files: files, isExpanded: false }
+            //   account.DocTypes.push(DocTypes)
+            //   account.documentCount += 1
+            // } else {
+
+            // }
           }
         }
         
@@ -257,81 +267,100 @@ ShareLinkFormPopup: boolean =  false;
   prepareTreeStructure(folderStructureData: any) {
 
     let deptName = [];
-    let rootFolder = [];
+    let branchDocCount = 0
+    let accountDocCount = 0
+    var data1: any;
 
     folderStructureData.forEach((row, indx) => {
-      let inRootFolder = rootFolder.some(b => b.rootFolderName == row.RootfolderName);
-      if(!inRootFolder) {
-        let root = {rootFolderName: row.RootfolderName, dept: [{deptName: row.DepartmentName, branches: [{branchName: row.BranchName, subFolder: [{subFolderName: row.SubfolderName}]}]}]};
-        rootFolder.push(root);
-      } else {
-        let inDeptNameInRootFolder = rootFolder.find(b => b.rootFolderName == row.RootfolderName).dept.find(b => b.deptName === row.DepartmentName)
-        if(!inDeptNameInRootFolder) {
-          rootFolder.filter(b => b.rootFolderName == row.RootfolderName)[0].dept.push({deptName: row.DepartmentName, branches: [{branchName: row.BranchName, subFolder: [{subFolderName: row.SubfolderName}]}]});
-        } else {
-          let isBranchesInDeptName = rootFolder.find(b => b.rootFolderName == row.RootfolderName).dept.filter(b => b.deptName === row.DepartmentName)[0].branches.find(b => b.branchName == row.BranchName);
-          if(!isBranchesInDeptName) {
-            rootFolder.find(b => b.rootFolderName == row.RootfolderName).dept.filter(b => b.deptName === row.DepartmentName)[0].branches.push({branchName: row.BranchName, subFolder: [{subFolderName: row.SubfolderName}]});
-          } else {
-            let isSubfolderInBranch = rootFolder.find(b => b.rootFolderName == row.RootfolderName).dept.filter(b => b.deptName === row.DepartmentName)[0].branches.filter(b => b.branchName == row.BranchName)[0].subFolder.find( b => b.subFolderName == row.SubfolderName);
-            if(!isSubfolderInBranch) {
-              rootFolder.find(b => b.rootFolderName == row.RootfolderName).dept.filter(b => b.deptName === row.DepartmentName)[0].branches.filter(b => b.branchName == row.BranchName)[0].subFolder.push({subFolderName: row.SubfolderName});
-            }
-          }
-        }
+      let inDeptName = deptName.some(b => b.DepartmentName == row.DepartmentName)
+      if (!inDeptName) {
+        // let files = []
+        // let DocTypes = [{ DocType: row.DocType, documentCount: row.DocCount, Files: files, isExpanded: false }]
+        // let Accounts = [{ AccNo: row.AccNo, documentCount: 1, DocTypes: DocTypes, isExpanded: indx == 0 ? true : false }]
+        let branches = [{BranchName: row.BranchName, Entity: [{entity: row.SubfolderName}]}]
+        deptName.push({ DepartmentName: row.DepartmentName, branches: branches, documentCount: 1, isExpanded: indx == 0 ? true : false })
+      } 
+      else {
+        let dept = deptName.find(b => b.DepartmentName == row.DepartmentName)
+        let inAccountsArray = dept.branches.some(b => b.BranchName == row.BranchName)
+        if (!inAccountsArray) {
+          // let files = []
+          // let DocTypes = [{ DocType: row.DocType, documentCount: row.DocCount, Files: files, isExpanded: false }]
+          // let Account = { AccNo: row.AccNo, documentCount: 1, DocTypes: DocTypes, isExpanded: false }
+          // dept.branches
+          dept.branches.push({BranchName: row.BranchName, Entity: [{entity: row.SubfolderName}]})
+          dept.documentCount += 1;
+          if(dept.branches.filter(el => el.BranchName === row.BranchName)[0].Entity.filter(el => el.entity == row.SubfolderName).length === 0)
+          dept.branches.filter(el => el.BranchName === row.BranchName)[0].Entity.push({entity: row.SubfolderName})
+        } 
+        // else {
+        //   if(dept.branches.filter(el => el.BranchName === row.BranchName)[0].Entity.filter(el => el.entity == row.SubfolderName).length === 0)
+        //   dept.branches.filter(el => el.BranchName === row.BranchName)[0].Entity.push({entity: row.SubfolderName})
+        //  // let account = branch.Accounts.find(b => b.AccNo == row.AccNo)
+        //  // let inDocTypesArray = account.DocTypes.some(b => b.DocType == row.DocType)
+        //   // if (!inDocTypesArray) {
+        //   //   let files = []
+        //   //   let DocTypes = { DocType: row.DocType, documentCount: row.DocCount, Files: files, isExpanded: false }
+        //   //   account.DocTypes.push(DocTypes)
+        //   //   account.documentCount += 1
+        //   // } else {
+
+        //   // }
+        // }
       }
+      
     });
+
+
   let data = [];
-  const parsedData = rootFolder;
+  const parsedData = deptName;
   parsedData.forEach(el => {
     let elData = {
-      "label": el.rootFolderName ? el.rootFolderName + ' (' + el.dept.length + ')' : 'Root' + ' (' + el.dept.length + ')',
-      "data": el.rootFolderName,
+      "label": el.DepartmentName + ' (' + el.documentCount + ')',
+      "data": el.DepartmentName,
       "expandedIcon": "fa fa-folder-open",
       "collapsedIcon": "fa fa-folder",
       "children": []
     }
 
-    el.dept.forEach(dept => {
+    el.branches.forEach(branchEl => {
       let branchElData = {
         //"label": accEl.AccNo + '(' + accEl.documentCount + ')',
-        "label": dept.deptName + ' (' + dept.branches.length + ')',
-        "data": dept.deptName,
+        "label": branchEl.BranchName + ' (' + branchEl.Entity.length + ')',
+        "data": branchEl.BranchName,
         "expandedIcon": "fa fa-folder-open",
         "collapsedIcon": "fa fa-folder",
         "children": []
       };
 
-      dept.branches.forEach(element => {
-        let entityData = {
-          //"label": accEl.AccNo + '(' + accEl.documentCount + ')',
-          "label": element.branchName+ '(' + element.subFolder.length + ')',
-          "data": element.branchName,
-          "expandedIcon": "fa fa-folder-open",
-          "collapsedIcon": "fa fa-folder",
-          "children": []
-        };
+      // branchEl.Entity.forEach(element => {
+      //   let entityData = {
+      //     //"label": accEl.AccNo + '(' + accEl.documentCount + ')',
+      //     "label": element.entity,
+      //     "data": element.entity,
+      //     "expandedIcon": "fa fa-folder-open",
+      //     "collapsedIcon": "fa fa-folder",
+      //     "children": []
+      //   };
+      //   branchElData.children.push(entityData);
+      // });
 
-        element.subFolder.forEach(el => {
-          const subFolderData = {
-            "label": el.subFolderName,
-            "data": el.subFolderName,
-            "expandedIcon": "fa fa-folder-open",
-            "collapsedIcon": "fa fa-folder",
-            "children": []
-          }
-          entityData.children.push(subFolderData);
-        });
-        branchElData.children.push(entityData);
-      });
+      // accEl.DocTypes.forEach(docEl => {
+      //   accElData['children'].push({
+      //   //  "label": docEl.DocType + '(' + docEl.documentCount + ')',
+      //     "label": docEl.DepartmentName ,                     //
+
+      //     "data": docEl.DepartmentName,
+      //     "icon": "pi pi-file"
+      //   })
+      // })
       elData.children.push(branchElData);
     })
     data.push(elData);
   })
   //  console.log("Tree data",data);
-
   this.treeFiles = data;
-}
+  }
   nodeSelect(e) {
     // console.log("You have selected " + e.node.data);
     // console.log("You have selected " + e.originalEvent.currentTarget.querySelector('span:last-child span').textContent);
