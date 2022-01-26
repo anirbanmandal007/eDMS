@@ -361,9 +361,8 @@
               </ng-template> 
         
               <div class="overlay" *ngIf="modalopen"></div>
-              <div class="modal-content" *ngIf="ShareLinkFormPopup" style="width: 50%;margin-left: 25%;margin-top: 3%;">
-                <div class="modal-content">
-                  <div class="modal-body p-0">
+              <div class="modal-content modal-popup" *ngIf="ShareLinkFormPopup">
+                  <div class="modal-body">
                     <div class=" card">
                       <div class=" card-header"><h3 class=" mb-0">Share Link</h3></div>
                       <div class="card-body">
@@ -403,10 +402,9 @@
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
               <div class="overlay" *ngIf="modalopen"></div>
-              <div class="modal-content" *ngIf="EmailFormPopup" style="width: 50%;margin-left: 25%;margin-top: 3%;">
+              <div class="modal-content modal-popup" *ngIf="EmailFormPopup">
                   <div class="modal-body">
                     <div class=" card">
                       <div class=" card-header"><h3 class=" mb-0">Send Email</h3></div>
