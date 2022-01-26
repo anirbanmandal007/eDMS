@@ -1,243 +1,243 @@
 <div class="flex flex-col flex-auto min-w-0">
 
-    <!-- Main -->
-    <div class="flex-auto p-6 sm:p-10">
-        <div class="row nav_direction">
-            <div class="col-12">
-              <ol class="breadcrumb">
-                <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg></li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  Search
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                  </svg> 
-                  File Storage
-                </li>
-              </ol>
-            </div>
-        </div>
-        <!-- CONTENT GOES HERE -->
-        <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
-          <div class="page-title">
-            <h3>File Storage</h3>
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
+      <div class="row nav_direction">
+          <div class="col-12">
+            <ol class="breadcrumb">
+              <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg></li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Search
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                </svg> 
+                File Storage
+              </li>
+            </ol>
           </div>
-          <form [formGroup]="FileStorageForm">  
-          <div class="flex flex-wrap">
-            <div class="w-full md:w-3/12 xl:w-3/12 p-6">
-              <h3 class="py-3 doc-header">Document Structure</h3>
-              <p-tree class="tree_box" [value]="treeFiles" [filter]="true" [(selection)]="selectedFiles" selectionMode="single" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
-               <!-- <mdb-card class="mb-3" borderColor="border-dark" style="max-width: 20rem">
-                <mdb-card-header style="background:linear-gradient(40deg, #FFD86F, #FC6262);">Document Structure</mdb-card-header>
-                <mdb-card-body style="padding: .5rem;">
-                 <p-tree class="tree_box" [value]="treeFiles" [filter]="true" [(selection)]="selectedFiles" selectionMode="single" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
-                </mdb-card-body>
-              </mdb-card> -->
-            </div>
-            <div class="w-full md:w-9/12 xl:w-9/12 p-6">
-                <div style="width: 30%;">
+      </div>
+      <!-- CONTENT GOES HERE -->
+      <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
+        <div class="page-title">
+          <h3>File Storage</h3>
+        </div>
+        <form [formGroup]="FileStorageForm">  
+        <div class="flex flex-wrap">
+          <div class="w-full md:w-3/12 xl:w-3/12 p-6">
+            <h3 class="py-3 doc-header">Document Structure</h3>
+            <p-tree class="tree_box" [value]="treeFiles" [filter]="true" [(selection)]="selectedFiles" selectionMode="single" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+             <!-- <mdb-card class="mb-3" borderColor="border-dark" style="max-width: 20rem">
+              <mdb-card-header style="background:linear-gradient(40deg, #FFD86F, #FC6262);">Document Structure</mdb-card-header>
+              <mdb-card-body style="padding: .5rem;">
+               <p-tree class="tree_box" [value]="treeFiles" [filter]="true" [(selection)]="selectedFiles" selectionMode="single" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+              </mdb-card-body>
+            </mdb-card> -->
+          </div>
+          <div class="w-full md:w-9/12 xl:w-9/12 p-6">
+              <div style="width: 30%;">
 
-                  <div *ngIf="_isDownload" >
-                    <button type="button" tooltip="Download Files" style="padding:1px 1px 1px 1px;float: left"
-                      class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadBulkFiles()" >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </button> 
-                  </div>
-
-                  <div *ngIf="_ShareLink" >
-                    <button type="button" tooltip="Share link" style="padding:1px 1px 1px 1px;float: left"
-                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="ShareLink(ShareLinkFormPopup)" >
+                <div *ngIf="_isDownload" >
+                  <button type="button" title="Download Files" style="padding:1px 1px 1px 1px;float: left"
+                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadBulkFiles()" >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </button> 
+                </div>
+
+                <div *ngIf="_ShareLink" >
+                  <button type="button" title="Share link" style="padding:1px 1px 1px 1px;float: left"
+                  class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="ShareLink(ShareLinkFormPopup)" >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                </button>
+                </div>
+
+                <div *ngIf="_isEmail" >
+                  <button type="button" title="Send E-Mail" style="padding:1px 1px 1px 1px;float: left"
+                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"   (click)="SendBulkEmail(EmailFormPopup)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </button>
-                  </div>
-
-                  <div *ngIf="_isEmail" >
-                    <button type="button" tooltip="Send E-Mail" style="padding:1px 1px 1px 1px;float: left"
-                      class="btn btn-icon btn-secondary btn-icon-only rounded-circle"   (click)="SendBulkEmail(EmailFormPopup)">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </button>
-                  </div>
-
-                <div>
-                  <button type="button" tooltip="Download Metadata" style="padding:1px 1px 1px 1px;float: left; position: relative;
-                      bottom: 3px;left: 3px;"
-                      class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadMetadata()" >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd" />
-                      </svg>
-                  </button>
                 </div>
-            </div>
-            <div style="width: 67%; float: right;">    
-              <div class="reresh-table" style="width: 30px;float:right;text-align: right;cursor: pointer;">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-10" viewBox="0 0 20 20" fill="currentColor" (click)="GetFileInfo('')">
-                  <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
-                </svg>
-              </div>  
-              <select name="TemplateID" id="TemplateID" style="width: 45%;float: right;
-              position: relative;
-              bottom: 8px;" class="form-control"  formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
-                <option value="0">Select Template</option>   
-                <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
-                {{_Temp.TemplateName}}  
-                </option>   
-              </select>
-              <label style="width: auto; float: right; position: relative;
-              top: 3px;
-              right: 8px;" for="TemplateID" class=" form-control-label">  Select Template </label>
-            </div>
 
-              <diV style="margin-top: 5%; font-size: 13px;">
-                <p-table #tt selectionMode="single" style="width: 100%;" [autoLayout]="true" [paginator]="true" [rows]="10" [columns]="tableHeader" [value]="formattedData"  (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]" [loading]="loading" [(first)]="first" (onPage)="paginate($event)" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-                <ng-template pTemplate="caption">
-                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
-                    <input type="text" pInputText size="50" placeholder="Global Filter" (keyup)="filterFolderTable($event)" class="global-search">
-                </ng-template>
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th [style.width]="'35px'">
-                          <p-checkbox  [(ngModel)]="doc" [binary]="true" [ngModelOptions]="{standalone: true}" (onChange)="selectAllRow($event, doc)" #e></p-checkbox>
-                        </th>
-                        <th *ngFor="let col of columns;" [pSortableColumn]="col.field" [pSortableColumnDisabled]="col.field != 'fileNo'">
-                        {{col.header}}
-                        </th>
-                        <th [style.width]="'10%'">
-                            ACTION
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-doc let-columns="columns">
-                    <tr>
-                        <td [style.width]="'35px'">
-                            <p-checkbox [(ngModel)]="doc.selected" [binary]="true" [ngModelOptions]="{standalone: true}" (onChange)="selectRow($event, doc)" #e></p-checkbox>
-                        </td>
-                        <td *ngFor="let col of columns">
-                            {{doc[col.field]}}
-                        </td>
-                        <td class="mat-action-items">
-                          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="cl">
-                            <mat-icon>more_vert</mat-icon>
-                          </button>
-                          <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="ViewEditDocument(doc)">
-                                  <i class="material-icons">preview</i>
-                                  <span>Document View & Edit</span>
-                                </button>
-                              <!--
-                              <button mat-menu-item (click)="EditRowData(doc)" *ngIf="_isEdit">
-                                <i class="material-icons">edit</i>
-                                <span>Edit Index Data</span>
-                              </button>-->
-                              <button mat-menu-item (click)="DownloadFileFromDB(doc)" *ngIf="_isDownload">
-                                <i class="material-icons">file_download</i>
-                                <span>Download File</span>
-                              </button>                                            
-                              <button mat-menu-item (click)="SendEmail(EmailFormPopup,doc)" *ngIf="_isEmail">
-                                <i class="material-icons">mail_outline</i>
-                                <span>Send Email</span>
-                              </button>
-                            
-                            
-                              <button mat-menu-item (click)="DeleteFullFile(doc)" *ngIf="_isDelete">
-                                <i class="material-icons">delete</i>
-                                <span>Delete File</span>
-                              </button>
-                              
-                          </mat-menu>
-                        </td>
-                    </tr>
-                </ng-template>
-                </p-table>
-              </diV>
-            </div>
-          </div>
-          
-          <div class="overlay" *ngIf="modalopen"></div>
-          <div class="modal-content" *ngIf="ShareLinkFormPopup" style="width: 50%;margin-left: 25%;margin-top: 3%;">
-            <div class="modal-content">
-              <div class="modal-body p-0">
-                <div class=" card">
-                  <div class=" card-header"><h3 class=" mb-0">Share Link</h3></div>
-                  <div class="card-body">
-                    <div class="form-row">
-                        
-                        <div class="w-full">
-                            <label class="form-control-label" for="ToEmailID">
-                              To 
-                            </label>
-                            <input  id="ToEmailID" name ="ToEmailID" [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/> 
-                            <div class="errorMsg-feedback"
-                *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>
-                        </div>
-                        <div class="w-full" style="margin-top: 1%;">
-                            <label class="form-control-label" for="ValidDate">
-                              Expire On
-                            </label>
-                            <input type="text" formControlName="ValidDate"  placeholder="Valid Date" class="form-control"  bsDatepicker [bsValue]="bsValue"
-                            [bsConfig]="{
-                              isAnimated: true,
-                              containerClass: 'theme-red'
-                            }"
-                            [minDate]="today"
-                          />  
-                        
-                        </div>                            
-    
-                        
-                      </div>
-                      <div class=" col-md-8" style="padding-top: 32px">  
-                        <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmailByShare()"> Send</button>
-                        <button class="btn btn-warning"  (click)="closeShareLinkPopUp()"> Close</button>
-                        
-                      </div>
-                      <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
-          
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="overlay" *ngIf="modalopen"></div>
-          <div class="modal-content" *ngIf="EmailFormPopup" style="width: 50%;margin-left: 25%;">
-              <div class="modal-body">
-                <div class=" card">
-                  <div class=" card-header"><h3 class=" mb-0">Send Email</h3></div>
-                  <div class="card-body">
-                    <div class="form-row">
-                        
-                        <div class="w-full">
-                            <label class="form-control-label" for="ToEmailID">
-                              To 
-                            </label>
-                            <input  id="ToEmailID" name ="ToEmailID" [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/> 
-                            <div class="errorMsg-feedback"
-                *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>                 
-                        </div>      
-                      </div>
-                      <div class=" col-md-8" style="padding-top: 32px">  
-                        <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmail()"> Send</button>
-                        <button class="btn btn-warning"  (click)="closeEmailPopUp()"> Close</button>
-                        
-                      </div>
-                      <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
-          
-                  </div>
-                </div>
+              <div>
+                <button type="button" title="Download Metadata" style="padding:1px 1px 1px 1px;float: left; position: relative;
+                    bottom: 0px;left: 3px;"
+                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadMetadata()" >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                </button>
               </div>
           </div>
-          </form>
+          <div style="width: 67%; float: right;">    
+            <div class="reresh-table" style="width: 30px;float:right;text-align: right;cursor: pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-10" viewBox="0 0 20 20" fill="currentColor" (click)="GetFileInfo('')">
+                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+              </svg>
+            </div>  
+            <select name="TemplateID" id="TemplateID" style="width: 45%;float: right;
+            position: relative;
+            bottom: 8px;" class="form-control"  formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
+              <option value="0">Select Template</option>   
+              <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
+              {{_Temp.TemplateName}}  
+              </option>   
+            </select>
+            <label style="width: auto; float: right; position: relative;
+            top: 3px;
+            right: 8px;" for="TemplateID" class=" form-control-label">  Select Template </label>
+          </div>
+
+            <diV style="margin-top: 5%; font-size: 13px;">
+              <p-table #tt selectionMode="single" style="width: 100%;" [autoLayout]="true" [paginator]="true" [rows]="10" [columns]="tableHeader" [value]="formattedData"  (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]" [loading]="loading" [(first)]="first" (onPage)="paginate($event)" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+              <ng-template pTemplate="caption">
+                  <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                  <input type="text" pInputText size="50" placeholder="Global Filter" (keyup)="filterFolderTable($event)" class="global-search">
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                  <tr>
+                      <th [style.width]="'35px'">
+                        <p-checkbox  [(ngModel)]="doc" [binary]="true" [ngModelOptions]="{standalone: true}" (onChange)="selectAllRow($event, doc)" #e></p-checkbox>
+                      </th>
+                      <th *ngFor="let col of columns;" [pSortableColumn]="col.field" [pSortableColumnDisabled]="col.field != 'fileNo'">
+                      {{col.header}}
+                      </th>
+                      <th [style.width]="'10%'">
+                          ACTION
+                      </th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-doc let-columns="columns">
+                  <tr>
+                      <td [style.width]="'35px'">
+                          <p-checkbox [(ngModel)]="doc.selected" [binary]="true" [ngModelOptions]="{standalone: true}" (onChange)="selectRow($event, doc)" #e></p-checkbox>
+                      </td>
+                      <td *ngFor="let col of columns">
+                          {{doc[col.field]}}
+                      </td>
+                      <td class="mat-action-items">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="cl">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="ViewEditDocument(doc)">
+                                <i class="material-icons">preview</i>
+                                <span>Document View & Edit</span>
+                              </button>
+                            <!--
+                            <button mat-menu-item (click)="EditRowData(doc)" *ngIf="_isEdit">
+                              <i class="material-icons">edit</i>
+                              <span>Edit Index Data</span>
+                            </button>-->
+                            <button mat-menu-item (click)="DownloadFileFromDB(doc)" *ngIf="_isDownload">
+                              <i class="material-icons">file_download</i>
+                              <span>Download File</span>
+                            </button>                                            
+                            <button mat-menu-item (click)="SendEmail(EmailFormPopup,doc)" *ngIf="_isEmail">
+                              <i class="material-icons">mail_outline</i>
+                              <span>Send Email</span>
+                            </button>
+                          
+                          
+                            <button mat-menu-item (click)="DeleteFullFile(doc)" *ngIf="_isDelete">
+                              <i class="material-icons">delete</i>
+                              <span>Delete File</span>
+                            </button>
+                            
+                        </mat-menu>
+                      </td>
+                  </tr>
+              </ng-template>
+              </p-table>
+            </diV>
+          </div>
         </div>
-    </div>
+        
+        <div class="overlay" *ngIf="modalopen"></div>
+        <div class="modal-content" *ngIf="ShareLinkFormPopup" style="width: 50%;margin-left: 25%;margin-top: 3%;">
+          <div class="modal-content">
+            <div class="modal-body p-0">
+              <div class=" card">
+                <div class=" card-header"><h3 class=" mb-0">Share Link</h3></div>
+                <div class="card-body">
+                  <div class="form-row">
+                      
+                      <div class="w-full">
+                          <label class="form-control-label" for="ToEmailID">
+                            To 
+                          </label>
+                          <input  id="ToEmailID" name ="ToEmailID" [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/> 
+                          <div class="errorMsg-feedback"
+              *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>
+                      </div>
+                      <div class="w-full" style="margin-top: 1%;">
+                          <label class="form-control-label" for="ValidDate">
+                            Expire On
+                          </label>
+                          <input type="text" formControlName="ValidDate"  placeholder="Valid Date" class="form-control"  bsDatepicker [bsValue]="bsValue"
+                          [bsConfig]="{
+                            isAnimated: true,
+                            containerClass: 'theme-red'
+                          }"
+                          [minDate]="today"
+                        />  
+                      
+                      </div>                            
+  
+                      
+                    </div>
+                    <div class=" col-md-8" style="padding-top: 32px">  
+                      <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmailByShare()"> Send</button>
+                      <button class="btn btn-warning"  (click)="closeShareLinkPopUp()"> Close</button>
+                      
+                    </div>
+                    <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
+        
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="overlay" *ngIf="modalopen"></div>
+        <div class="modal-content" *ngIf="EmailFormPopup" style="width: 50%;margin-left: 25%;margin-top: 3%;">
+            <div class="modal-body">
+              <div class=" card">
+                <div class=" card-header"><h3 class=" mb-0">Send Email</h3></div>
+                <div class="card-body">
+                  <div class="form-row">
+                      
+                      <div class="w-full">
+                          <label class="form-control-label" for="ToEmailID">
+                            To 
+                          </label>
+                          <input  id="ToEmailID" name ="ToEmailID" [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/> 
+                          <div class="errorMsg-feedback"
+              *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>                 
+                      </div>      
+                    </div>
+                    <div class=" col-md-8" style="padding-top: 32px">  
+                      <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmail()"> Send</button>
+                      <button class="btn btn-warning"  (click)="closeEmailPopUp()"> Close</button>
+                      
+                    </div>
+                    <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
+        
+                </div>
+              </div>
+            </div>
+        </div>
+        </form>
+      </div>
+  </div>
 </div>  

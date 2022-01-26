@@ -173,14 +173,18 @@ export class SearchService {
   }
 
   SendEmailBulkFiles(data) {
-    data["User_Token"]=this.userToken
-    const apiUrl = "Status/GetMetaDataFileNo"
+    data["User_Token"]=this.userToken;
+    data['userID']=String(this.userId);
+    data['CreatedBy']=String(this.userId);
+    const apiUrl = "Mail/SendEmailBulkFiles"
     return this._httpService.post(apiUrl,data);
   }
 
   SendEmail(data) {
-    data["User_Token"]=this.userToken
-    const apiUrl = "Status/GetMetaDataFileNo"
+    data["User_Token"]=this.userToken;
+    data['userID']=String(this.userId);
+    data['CreatedBy']=String(this.userId);
+    const apiUrl = "Mail/SendEmail"
     return this._httpService.post(apiUrl,data);
   }
 
