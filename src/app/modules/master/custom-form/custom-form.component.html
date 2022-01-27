@@ -73,7 +73,9 @@
               [limit]="entries != -1 ? entries : undefined"
               [rows]="_FilteredList"
             >
-          
+            <ngx-datatable-column name="SrNo">
+              <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column *ngFor="let column of columns; 
               let i = index;" name="{{column.prop}}"
               prop="{{column.prop}}">
