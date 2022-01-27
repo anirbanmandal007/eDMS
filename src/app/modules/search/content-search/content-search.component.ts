@@ -442,51 +442,44 @@ export class ContentSearchComponent implements OnInit {
   prepareTableData(tableData, headerList) {
     let formattedData = [];
     let tableHeader: any = [
-      { field: "srNo", header: "SR NO", index: 1 },
+      { field: 'srNo', header: "SR NO", index: 1 },
       // { field: 'accId', header: 'Acc ID', index: 2 },
-      // { field: 'DepartmentName', header: 'CABINET', index: 3 },
-      // { field: 'branch', header: 'FOLDER', index: 3 },
-      // { field: 'SubfolderName', header: 'SUBFOLDER', index: 3 },
-      //  { field: 'TemplateName', header: 'TemplateName', index: 3 },
-      //  { field: 'department', header: 'Department', index: 4 },
-      //  { field: 'docType', header: 'Doc Type', index: 5 },
-      { field: "pageCount", header: "PAGE COUNT", index: 6 },
-      { field: "entryDate", header: "CREATE DATE", index: 3 },
-      // { field: 'filePath', header: 'File Path', index: 3 },
+      { field: 'branch', header: 'CUSTOMER', index: 3 },
+        //  { field: 'TemplateName', header: 'TemplateName', index: 3 },
+    //  { field: 'department', header: 'Department', index: 4 },
+    //  { field: 'docType', header: 'Doc Type', index: 5 },
+      { field: 'pageCount', header: 'PAGE COUNT', index: 6 },
+      { field: 'entryDate', header: 'CREATE DATE', index: 3 },
     ];
     headerList.forEach((el, index) => {
       tableHeader.push({
-        field: "metadata-" + parseInt(index + 1),
-        header: el.DisplayName,
-        index: parseInt(5 + index),
-      });
-    });
-    // console.log("tableData",tableData);
+        field: 'metadata-' + parseInt(index+1), header: el.DisplayName, index: parseInt(7+index)
+      })
+    })
+    console.log("tableData",tableData);
     tableData.forEach((el, index) => {
       formattedData.push({
-        srNo: parseInt(index + 1),
-        accId: el.Ref1,
-        // 'DepartmentName': el.DepartmentName,
-        // 'branch': el.BranchName,
-        // 'SubfolderName': el.SubfolderName,
-        // 'TemplateName': el.TemplateName,
-        entryDate: el.EntryDate,
-        //  'department': el.DepartmentName,
+        'srNo': parseInt(index + 1),
+        'accId': el.Ref1,
+        'branch': el.BranchName,
+        // 'TemplateName': el.TemplateName,         
+        "entryDate": el.EntryDate,
+      //  'department': el.DepartmentName,
         // 'docType': el.DocType,
-        pageCount: el.DocCount,
-        AccNo: el.AccNo,
-        TemplateID: el.TemplateID,
+        'pageCount': el.DocCount,
+        'AccNo': el.AccNo,
+        'TemplateID': el.TemplateID,
+        
 
         // 'RelPath': el.RelPath,
         // 'FilePath': el.FilePath,
-        ACC: el.ACC,
-        filePath: el.FilePath,
-        //  'DocID': el.DocID,
+        'ACC': el.ACC,
+        'filePath': el.FilePath
+      //  'DocID': el.DocID,
         // 'profileImg': el.PhotoPath
       });
       headerList.forEach((el1, i) => {
-        formattedData[index]["metadata-" + parseInt(i + 1)] =
-          el["Ref" + parseInt(i + 1)];
+        formattedData[index]['metadata-' + parseInt(i + 1)] = el['Ref'+ parseInt(i+1)]
       });
     });
     this.headerList = tableHeader;
@@ -973,17 +966,11 @@ export class ContentSearchComponent implements OnInit {
   }
 
   GetFilterData(tempID: any) {
-    //   const apiUrl = this._global.baseAPIUrl + 'TaggingDetails/GetPendingData?UserID=' + localStorage.getItem('UserID') + '&user_Token='+ localStorage.getItem('User_Token');
+    
 
-    //    const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/getSearchDataByFolderStructure?UserID=' + localStorage.getItem('UserID') + '&user_Token='+ localStorage.getItem('User_Token');
-    // const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/getSearchDataByFilter?UserID='+localStorage.getItem('UserID')+'&user_Token='+localStorage.getItem('User_Token')+'&TemplateID='+this.ContentSearchForm.get('TemplateID').value+'&BranchID='+this.ContentSearchForm.get('BranchID').value+'&SearchParamterID='+this.ContentSearchForm.get('SearchByID').value+'&SearchValues='+this.ContentSearchForm.get('FileNo').value
-
-    //this._onlineExamService.postData(this.ContentSearchForm.value,apiUrl)
-
-    // const apiUrl="https://demo2993066.mockable.io/getAllData";
-    //this._onlineExamService.getAllData(apiUrl).
+   // const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/getSearchDataByFilter?UserID='+localStorage.getItem('UserID')+'&user_Token='+localStorage.getItem('User_Token')+'&TemplateID='+this.ContentSearchForm.get('TemplateID').value+'&BranchID='+this.ContentSearchForm.get('BranchID').value+'&SearchParamterID='+this.ContentSearchForm.get('SearchByID').value+'&SearchValues='+this.ContentSearchForm.get('FileNo').value  
     this.searchService
-      .getSearchDataByFilter(this.ContentSearchForm.value)
+      .getSearchDataByFilter(this.ContentSearchForm.get('TemplateID').value,this.ContentSearchForm.get('BranchID').value,this.ContentSearchForm.get('SearchByID').value,this.ContentSearchForm.get('FileNo').value )
       .subscribe((data: [any]) => {
         this._FileList = data;
         this._FilteredList = data;

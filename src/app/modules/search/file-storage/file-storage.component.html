@@ -178,7 +178,7 @@
                             </label>
                             <input  id="ToEmailID" name ="ToEmailID" [formControlName]="'ToEmailID'" placeholder="Email" type="email" class="form-control"/> 
                             <div class="errorMsg-feedback"
-                *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>
+                            *ngIf="tf.ToEmailID && tf.ToEmailID.touched && tf.ToEmailID.invalid && tf.ToEmailID.errors.required">This field is Required</div>
                         </div>
                         <div class="w-full" style="margin-top: 1%;">
                             <label class="form-control-label" for="ValidDate">
@@ -202,31 +202,8 @@
                       <div class=" col-md-8" style="padding-top: 32px">  
                         <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmailByShare()"> Send</button>
                         <button class="btn btn-warning"  (click)="closeShareLinkPopUp()"> Close</button>
-                        
-                      </div>
-                      <div class="w-full" style="margin-top: 1%;">
-                          <label class="form-control-label" for="ValidDate">
-                            Expire On
-                          </label>
-                          <input type="text" formControlName="ValidDate"  placeholder="Valid Date" class="form-control"  bsDatepicker [bsValue]="bsValue"
-                          [bsConfig]="{
-                            isAnimated: true,
-                            containerClass: 'theme-red'
-                          }"
-                          [minDate]="today"
-                        />  
-                      
-                      </div>                            
-  
-                      
+                      </div>                          
                     </div>
-                    <div class=" col-md-8" style="padding-top: 32px">  
-                      <button class="btn btn-primary" [disabled]="tf.ToEmailID.invalid" (click)="onSendEmailByShare()"> Send</button>
-                      <button class="btn btn-warning"  (click)="closeShareLinkPopUp()"> Close</button>
-                      
-                    </div>
-                    <!-- <button type="button" class="btn btn-warning" (click)="OnReset()">Clear</button> -->
-        
                 </div>
               </div>
             </div>
@@ -237,7 +214,7 @@
               <div class=" card">
                 <div class=" card-header"><h3 class=" mb-0">Send Email</h3></div>
                 <div class="card-body">
-                  <div class="form-row">
+                  <div class="form-row grid grid-cols-2 gap-2">
                       
                       <div class="w-full">
                           <label class="form-control-label" for="ToEmailID">

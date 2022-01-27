@@ -159,10 +159,9 @@ export class SearchService {
     //return this._httpService.post(apiUrl,data);
   }
 
-  getSearchDataByFilter(data) {
-    data["User_Token"]=this.userToken
-    const apiUrl = "SearchFileStatus/getSearchDataByFilter"
-    return this._httpService.post(apiUrl,data);
+  getSearchDataByFilter(templateId,branchId,searchByID,fileNo) {
+    const apiUrl = 'SearchFileStatus/getSearchDataByFilter?UserID='+this.userId+'&user_Token='+this.userToken+'&TemplateID='+templateId+'&BranchID='+branchId+'&SearchParamterID='+searchByID+'&SearchValues='+fileNo ;
+    return this._httpService.get(apiUrl);
   }
 
   GetMetaDataFileNo(data) {
