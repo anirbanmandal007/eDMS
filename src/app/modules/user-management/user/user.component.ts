@@ -37,6 +37,7 @@ export class UserComponent implements OnInit {
   createmodalopen:boolean = false;
   AddUserForm: FormGroup;
   roleList: any;
+  roleEdit: any;
   
   
   constructor(
@@ -202,6 +203,7 @@ editRow(userId:any){
 
   this._userManagementService.getUsersDataById(userId).subscribe(data => {
     console.log(data)
+    this.roleEdit = data.roleName;
     this.editform.setValue({
       id: data.id,
       name: data.name,

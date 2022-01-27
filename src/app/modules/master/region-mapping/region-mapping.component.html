@@ -63,6 +63,9 @@
           <ngx-datatable *ngIf="_TemplateList.length > 0" class="material w-full" style="height: 500px;" [rows]="_TemplateList" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
             [rowHeight]="50" [limit]="10" [count]="_TemplateList.length" [scrollbarV]="true">
             
+              <ngx-datatable-column name="SrNo">
+                <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
+              </ngx-datatable-column>
               <ngx-datatable-column *ngFor="let column of columns; 
                 let i = index;" name="{{column.prop}}"
                 prop="{{column.prop}}">
