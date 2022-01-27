@@ -407,12 +407,18 @@ ShareLinkFormPopup: boolean =  false;
   prepareTableData(data) {
     var formattedData = [];
     let metadataTableHeader = [];
-console.log(data);
+    // this.metadataList.forEach((el, index) => {
+    //   metadataTableHeader.push({
+    //     field: 'metadata-' + parseInt(index+1), header: el.DisplayName, index: parseInt(7+index)
+    //   })
+    // })
+
+    console.log(data);
     
     data.forEach((el, index) => {
       if (el.FileNo) {
-
         formattedData.push({
+          'srNo': parseInt(index + 1),
           "fileNo": el.FileNo,
           "USERID": el.USERID,
           "EntryDate": el.EntryDate,
@@ -420,23 +426,46 @@ console.log(data);
           "PageCount": el.PageCount,
           "IsIndexing": el.IsIndexing,
           "BranchName": el.BranchName,
-          "DepartmentName": el.DepartmentName,  
-          "SubfolderName": el.SubfolderName,   
-          "FilePath": el.FilePath,   
+          "DepartmentName": el.DepartmentName,    
+          "FilePath": el.FilePath,     
+          
+          
+          // "empName": el.Ref2,
+          // "dob": el.Ref3,
+          // "designation": el.Ref4,
+          // "isActive": el.Ref5,
+          // "doj": el.Ref6,
+
+         // "RelPath": el.RelPath
         });
       }
+      // this.metadataList.forEach((el1, i) => {
+      //   formattedData[index]['metadata-' + parseInt(i + 1)] = el['Ref'+ parseInt(i+1)]
+      // });
 
     });
     this.tableHeader = [
+      { field: 'srNo', header: "SR NO", index: 1 },
       { field: 'fileNo', header: this.TempField, index: 1 },
-      { field: 'DepartmentName', header: 'CABINET', index: 1 },
-      { field: 'BranchName', header: 'FOLDER', index: 1 },
-      { field: 'SubfolderName', header: 'SUBFOLDER', index: 3 },
+      { field: 'DepartmentName', header: 'REGION', index: 1 },
+      { field: 'BranchName', header: 'CUSTOMER', index: 1 },
+   
+      
+      // { field: 'empName', header: 'EMP NAME', index: 7 },
+      // { field: 'dob', header: 'DOB', index: 8 },
+      // { field: 'designation', header: 'Designation', index: 9 },
+      // { field: 'isActive', header: 'Is Active', index: 10 },
+      // { field: 'doj', header: 'DOJ', index: 11 },
       { field: 'USERID', header: 'CREATE BY', index: 2 },
       { field: 'EntryDate', header: 'CREATE DATE', index: 3 },
+      // { field: 'fileSize', header: 'File Size', index: 4 },
       { field: 'PageCount', header: 'PAGE COUNT', index: 5 },
       { field: 'IsIndexing', header: 'IS INDEXING', index: 5 },
+     
+    //  { field: 'Archive', header: 'Archive', index: 7 }
     ];
+    // let arr1 = this.tableHeader.slice(Math.max(this.tableHeader.length - 5, 0));
+    // let arr2 = this.tableHeader.slice(0, 6);
     Array.prototype.push.apply(metadataTableHeader, this.tableHeader);
     this.tableHeader = metadataTableHeader;
     this.formattedData = formattedData;
@@ -444,6 +473,7 @@ console.log(data);
     //console.log(JSON.stringify(this.formattedData));
     this.loading=false;
   }
+  
   DownloadMetadata() {
    
     let _CSVData = "";

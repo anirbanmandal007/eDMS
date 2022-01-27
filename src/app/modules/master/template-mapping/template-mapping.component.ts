@@ -346,16 +346,15 @@ handleFilterChange(text: string): void {
 
      }
      master_change(){
-       console.log("val",this.AddTemplateMappingForm.controls['selectAll'].value);
       let _bool =this.AddTemplateMappingForm.controls['selectAll'].value;
-      this.largeDatasetForMap.forEach((ele,index) => {
+      this.largeDataset.forEach((ele,index) => {
         if(_bool == true){
           ele.ischecked = true;
         }else
           ele.ischecked = false;
          
       });
-      console.log("this.largeDatasetForMap",this.largeDatasetForMap);
+      console.log("this.largeDataset",this.largeDataset);
      }
      filternames(mList){
         this.largeDataset = mList;
