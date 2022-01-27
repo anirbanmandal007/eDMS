@@ -11,6 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
         MatProgressSpinnerModule,
         NgxDatatableModule,
         NgxDocViewerModule,
-        NgxCaptchaModule
+        NgxCaptchaModule,
+        CalendarModule
     ],
     exports: [
         CommonModule,
@@ -40,7 +42,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
         MatProgressSpinnerModule,
         NgxDatatableModule,
         NgxDocViewerModule,
-        NgxCaptchaModule
+        NgxCaptchaModule,
+        CalendarModule
     ],
     declarations: [
         ConfirmationDialogComponent

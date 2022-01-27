@@ -379,13 +379,17 @@
                                 <label class="form-control-label" for="ValidDate">
                                   Expire On
                                 </label>
-                                <input type="text" [formControlName]="ValidDate"  placeholder="Valid Date" class="form-control"  bsDatepicker [bsValue]="bsValue"
+
+                                <div>  
+                                  <p-calendar formControlName="ValidDate" [minDate]="today"></p-calendar>
+                                </div>  
+                                <!-- <input type="text" [formControlName]="ValidDate"  placeholder="Valid Date" class="form-control"  bsDatepicker [bsValue]="bsValue"
                                 [bsConfig]="{
                                   isAnimated: true,
                                   containerClass: 'theme-red'
                                 }"
                                 [minDate]="today"
-                              />  
+                              />   -->
                             
                             </div>                            
         

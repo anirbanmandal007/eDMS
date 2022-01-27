@@ -125,7 +125,7 @@ export class ContentSearchComponent implements OnInit {
       MFileNo: [""],
       DocuemntType: [""],
       AccNo: [""],
-      ToEmailID: ["", Validators.required],
+      ToEmailID: ["", [Validators.required, Validators.email]],
       ValidDate: [""],
       IsAttachment: [""],
       BranchID: ["0"],

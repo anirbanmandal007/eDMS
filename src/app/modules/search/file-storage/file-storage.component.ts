@@ -172,7 +172,7 @@ ShareLinkFormPopup: boolean =  false;
       MFileNo: [''],
       DocuemntType: [''],
       ToEmailID:['',Validators.required],
-      ValidDate:[''],
+      ValidDate:['', [Validators.required, Validators.email]],
       IsAttachment:[''],
     });
     this.getTemplate();

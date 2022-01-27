@@ -4,3 +4,7 @@
     position: relative;
     top: 20px;
 }
+
+::ng-deep .cdk-overlay-container{
+    z-index: 1200 !important;
+}
