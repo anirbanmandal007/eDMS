@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
 import { ToasterService } from 'app/shared/toaster/toaster.service';
 import { ProcessService } from '../process.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-view-indexing',
@@ -27,7 +28,8 @@ export class ViewIndexingComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private _authService: AuthService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private _location: Location
   ) { }
 
   ngOnInit(): void {
@@ -112,7 +114,8 @@ export class ViewIndexingComponent implements OnInit {
   }
 
   backToIndex() {
-    this.router.navigate(['process/indexing'])
+    // this.router.navigate(['process/indexing'])
+    this._location.back();
   }
 
   onSave() {
