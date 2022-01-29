@@ -35,3 +35,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 1. Template mapping :  delete mapping (got 500 error)
 2. Region mapping : delete mapping (got 200 from API but not reflect in the UI)
  
+ 

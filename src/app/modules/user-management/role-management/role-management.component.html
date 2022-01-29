@@ -22,14 +22,14 @@
           <div class="page-title">
             <h3>All Roles</h3>
           </div>
-          <div class="btn-panel"><button type="button" (click)="CreateRow()">Create Role</button></div>
+          <div class="btn-panel"><button type="button" (click)="CreateRow()">Create Role Access</button></div>
           <div *ngIf="displayTable">
             <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
                   <th class="text-left">Sr No.</th>
                   <th class="text-left">Role Name</th>
-                  <th class="text-left">Remarks</th>
+                
                   <th class="text-left">Action</th>
                 </tr>
               </thead>
@@ -37,7 +37,7 @@
                 <tr *ngFor="let role of dataSource; let i = index;" class="data-tr">
                   <td>{{i + 1}}</td>
                   <td>{{role.roleName}}</td>
-                  <td>{{role.remarks}}</td>
+                  <!-- <td>{{role.remarks}}</td> -->
                   <td (click)="openMenu(role.id)" class="cursor-pointer"><mat-icon #openmenu >more_vert</mat-icon>
                     <ul class="data-menu row_icon" *ngIf="openlist && role.id == selectedId">
                       <li (click)="editRow(role)"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -67,13 +67,13 @@
     <div class="content-wrap">
       <div class="left-panel">
         <div class="form-group">
-          <label class="form-control-label" for="Role Name">Role Name</label>
+          <label class="form-control-label" for="Role Name">Access Role Name</label>
           <input type="text" class="form-control" id="roleName" formControlName="roleName" placeholder="Role Name" value="Mark" required />
         </div>
-        <div class="form-group pt-4">
+        <!-- <div class="form-group pt-4">
           <label class="form-control-label" for="remarks">Remarks</label>
           <input type="text" class="form-control" id="remarks" formControlName="remarks" placeholder="Remark" value="Mark" required />
-        </div>
+        </div> -->
         <div class="form-group pt-4">
           <label class="form-control-label " for="remarks">Access Rights</label>
           <div class="col-sm-10">
@@ -93,7 +93,7 @@
       </div>
       <div class="right-panel">
         <div class="form-group">
-          <label class="form-control-label" for="remarks">Pages</label>
+          <label class="form-control-label" for="remarks">Access</label>
           <div class="col-sm-10">
             <button class="btn btn-outline-default btn-round"><input type="checkbox" formControlName="SelectAll"  (change)="OnSelectAll()" [value]=""> Select All</button>
             

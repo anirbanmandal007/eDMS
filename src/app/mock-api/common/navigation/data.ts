@@ -41,7 +41,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Add Role',
-                title: 'Roles',
+                title: 'Roles Access',
                 type : 'basic',
                 icon : 'heroicons_outline:user',
                 link : '/userManagement/roles',
@@ -66,7 +66,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'Template',
-                title: 'Template',
+                title: 'Category',
                 type : 'basic',
                 icon : 'heroicons_outline:template',
                 link : '/master/template',
@@ -74,7 +74,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Customer',
-                title: 'Customer',
+                title: 'Folder',
                 type : 'basic',
                 icon : 'heroicons_outline:user',
                 link : '/master/Customer',
@@ -82,7 +82,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Customer Mapping',
-                title: 'Customer Mapping',
+                title: 'Folder Access',
                 type : 'basic',
                 icon : 'heroicons_outline:map',
                 link : '/master/customer-mapping',
@@ -90,7 +90,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Custom Forms',
-                title: 'View Custom Form',
+                title: 'Form Entry',
                 type : 'basic',
                 icon : 'heroicons_outline:archive',
                 link : '/master/view-custom-form',
@@ -98,7 +98,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Region',
-                title: 'Region',
+                title: 'Cabinet',
                 type : 'basic',
                 icon : 'heroicons_outline:globe-alt',
                 link : '/master/Region',
@@ -106,7 +106,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Template Mapping',
-                title: 'Template Mapping',
+                title: 'Category Access',
                 type : 'basic',
                 icon : 'heroicons_outline:template',
                 link : '/master/template-mapping',
@@ -114,7 +114,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Region Mapping',
-                title: 'Region Mapping',
+                title: 'Cabinet Mapping',
                 type : 'basic',
                 icon : 'heroicons_outline:location-marker',
                 link : '/master/region-mapping',
@@ -131,7 +131,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'File Upload',
-                title: 'File Upload',
+                title: 'Files Upload',
                 type : 'basic',
                 icon : 'heroicons_outline:cloud-upload',
                 link : '/upload/file-upload',
@@ -139,20 +139,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'CSV Upload',
-                title: 'CSV Upload',
+                title: 'Data Upload',
                 type : 'basic',
                 icon : 'heroicons_outline:upload',
                 link : '/upload/data-upload',
                 disabled: false,
             },
-            {
-                id   : 'SFTP Upload',
-                title: 'SFTP Upload',
-                type : 'basic',
-                icon : 'heroicons_outline:upload',
-                link : '/upload/sftpupload',
-                disabled: false,
-            }
+            // {
+            //     id   : 'SFTP Upload',
+            //     title: 'SFTP Upload',
+            //     type : 'basic',
+            //     icon : 'heroicons_outline:upload',
+            //     link : '/upload/sftpupload',
+            //     disabled: false,
+            // }
         ]
     },
     {
@@ -164,7 +164,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'Log Report',
-                title: 'Logs',
+                title: 'Activity Report',
                 type : 'basic',
                 icon : 'heroicons_outline:server',
                 link : '/reports/logs',
@@ -172,7 +172,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Status Report',
-                title: 'Status',
+                title: 'File Status',
                 type : 'basic',
                 icon : 'heroicons_outline:status-online',
                 link : '/reports/status',
@@ -180,7 +180,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Meta Data Report',
-                title: 'Metadata',
+                title: 'Master',
                 type : 'basic',
                 icon : 'heroicons_outline:document-duplicate',
                 link : '/reports/metadata',
@@ -197,7 +197,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'Data Entry',
-                title: 'Indexing',
+                title: 'Data Entry',
                 type : 'basic',
                 icon : 'heroicons_outline:document-text',
                 link : '/process/indexing',
@@ -214,23 +214,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'Quick Search',
-                title: 'Content Search',
+                title: 'Filter Search',
                 type : 'basic',
                 icon : 'heroicons_outline:document-search',
                 link : '/search/content-search',
                 disabled: false,
             },
-            {
-                id   : 'Advanced Search',
-                title: 'Advanced Search',
-                type : 'basic',
-                icon : 'heroicons_outline:search-circle',
-                link : '/search/advanced-search',
-                disabled: false,
-            },
+            // {
+            //     id   : 'Advanced Search',
+            //     title: 'Advanced Search',
+            //     type : 'basic',
+            //     icon : 'heroicons_outline:search-circle',
+            //     link : '/search/advanced-search',
+            //     disabled: false,
+            // },
             {
                 id   : 'File Storage',
-                title: 'File Storage',
+                title: 'Folder Struture',
                 type : 'basic',
                 icon : 'heroicons_outline:database',
                 link : '/search/file-storage',
@@ -238,7 +238,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'BulkDownlaod',
-                title: 'Bulk Downlaod',
+                title: 'Files Downlaod',
                 type : 'basic',
                 icon : 'heroicons_outline:cloud-download',
                 link : '/search/bulk-download',
@@ -246,7 +246,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'DeleteFiles',
-                title: 'Delete Files',
+                title: 'Delete Data',
                 type : 'basic',
                 icon : 'heroicons_outline:trash',
                 link : '/search/delete-files',
@@ -314,14 +314,14 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     },
     {
         id   : 'User Management',
-        title: 'User Management',
+        title: 'User',
         type : 'aside',
         icon : 'heroicons_outline:user-group',
         disabled: false,
         children: [
             {
                 id   : 'Add User',
-                title: 'Users',
+                title: 'Users Creation',
                 type : 'basic',
                 icon : 'heroicons_outline:users',
                 link : '/userManagement/user',
@@ -329,7 +329,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Add Role',
-                title: 'Roles',
+                title: 'Role Access',
                 type : 'basic',
                 icon : 'heroicons_outline:user',
                 link : '/userManagement/roles',
@@ -347,14 +347,14 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     },
     {
         id   : 'Master',
-        title: 'Master',
+        title: 'Configuration',
         type : 'aside',
         icon : 'heroicons_outline:cog',
         disabled: false,
         children: [
             {
                 id   : 'Template',
-                title: 'Template',
+                title: 'Category',
                 type : 'basic',
                 icon : 'heroicons_outline:template',
                 link : '/master/template',
@@ -362,7 +362,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Customer',
-                title: 'Customer',
+                title: 'Folder',
                 type : 'basic',
                 icon : 'heroicons_outline:user',
                 link : '/master/Customer',
@@ -370,7 +370,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Customer Mapping',
-                title: 'Customer Mapping',
+                title: 'Folder Access',
                 type : 'basic',
                 icon : 'heroicons_outline:map',
                 link : '/master/customer-mapping',
@@ -378,7 +378,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Custom Forms',
-                title: 'View Custom Form',
+                title: 'Form Entry',
                 type : 'basic',
                 icon : 'heroicons_outline:archive',
                 link : '/master/view-custom-form',
@@ -386,7 +386,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Region',
-                title: 'Region',
+                title: 'Cabinet',
                 type : 'basic',
                 icon : 'heroicons_outline:globe-alt',
                 link : '/master/Region',
@@ -394,7 +394,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Template Mapping',
-                title: 'Template Mapping',
+                title: 'Catrgory Access',
                 type : 'basic',
                 icon : 'heroicons_outline:template',
                 link : '/master/template-mapping',
@@ -402,7 +402,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Region Mapping',
-                title: 'Region Mapping',
+                title: 'Cabinet Access',
                 type : 'basic',
                 icon : 'heroicons_outline:location-marker',
                 link : '/master/region-mapping',
@@ -427,20 +427,20 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'CSV Upload',
-                title: 'CSV Upload',
+                title: 'Data Upload',
                 type : 'basic',
                 icon : 'heroicons_outline:upload',
                 link : '/upload/data-upload',
                 disabled: false,
             },
-            {
-                id   : 'SFTP Upload',
-                title: 'SFTP Upload',
-                type : 'basic',
-                icon : 'heroicons_outline:upload',
-                link : '/upload/sftpupload',
-                disabled: false,
-            }
+            // {
+            //     id   : 'SFTP Upload',
+            //     title: 'SFTP Upload',
+            //     type : 'basic',
+            //     icon : 'heroicons_outline:upload',
+            //     link : '/upload/sftpupload',
+            //     disabled: false,
+            // }
         ]
     },
     {
@@ -452,7 +452,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'Log Report',
-                title: 'Logs',
+                title: 'Activity Report',
                 type : 'basic',
                 icon : 'heroicons_outline:server',
                 link : '/reports/logs',
@@ -460,7 +460,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Status Report',
-                title: 'Status',
+                title: 'File Status',
                 type : 'basic',
                 icon : 'heroicons_outline:status-online',
                 link : '/reports/status',
@@ -468,7 +468,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'Meta Data Report',
-                title: 'Metadata',
+                title: 'Master Report',
                 type : 'basic',
                 icon : 'heroicons_outline:document-duplicate',
                 link : '/reports/metadata',
@@ -478,14 +478,14 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     },
     {
         id   : 'Process',
-        title: 'Process',
+        title: 'Transaction',
         type : 'aside',
         icon : 'heroicons_outline:database',
         disabled: false,
         children: [
             {
                 id   : 'Data Entry',
-                title: 'Indexing',
+                title: 'Data Entry',
                 type : 'basic',
                 icon : 'heroicons_outline:document-text',
                 link : '/process/indexing',
@@ -502,23 +502,23 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id   : 'Quick Search',
-                title: 'Content Search',
+                title: 'Filter Search',
                 type : 'basic',
                 icon : 'heroicons_outline:document-search',
                 link : '/search/content-search',
                 disabled: false,
             },
-            {
-                id   : 'Advanced Search',
-                title: 'Advanced Search',
-                type : 'basic',
-                icon : 'heroicons_outline:search-circle',
-                link : '/search/advanced-search',
-                disabled: false,
-            },
+            // {
+            //     id   : 'Advanced Search',
+            //     title: 'Advanced Search',
+            //     type : 'basic',
+            //     icon : 'heroicons_outline:search-circle',
+            //     link : '/search/advanced-search',
+            //     disabled: false,
+            // },
             {
                 id   : 'File Storage',
-                title: 'File Storage',
+                title: 'Folder Structure',
                 type : 'basic',
                 icon : 'heroicons_outline:database',
                 link : '/search/file-storage',
@@ -526,7 +526,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'BulkDownlaod',
-                title: 'Bulk Downlaod',
+                title: 'Files Downlaod',
                 type : 'basic',
                 icon : 'heroicons_outline:cloud-download',
                 link : '/search/bulk-download',
@@ -534,7 +534,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'DeleteFiles',
-                title: 'Delete Files',
+                title: 'Delete Data',
                 type : 'basic',
                 icon : 'heroicons_outline:trash',
                 link : '/search/delete-files',

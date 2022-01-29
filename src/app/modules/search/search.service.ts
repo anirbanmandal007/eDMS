@@ -159,6 +159,19 @@ export class SearchService {
     //return this._httpService.post(apiUrl,data);
   }
 
+  // public BulkDownload(data,apiUrl): Observable<any> {
+  //   return this.http.post(apiUrl, data, { responseType: "blob" })
+      
+  // }
+
+  BulkDownload(data) {
+    data["User_Token"]=this.userToken
+    data["userID"]=this.userId
+    const apiUrl = environment.baseUrl+ "SearchFileStatus/DLoadBulkFiles";
+    return this.http.post(apiUrl,data,{ responseType: "blob" });
+    //return this._httpService.post(apiUrl,data);
+  }
+
   getSearchDataByFilter(templateId,branchId,searchByID,fileNo) {
     const apiUrl = 'SearchFileStatus/getSearchDataByFilter?UserID='+this.userId+'&user_Token='+this.userToken+'&TemplateID='+templateId+'&BranchID='+branchId+'&SearchParamterID='+searchByID+'&SearchValues='+fileNo ;
     return this._httpService.get(apiUrl);

@@ -30,8 +30,8 @@ export class RegionMappingComponent implements OnInit {
 
   userFilter:any = { BranchName: '' };
   createmodalopen:boolean = false; 
-  _PageTitle:any = "New Region Mapping";
-  _toasterTitle:any = "Mapped!";
+  _PageTitle:any = "New Cabinet Access";
+  _toasterTitle:any = "Access!";
   dtOptions:any = {
     processing: true,
     ordering: true,
@@ -133,8 +133,8 @@ export class RegionMappingComponent implements OnInit {
   }
   /*Create region Mapping */
   createRegionMapping(){
-    this._PageTitle = "New Region Mapping";
-    this._toasterTitle ="Mapped!";
+    this._PageTitle = "New Cabinet Access";
+    this._toasterTitle ="Access!";
     this.createmodalopen=true;
     this.getRegionList();
     //this.getBranchDetailsRegionWise(0);
@@ -143,7 +143,7 @@ export class RegionMappingComponent implements OnInit {
    /*Edit region mapping*/
   editRegionMapping() {
     this._toasterTitle = "Updated!";
-    this._PageTitle = "Edit Region Mapping";
+    this._PageTitle = "Edit Cabinet Access";
     this.createmodalopen=true;
     this.getRegionList();
     //this.getBranchDetailsRegionWise(0);
@@ -326,7 +326,7 @@ handleFilterChange(text: string): void {
     }
 
     this._masterService.createRegionMapping(body).subscribe((data) => {
-        this.toaster.show('success', 'Region Mapping Done', data);
+        this.toaster.show('success', 'Cabinet Access Done', data);
         this.getRegionListById(this._selectedCustId);
         this.createmodalopen=false;
       });

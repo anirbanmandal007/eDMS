@@ -18,7 +18,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
                 </svg> 
-                File Storage
+                Folder Struture
               </li>
             </ol>
           </div>
@@ -26,7 +26,7 @@
       <!-- CONTENT GOES HERE -->
       <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
         <div class="page-title">
-          <h3>File Storage</h3>
+          <h3>Folder Struture</h3>
         </div>
         <form [formGroup]="FileStorageForm">  
         <div class="flex flex-wrap">
@@ -80,8 +80,9 @@
                 </button>
               </div>
           </div>
-          <div style="width: 67%; float: right;">    
-            <div class="reresh-table" style="width: 30px;float:right;text-align: right;cursor: pointer;">
+          <div style="width: 67%; float: right;">   
+             
+            <div class="reresh-table" style="width: 25px;float:right;text-align: right;cursor: pointer;">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-10" viewBox="0 0 20 20" fill="currentColor" (click)="GetFileInfo('')">
                 <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
               </svg>
@@ -89,14 +90,14 @@
             <select name="TemplateID" id="TemplateID" style="width: 45%;float: right;
             position: relative;
             bottom: 8px;" class="form-control"  formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
-              <option value="0">Select Template</option>   
+              <option value="0">Category</option>   
               <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
               {{_Temp.TemplateName}}  
               </option>   
             </select>
             <label style="width: auto; float: right; position: relative;
             top: 3px;
-            right: 8px;" for="TemplateID" class=" form-control-label">  Select Template </label>
+            right: 8px;" for="TemplateID" class=" form-control-label">  Select Category </label>
           </div>
 
             <diV style="margin-top: 5%; font-size: 13px;">
@@ -152,7 +153,7 @@
                           
                             <button mat-menu-item (click)="DeleteFullFile(doc)" *ngIf="_isDelete">
                               <i class="material-icons">delete</i>
-                              <span>Delete File</span>
+                              <span>File Delete</span>
                             </button>
                             
                         </mat-menu>
@@ -182,7 +183,7 @@
                         </div>
                         <div class="w-full" style="margin-top: 1%;">
                             <label class="form-control-label" for="ValidDate">
-                              Expire On
+                              Validity
                             </label>
                             <div>  
                               <p-calendar formControlName="ValidDate" [minDate]="today"></p-calendar>

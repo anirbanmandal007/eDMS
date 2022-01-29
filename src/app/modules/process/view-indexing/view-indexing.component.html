@@ -16,13 +16,13 @@
                         <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z" />
                       <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z" />
                     </svg>  
-                    Process
+                    Transaction
                 </li>
                 <li>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
                     </svg>  
-                    Indexing
+                    Data Entry
                 </li>
                 <li>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -37,7 +37,7 @@
 
         <div class="h-300 min-h-300 max-h-300 border-2 border-gray-300 bg-wt p-4 table-wrap">
             <div class="page-title">
-              <h3>View Indexing</h3>
+              <h3>View Data </h3>
             </div>
             <div *ngIf="docLoaded" class="grid grid-cols-3 gap-8">
               <div class="col-span-2">
@@ -52,7 +52,7 @@
                 <form [formGroup]="indexForm" class="grid grid-cols-2 gap-x-20">
                   <div>
                     <label class="custom-form-label">
-                      Template
+                      Category
                       <select (change)="getFields()" class="form-control custom-select" formControlName="TemplateID">
                         <option *ngFor="let temp of _TemplateList" [value]="temp.TemplateID">{{temp.TemplateName}}</option>
                       </select>
@@ -64,7 +64,7 @@
 
                   <div>
                     <label>
-                      Customer
+                      Folder
                       <select class="form-control custom-select" formControlName="BranchID">
                         <option *ngFor="let temp of branchList" [value]="temp.BranchID">{{temp.BranchName}}</option>
                       </select>

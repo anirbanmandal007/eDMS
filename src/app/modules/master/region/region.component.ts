@@ -25,7 +25,7 @@ export class RegionComponent implements OnInit {
   RegionForm: FormGroup;
 
   createmodalopen:boolean = false; 
-  _PageTitle:any = "Add new region";
+  _PageTitle:any = "Add new Category";
   _toasterTitle:any = "Added";
   constructor(
     private toaster: ToasterService,
@@ -69,7 +69,7 @@ export class RegionComponent implements OnInit {
   }
   /*Create new region */
   createRegion(){
-    this._PageTitle = "Add new region";
+    this._PageTitle = "Add new Cabinet";
     this._toasterTitle ="Added!";
     this.createmodalopen=true;
     this.RegionForm = this._formBuilder.group({
@@ -80,7 +80,7 @@ export class RegionComponent implements OnInit {
    /*Edit region*/
    editRegion(region:any) {
     this._toasterTitle = "Updated!";
-    this._PageTitle = "Edit region";
+    this._PageTitle = "Edit Cabinet";
     this.RegionForm = this._formBuilder.group({
       DepartmentName: [region.DepartmentName, Validators.required],
       id:region.DID
@@ -101,7 +101,7 @@ export class RegionComponent implements OnInit {
   }
   /*Delete region */
   deleteRegion(regionId:any,DepartmentName:any){
-    const message = `Are you sure you want delete this Department: `+DepartmentName+`?`;
+    const message = `Are you sure you want delete this Cabinet: `+DepartmentName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

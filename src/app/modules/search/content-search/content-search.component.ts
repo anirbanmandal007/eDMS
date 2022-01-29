@@ -194,18 +194,18 @@ export class ContentSearchComponent implements OnInit {
   //   return this._RootList.filter(option => option.toLowerCase().includes(filterValue));
   // }
 
-  getRootList() {
-    this.searchService.GetRootByUserID().subscribe((data: {}) => {
-      this._RootList = data;
-      //  this.filteredOptions=  JSON.parse(JSON.stringify(data));
-      //  this._FilteredList = data
-      this.ContentSearchForm.controls["DeptID"].setValue(0);
-      this.ContentSearchForm.controls["BranchID"].setValue(0);
-      this.ContentSearchForm.controls["SubfolderID"].setValue(0);
-      //console.log(this._FilteredList );
-      //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
-    });
-  }
+  // getRootList() {
+  //   this.searchService.GetRootByUserID().subscribe((data: {}) => {
+  //     this._RootList = data;
+  //     //  this.filteredOptions=  JSON.parse(JSON.stringify(data));
+  //     //  this._FilteredList = data
+  //     this.ContentSearchForm.controls["DeptID"].setValue(0);
+  //     this.ContentSearchForm.controls["BranchID"].setValue(0);
+
+  //     //console.log(this._FilteredList );
+  //     //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
+  //   });
+  // }
 
   geBranchListByUserID(userid: number) {
     //     alert(this.BranchMappingForm.value.UserID);
@@ -281,40 +281,40 @@ export class ContentSearchComponent implements OnInit {
   //     this.ContentSearchForm.controls['SubfolderID'].setValue(0);
   //     //this.itemRows = Array.from(Array(Math.ceil(this.adresseList.length/2)).keys())
   //   });
+  // // }
+
+  // getEntityForUser(userid: number) {
+  //   this.getEntity(userid);
   // }
 
-  getEntityForUser(userid: number) {
-    this.getEntity(userid);
-  }
+  // getEntity(userid: number) {
+  //   //   const apiUrl =this._global.baseAPIUrl +"SubFolderMapping/GetDetails?ID="+userid+"&user_Token="+this.EntityMappingForm.get("User_Token").value;;
+  //   //const apiUrl=this._global.baseAPIUrl+'BranchMapping/GetList?user_Token=123123'
+  //   this.searchService
+  //     .GetSubFolderByBranch(this.ContentSearchForm.get("BranchID").value)
+  //     .subscribe((res) => {
+  //       this.EntityList = res;
+  //       this.ContentSearchForm.controls["SubfolderID"].setValue(0);
+  //       //  this.checkbox_list = [];
+  //       //this.checkbox_list = res;
+  //       //this.checklistArray.clear()
+  //       // this.checkbox_list.forEach(item => {
+  //       //   let fg = this.formBuilder.group({
+  //       //     id: [item.id],
+  //       //     SubfolderName: [item.SubfolderName],
+  //       //     ischecked: [item.ischecked]
+  //       //     })
+  //       //     this.checklistArray.push(fg)
+  //       // });
+  //       //  console.log('Branch Mapping -> ',res);
 
-  getEntity(userid: number) {
-    //   const apiUrl =this._global.baseAPIUrl +"SubFolderMapping/GetDetails?ID="+userid+"&user_Token="+this.EntityMappingForm.get("User_Token").value;;
-    //const apiUrl=this._global.baseAPIUrl+'BranchMapping/GetList?user_Token=123123'
-    this.searchService
-      .GetSubFolderByBranch(this.ContentSearchForm.get("BranchID").value)
-      .subscribe((res) => {
-        this.EntityList = res;
-        this.ContentSearchForm.controls["SubfolderID"].setValue(0);
-        //  this.checkbox_list = [];
-        //this.checkbox_list = res;
-        //this.checklistArray.clear()
-        // this.checkbox_list.forEach(item => {
-        //   let fg = this.formBuilder.group({
-        //     id: [item.id],
-        //     SubfolderName: [item.SubfolderName],
-        //     ischecked: [item.ischecked]
-        //     })
-        //     this.checklistArray.push(fg)
-        // });
-        //  console.log('Branch Mapping -> ',res);
+  //       // this.itemRows = Array.from(Array(Math.ceil(this.checkbox_list.length/2)).keys())
 
-        // this.itemRows = Array.from(Array(Math.ceil(this.checkbox_list.length/2)).keys())
-
-        //this.productsArray = res;
-        //  this.checkbox_list= res;
-        //this.checklist =res;
-      });
-  }
+  //       //this.productsArray = res;
+  //       //  this.checkbox_list= res;
+  //       //this.checklist =res;
+  //     });
+  // }
 
   entriesChange($event) {
     this.entries = $event.target.value;
@@ -444,12 +444,12 @@ export class ContentSearchComponent implements OnInit {
     let tableHeader: any = [
       { field: 'srNo', header: "SR NO", index: 1 },
       // { field: 'accId', header: 'Acc ID', index: 2 },
-      { field: 'branch', header: 'CUSTOMER', index: 3 },
+      { field: 'branch', header: 'FOLDER', index: 3 },
         //  { field: 'TemplateName', header: 'TemplateName', index: 3 },
     //  { field: 'department', header: 'Department', index: 4 },
     //  { field: 'docType', header: 'Doc Type', index: 5 },
-      { field: 'pageCount', header: 'PAGE COUNT', index: 6 },
-      { field: 'entryDate', header: 'CREATE DATE', index: 3 },
+      { field: 'pageCount', header: 'PAGES', index: 6 },
+      { field: 'entryDate', header: 'UPLAOD DATE', index: 3 },
     ];
     headerList.forEach((el, index) => {
       tableHeader.push({
@@ -927,7 +927,7 @@ export class ContentSearchComponent implements OnInit {
       // headerArray.push(headers[j]);
     }
     this._HeaderList += "," + "FOLDER";
-    this._HeaderList += "," + "SUBFOLDER";
+
     this._HeaderList += "," + "PAGECOUNT";
     this._HeaderList += "\n";
     let that = this;
@@ -941,7 +941,6 @@ export class ContentSearchComponent implements OnInit {
       // }
 
       this._HeaderList += "," + stat.BranchName;
-      this._HeaderList += "," + stat.SubfolderName;
       this._HeaderList += "," + stat.PageCount;
       this._HeaderList += "\n";
     });
@@ -1057,7 +1056,7 @@ export class ContentSearchComponent implements OnInit {
           dwldLink.setAttribute("target", "_blank");
         }
         dwldLink.setAttribute("href", url);
-        dwldLink.setAttribute("download", "Metadata" + ".csv");
+        dwldLink.setAttribute("download", "DataEntry" + ".csv");
         dwldLink.style.visibility = "hidden";
         document.body.appendChild(dwldLink);
         dwldLink.click();
@@ -1149,7 +1148,7 @@ export class ContentSearchComponent implements OnInit {
       dwldLink.setAttribute("target", "_blank");
     }
     dwldLink.setAttribute("href", url);
-    dwldLink.setAttribute("download", "Metadata" + ".csv");
+    dwldLink.setAttribute("download", "Master" + ".csv");
     dwldLink.style.visibility = "hidden";
     document.body.appendChild(dwldLink);
     dwldLink.click();
@@ -1175,7 +1174,7 @@ export class ContentSearchComponent implements OnInit {
 
     // this._HeaderList += ','+ 'REGION'
     this._HeaderList += "," + "FOLDER";
-    this._HeaderList += "," + "SUBFOLDER";
+
     this._HeaderList += "," + "PAGECOUNT";
 
     this._HeaderList += "\n";
@@ -1191,7 +1190,7 @@ export class ContentSearchComponent implements OnInit {
       }
       // this._HeaderList +=',' + stat.DepartmentName;
       this._HeaderList += "," + stat.BranchName;
-      this._HeaderList += "," + stat.SubfolderName;
+
       this._HeaderList += "," + stat.DocCount;
 
       // }
@@ -1211,7 +1210,7 @@ export class ContentSearchComponent implements OnInit {
   }
 
   DownloadBulkFiles() {
-    if (this.selectedRows.length <= 25) {
+    if (this.selectedRows.length <= 10) {
       let _CSVData = "";
       for (let j = 0; j < this.selectedRows.length; j++) {
         _CSVData += this.selectedRows[j] + ",";
@@ -1222,7 +1221,7 @@ export class ContentSearchComponent implements OnInit {
       this.downloadBulkFileBYCSV(_CSVData);
     } else {
       this.ShowErrormessage(
-        "You can not select more than 25 files to download"
+        "You can download 10 files one time"
       );
     }
   }

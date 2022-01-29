@@ -41,7 +41,7 @@
                         <label class=" form-control-label w-full px-4" for="UserIDS">
                             <select name="TemplateID" id="TemplateID" class="form-control" formControlName="TemplateID"
                               (change)="geTemplateNameListByTempID($event.target.value)">
-                              <option value=0>Select Template</option>
+                              <option value=0>Select Category</option>
                               <option *ngFor="let _Temp of _TemplateList" [value]="_Temp.TemplateID">
                                 {{_Temp.TemplateName}}
                               </option>

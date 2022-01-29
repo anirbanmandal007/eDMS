@@ -29,7 +29,7 @@ export class TemplateMappingComponent implements OnInit {
   AddTemplateMappingForm: FormGroup;
   userFilter:any = { TemplateName: '' };
   createmodalopen:boolean = false; 
-  _PageTitle:any = "New Template Mapping";
+  _PageTitle:any = "New Category Access";
   _toasterTitle:any = "Mapped!";
   dtOptions:any = {
     processing: true,
@@ -131,7 +131,7 @@ export class TemplateMappingComponent implements OnInit {
   }
   /*Create template Mapping */
   createTemplateMapping(){
-    this._PageTitle = "New Template Mapping";
+    this._PageTitle = "New Category Access";
     this._toasterTitle ="Mapped!";
     this.createmodalopen=true;
     this.getUserList();
@@ -141,7 +141,7 @@ export class TemplateMappingComponent implements OnInit {
    /*Edit template*/
   editTemplateMapping() {
     this._toasterTitle = "Updated!";
-    this._PageTitle = "Edit template";
+    this._PageTitle = "Edit Category";
     this.createmodalopen=true;
     this.getUserList();
     this.getTemplatebyUser(0);

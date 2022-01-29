@@ -23,7 +23,7 @@ export class TemplateComponent implements OnInit {
   TemplateForm: FormGroup;
 
   createmodalopen:boolean = false; 
-  _PageTitle:any = "Add new template";
+  _PageTitle:any = "Add new Category";
   _toasterTitle:any = "Added";
   constructor(
     private toaster: ToasterService,
@@ -67,7 +67,7 @@ export class TemplateComponent implements OnInit {
   }
   /*Create new template */
   createTemplate(){
-    this._PageTitle = "Add new template";
+    this._PageTitle = "Add new Category";
     this._toasterTitle ="Added!";
     this.createmodalopen=true;
     this.TemplateForm = this._formBuilder.group({
@@ -78,7 +78,7 @@ export class TemplateComponent implements OnInit {
    /*Edit template*/
   editTemplate(template:any) {
     this._toasterTitle = "Updated!";
-    this._PageTitle = "Edit template";
+    this._PageTitle = "Edit Category";
     this.TemplateForm = this._formBuilder.group({
     TemplateName: [template.TemplateName, Validators.required],
     id:template.id

@@ -447,8 +447,8 @@ ShareLinkFormPopup: boolean =  false;
     this.tableHeader = [
       { field: 'srNo', header: "SR NO", index: 1 },
       { field: 'fileNo', header: this.TempField, index: 1 },
-      { field: 'DepartmentName', header: 'REGION', index: 1 },
-      { field: 'BranchName', header: 'CUSTOMER', index: 1 },
+      { field: 'DepartmentName', header: 'CABINET', index: 1 },
+      { field: 'BranchName', header: 'FOLDER', index: 1 },
    
       
       // { field: 'empName', header: 'EMP NAME', index: 7 },
@@ -456,11 +456,11 @@ ShareLinkFormPopup: boolean =  false;
       // { field: 'designation', header: 'Designation', index: 9 },
       // { field: 'isActive', header: 'Is Active', index: 10 },
       // { field: 'doj', header: 'DOJ', index: 11 },
-      { field: 'USERID', header: 'CREATE BY', index: 2 },
-      { field: 'EntryDate', header: 'CREATE DATE', index: 3 },
+      // { field: 'USERID', header: 'CREATE BY', index: 2 },
+      { field: 'EntryDate', header: 'UPLOAD DATE', index: 3 },
       // { field: 'fileSize', header: 'File Size', index: 4 },
-      { field: 'PageCount', header: 'PAGE COUNT', index: 5 },
-      { field: 'IsIndexing', header: 'IS INDEXING', index: 5 },
+      { field: 'PageCount', header: 'PAGES', index: 5 },
+      { field: 'IsIndexing', header: 'FORM ENTRY', index: 5 },
      
     //  { field: 'Archive', header: 'Archive', index: 7 }
     ];
@@ -694,7 +694,7 @@ filterFolderTable($event) {
 }
 
 DownloadBulkFiles() {
-  if (this.selectedRows.length <= 25) {
+  if (this.selectedRows.length <= 10) {
     let _CSVData = "";
     for (let j = 0; j < this.selectedRows.length; j++) {
       _CSVData += this.selectedRows[j] + ",";
@@ -705,7 +705,7 @@ DownloadBulkFiles() {
     this.downloadBulkFileBYCSV(_CSVData);
   } else {
     this.ShowErrormessage(
-      "You can not select more than 25 files to download"
+      "You can not select more than 10 files to download"
     );
   }
 }
@@ -714,16 +714,42 @@ downloadBulkFileBYCSV(_CSVData: any) {
     ACC: _CSVData,
   });
 
+  console.log("Final FP-- res ", _CSVData);
+
   // BulkDownload
   //   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/SearchBulkFile?ID=' + localStorage.getItem('UserID') + '&_fileName= '+  _CSVData +' &user_Token='+ localStorage.getItem('User_Token');
   //  this._onlineExamService.downloadDoc(apiUrl).subscribe(res => {
-  this.searchService.downloadBulkFileBYCSV(this.FileStorageForm.value).subscribe((res) => {
+  this.searchService.BulkDownload(this.FileStorageForm.value).subscribe((res) => {
       if (res) {
         saveAs(res, "Bulk Files" + ".zip");
       }
-      // console.log("Final FP-- res ", res);
+     console.log("Final FP-- res ", res);
     });
 }
+
+// downloadBulkFileBYCSV(_CSVData:any) {
+
+
+//   this.FileStorageForm.patchValue({
+//     ACC: _CSVData,
+//     User_Token: localStorage.getItem('User_Token'),
+//     userID: localStorage.getItem('UserID')
+//   });
+
+//  // BulkDownload
+//   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/DLoadBulkFiles';   
+// //   const apiUrl = this._global.baseAPIUrl + 'SearchFileStatus/SearchBulkFile?ID=' + localStorage.getItem('UserID') + '&_fileName= '+  _CSVData +' &user_Token='+ localStorage.getItem('User_Token');
+// //  this._onlineExamService.downloadDoc(apiUrl).subscribe(res => {
+//   this._onlineExamService.BulkDownload(this.FileStorageForm.value, apiUrl).subscribe( res => {
+//     if (res) {      
+//     saveAs(res, "Bulk Files" + '.zip');         
+//     }
+//     // console.log("Final FP-- res ", res);  
+//   });
+
+// }
+
+
 ShareLink(template: TemplateRef<any>) {
   var that = this;
   ///console.log("Email", this.selectedRows);

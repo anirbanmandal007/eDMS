@@ -86,8 +86,8 @@ export class UserComponent implements OnInit {
       email: ["", [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
       ]],
       mobile: [""],
-      role: ["", Validators.required],
-      Remarks: [""]
+      role: ["", Validators.required]
+      
     });
    
     this.editform = this._formBuilder.group({
@@ -100,7 +100,7 @@ export class UserComponent implements OnInit {
       ]],
       mobile: [""],
       role: ["", Validators.required],
-      Remarks: [""],
+      
       User_Token: localStorage.getItem('User_Token'),
     });
   }
@@ -179,7 +179,7 @@ export class UserComponent implements OnInit {
       email: this.AddUserForm.controls.email.value,
       mobile:String(this.AddUserForm.controls.mobile.value),
       role: this.AddUserForm.controls.role.value,
-      Remarks: this.AddUserForm.controls.Remarks.value,
+     
       User_Token: localStorage.getItem('User_Token'),
     }
     console.log(body)
@@ -213,7 +213,7 @@ editRow(userId:any){
       email: data.email,
       mobile: data.mobile,
       role: data.roleName,
-      Remarks: data.remarks,
+     
       User_Token: localStorage.getItem('User_Token'),
     });
     
@@ -236,7 +236,7 @@ editRowdata(){
     email: this.editform.controls.email.value,
     mobile:String(this.editform.controls.mobile.value),
     sysRoleID:this.role_id,
-    Remarks: this.editform.controls.Remarks.value,
+    
     role: this.editform.controls.role.value
   }
 

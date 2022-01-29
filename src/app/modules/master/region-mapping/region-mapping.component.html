@@ -11,18 +11,18 @@
               <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>Master</li>
+                </svg>Configuration</li>
               <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>Region Mapping</li>
+                </svg>Cabinet Access</li>
             </ol>
           </div>
       </div>
       <!-- CONTENT GOES HERE -->
       <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
         <div class="page-title">
-          <h3>All Region Mappings</h3>
+          <h3>All Cabinet Access</h3>
         </div>
           <div class="grid grid-cols-2 gap-2">
               <div>
@@ -109,13 +109,13 @@
                   *ngIf="tf.DeptID && tf.DeptID.touched && tf.DeptID.invalid && tf.DeptID.errors.required">This field is Required</div>
               </div>
                <div class="col-md-6">
-                <input type="text" class="search-box" [(ngModel)]="userFilter.BranchName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(BranchName)" placeholder="Search by Customer Name"/>
+                <input type="text" class="search-box" [(ngModel)]="userFilter.BranchName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(BranchName)" placeholder="Search by Folder"/>
               </div>
           </div>
           <div class="form-row">
             <div class="col-md-6">
               <ul class="position-relative cust-list">
-                <label class="box-label">Customer List</label>
+                <label class="box-label">Folder List</label>
                 <li>
                   <input
                       class="custom-control-input"

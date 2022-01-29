@@ -68,7 +68,7 @@ export class CustomerComponent implements OnInit {
   }
   /*Create new customer */
   createCustomer(){
-    this._PageTitle = "Add new customer";
+    this._PageTitle = "Add new Folder";
     this._toasterTitle ="Added!";
     this.createmodalopen=true;
     this.CustomerForm = this._formBuilder.group({
@@ -79,7 +79,7 @@ export class CustomerComponent implements OnInit {
    /*Edit customer*/
    editCustomer(customer:any) {
     this._toasterTitle = "Updated!";
-    this._PageTitle = "Edit customer";
+    this._PageTitle = "Edit Folder";
     this.CustomerForm = this._formBuilder.group({
       BranchName: [customer.BranchName, Validators.required],
       id:customer.id
@@ -100,7 +100,7 @@ export class CustomerComponent implements OnInit {
   }
   /*Delete Customer */
   deleteCustomer(customerId:any,BranchName:any){
-    const message = `Are you sure you want delete this Customer: `+BranchName+`?`;
+    const message = `Are you sure you want delete this Folder: `+BranchName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

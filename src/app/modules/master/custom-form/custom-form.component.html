@@ -11,17 +11,17 @@
               <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>Master</li>
+                </svg>Config</li>
               <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"  fill="none" viewBox="0 0 24 24" stroke="currentColor" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-              </svg>Custom Form</li>
+              </svg>Form Entry</li>
             </ol>
           </div>
       </div>
       <!-- CONTENT GOES HERE -->
       <div class="h-150 min-h-150 max-h-150 border-2 border-gray-300 bg-wt p-4 table-wrap">
         <div class="page-title">
-          <h3>All Field</h3>
+          <h3>All </h3>
         </div>
           <div class="grid grid-cols-2 gap-2">
               <div>
@@ -30,7 +30,7 @@
                           <label class=" form-control-label" for="UserIDS">
                               <select class="form-control form-control-sm" [formControlName]="'TemplateID'" data-toggle="select" id="TemplateID"
                               (change)="geTemplateNameListByTempID($event.target.value)">
-                                  <option value="0"> Select Template</option>
+                                  <option value="0"> Select Category</option>
                                   <option *ngFor="let _TL of TemplateList" [value]="_TL.id"  >
                                   {{_TL.TemplateName}}
                                   </option>
@@ -40,7 +40,7 @@
                   </form>
               </div>
               <div>
-                  <div class="btn-panel"><button type="button" (click)="addFields()">Add Field</button></div>
+                  <div class="btn-panel"><button type="button" (click)="addFields()">Add Index Field</button></div>
               </div>
           </div>
           <hr>
@@ -109,38 +109,38 @@
         <form class="needs-validation" novalidate=""  [formGroup]="AddCustomForm">
           <div class="form-wrap">
               <div class="form-group">
-                <label class="form-control-label" for="IndexField">Template</label>
+                <label class="form-control-label" for="IndexField">Category</label>
                 <select name="TemplateID" id="TemplateID" class="form-control" formControlName="TemplateID">
-                  <option value=0>Select Template</option>   
+                  <option value=0>Select Category</option>   
                   <option *ngFor="let _Temp of TemplateList" [value]="_Temp.id"  >  
                   {{_Temp.TemplateName}}  
                   </option>   
               </select>
               </div>
               <div class="form-group">
-                <label class="form-control-label" for="IndexField">Index Field</label>
+                <label class="form-control-label" for="IndexField">Field Name</label>
                 <input type="text" class="form-control" id="IndexField" formControlName="IndexField" placeholder="Index Field" value="Mark" required />
               </div>
               <div class="form-group">
-                <label class="form-control-label" for="DisplayName">Display Name</label>
+                <label class="form-control-label" for="DisplayName">Field Caption (Label)*</label>
                 <input type="text" class="form-control" id="DisplayName" formControlName="DisplayName" placeholder="Display Name" value="Mark" required />
               </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="form-control-label" for="MinLenght">Min Length</label>
                 <input type="text" class="form-control" id="MinLenght" formControlName="MinLenght" placeholder="Min Length" value="Mark" required />
-              </div>
+              </div> -->
               <div class="form-group">
-                <label class="form-control-label" for="MaxLenght">Max Length</label>
+                <label class="form-control-label" for="MaxLenght">Length</label>
                 <input type="text" class="form-control" id="MaxLenght" formControlName="MaxLenght" placeholder="Max Length" value="Mark" required />
               </div>
               <div class="form-group">
-                <label class="form-control-label" for="MaxLenght">Field Type</label>
+                <label class="form-control-label" for="MaxLenght">Data Type</label>
                 <select class=" form-control" data-toggle="select"  formControlName="FieldType" id="FieldType" required>
-                  <option value=0 >Select Field Type</option>   
+                  <option value=0 >Select Data Type</option>   
                   <option value=1>Text</option>   
                   <option value=2>Number</option>   
                   <option value=3>Date</option>   
-                  <option value=4>Drop Down</option> 
+                  <option value=4>Master</option> 
                   <option value=5>Alpha Numeric</option> 
               </select>
               </div>
@@ -150,7 +150,7 @@
               </div>
               <div class="form-group flex">
                 <div class="w-50">
-                    Mandatory
+                    Required
                     <label class=" custom-toggle custom-toggle-success mr-1">
                       <input checked="checked" type="checkbox" formControlName="IsMandatory"/>
                       <span
@@ -160,8 +160,8 @@
                       </span>
                     </label>
                   </div>
-                  <div class="w-50">
-                    Auto Number 
+                  <!-- <div class="w-50">
+                    Random Number 
                     <label class=" custom-toggle custom-toggle-success mr-1"> 
                       <input checked="checked" type="checkbox" formControlName="IsAuto"/>
                       <span
@@ -170,7 +170,7 @@
                         data-label-on="YES"              >
                       </span>
                     </label> 
-                  </div>         
+                  </div>          -->
                 </div>
             </div>
           <div class="text-right">

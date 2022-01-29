@@ -21,7 +21,7 @@ export class CustomFormComponent implements OnInit {
  
   userFilter:any = { BranchName: '' };
 
-  columns = [{prop: 'IndexField'}, {prop: 'DisplayName'}, {prop: 'FieldTypeText'}, {prop: 'MinLenght'}, {prop: 'MaxLenght'}];
+  columns = [{prop: 'IndexField'}, {prop: 'DisplayName'}, {prop: 'FieldTypeText'}, {prop: 'MaxLenght'}];
   loader: boolean;
   TemplateList: any;
   _IndexList: any;
@@ -64,7 +64,7 @@ export class CustomFormComponent implements OnInit {
       TemplateID: [0, Validators.required],
       IndexField: ['', Validators.compose([Validators.required])],
       DisplayName: ['', Validators.required],      
-      MinLenght: ['', Validators.required],        
+      MinLenght: [1],        
       //CloginPass: ['', Validators.required],
       MaxLenght: ['', Validators.required],
       FieldType: [0, Validators.required],    
@@ -159,10 +159,10 @@ geTemplateNameListByTempID(templateId:number) {
       }
       let _IsAuto =0;
       
-      if (this.AddCustomForm.get("IsAuto").value)
-      {
-        _IsAuto =1;
-      }
+      // if (this.AddCustomForm.get("IsAuto").value)
+      // {
+      //   _IsAuto =1;
+      // }
   
       let _IsMandatory =0;    
       if (this.AddCustomForm.get("IsMandatory").value)
@@ -206,11 +206,9 @@ geTemplateNameListByTempID(templateId:number) {
       this.AddCustomForm.controls['IndexField'].setValue(that._IndexFieldData.IndexField);
       this.AddCustomForm.controls['DisplayName'].setValue(that._IndexFieldData.DisplayName);
       this.AddCustomForm.controls['FieldType'].setValue(that._IndexFieldData.FieldType);
-      this.AddCustomForm.controls['MinLenght'].setValue(that._IndexFieldData.MinLenght);
       this.AddCustomForm.controls['MaxLenght'].setValue(that._IndexFieldData.MaxLenght);
       this.AddCustomForm.controls['ListData'].setValue(that._IndexFieldData.ListData);
       this.AddCustomForm.controls['IsMandatory'].setValue(that._IndexFieldData.IsMandatory);
-      this.AddCustomForm.controls['IsAuto'].setValue(that._IndexFieldData.IsAuto);
   
       that._IndexFieldData="";
       localStorage.setItem('_TempID','0') ;

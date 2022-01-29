@@ -62,7 +62,7 @@ _PageTitle:any = "Create Role";
     this.geRoleList();
     this.AddRoleForm = this.__formBuilder.group({     
       roleName: ['', Validators.required],
-      remarks: ['', Validators.required],
+    
       User_Token: localStorage.getItem('User_Token') ,
       CreatedBy: localStorage.getItem('UserID') ,
       Roles: this.__formBuilder.array([]),
@@ -82,7 +82,7 @@ _PageTitle:any = "Create Role";
     this._PageList(Number(_RoleID) );
     this._RightList(Number(_RoleID) );
     this.AddRoleForm.controls['roleName'].setValue(localStorage.getItem('_RoleName'));
-    this.AddRoleForm.controls['remarks'].setValue(localStorage.getItem('_RoleRemark'));  
+  
 
     }
     else 
@@ -120,7 +120,7 @@ _PageTitle:any = "Create Role";
     this.getPageList(Number(_RoleID) );
     this.getRightList(Number(_RoleID) );
     this.AddRoleForm.controls['roleName'].setValue(localStorage.getItem('_RoleName'));
-    this.AddRoleForm.controls['remarks'].setValue(localStorage.getItem('_RoleRemark'));  
+    
 
     }
     else 
@@ -274,7 +274,7 @@ _PageTitle:any = "Create Role";
 
       localStorage.removeItem('_RoleID');   
       localStorage.removeItem('roleName');   
-      localStorage.removeItem('remarks');
+  
       window.location.reload();
 
       }
@@ -326,7 +326,7 @@ _PageTitle:any = "Create Role";
 
     OnReset() { 
     this.AddRoleForm.controls['roleName'].setValue("");
-    this.AddRoleForm.controls['remarks'].setValue("");  
+  
 
     let _bool = false; 
     this.roles.controls.forEach((role) => {
@@ -348,7 +348,7 @@ _PageTitle:any = "Create Role";
     {
     localStorage.removeItem('_RoleID') ;   
     localStorage.removeItem('roleName') ;   
-    localStorage.removeItem('remarks') ;
+   
     window.location.reload();
 
     }

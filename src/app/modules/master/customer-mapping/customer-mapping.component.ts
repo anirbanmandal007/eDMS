@@ -28,8 +28,8 @@ export class CustomerMappingComponent implements OnInit {
   BranchMappingForm: FormGroup;
   userFilter:any = { BranchName: '' };
   createmodalopen:boolean = false; 
-  _PageTitle:any = "New Customer Mapping";
-  _toasterTitle:any = "Mapped!";
+  _PageTitle:any = "New Folder Mapping";
+  _toasterTitle:any = "Access!";
   dtOptions:any = {
     processing: true,
     ordering: true,
@@ -124,8 +124,8 @@ export class CustomerMappingComponent implements OnInit {
   }
   /*Create Customer Mapping */
   createCustomerMapping(){
-    this._PageTitle = "New Customer Mapping";
-    this._toasterTitle ="Mapped!";
+    this._PageTitle = "New Folder Access";
+    this._toasterTitle ="Access!";
     this.createmodalopen=true;
     this.getUserList();
     /*this.AddBranchMappingForm = this._formBuilder.group({
@@ -137,7 +137,7 @@ export class CustomerMappingComponent implements OnInit {
   editTemplate(template:any) {
     this.createCustomerMapping();
     this._toasterTitle = "Updated!";
-    this._PageTitle = "Edit template";
+    this._PageTitle = "Edit Category";
     this.AddBranchMappingForm = this._formBuilder.group({
     TemplateName: [template.TemplateName, Validators.required],
     id:template.id
@@ -158,7 +158,7 @@ export class CustomerMappingComponent implements OnInit {
   }
   /*Delete template */
   deleteTemplate(templateId:any,templateName:any){
-    const message = `Are you sure you want delete this customer: `+templateName+`?`;
+    const message = `Are you sure you want delete this Folder: `+templateName+`?`;
     const dialogData = new ConfirmDialogModel("Confirm Deletion", message, 'Delete', 'Cancel');
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -306,7 +306,7 @@ ngAfterViewInit(): void {
 
     this._masterService.createMapping(body).subscribe((data) => {
         this.createmodalopen = false;
-        this.toaster.show('success', 'Branch Mapping Done', data);
+        this.toaster.show('success', 'Folder Access Done', data);
         this.getCustListById(this._selectedCustId);
         this.getCustomerWiseList(0);
       });
