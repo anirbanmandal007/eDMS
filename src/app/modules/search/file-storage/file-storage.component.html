@@ -41,66 +41,44 @@
             </mdb-card> -->
           </div>
           <div class="w-full md:w-9/12 xl:w-9/12 p-6">
-              <div style="width: 30%;">
-
-                <div *ngIf="_isDownload" >
-                  <button type="button" title="Download Files" style="padding:1px 1px 1px 1px;float: left"
-                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadBulkFiles()" >
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex icon-button">
+                  <button *ngIf="_isDownload" type="button" title="Download Files"(click)="DownloadBulkFiles()" >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </button> 
-                </div>
-
-                <div *ngIf="_ShareLink" >
-                  <button type="button" title="Share link" style="padding:1px 1px 1px 1px;float: left"
-                  class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="ShareLink(ShareLinkFormPopup)" >
+                  <button type="button"  *ngIf="_ShareLink" title="Share link"(click)="ShareLink(ShareLinkFormPopup)" >
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                   </svg>
                 </button>
-                </div>
-
-                <div *ngIf="_isEmail" >
-                  <button type="button" title="Send E-Mail" style="padding:1px 1px 1px 1px;float: left"
-                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"   (click)="SendBulkEmail(EmailFormPopup)">
+                  <button type="button" *ngIf="_isEmail" title="Send E-Mail"  (click)="SendBulkEmail(EmailFormPopup)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </button>
-                </div>
-
-              <div>
-                <button type="button" title="Download Metadata" style="padding:1px 1px 1px 1px;float: left; position: relative;
-                    bottom: 0px;left: 3px;"
-                    class="btn btn-icon btn-secondary btn-icon-only rounded-circle"  (click)="DownloadMetadata()" >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
+                  <button type="button" title="Download Metadata" (click)="DownloadMetadata()" >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                  </button>
+              </div>
+              <div class="flex">
+                <select name="TemplateID" id="TemplateID" style="width: 45%;margin-left: 30%;" class="form-control"  formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
+                  <option value="0">Select Category</option>   
+                  <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
+                  {{_Temp.TemplateName}}  
+                  </option>   
+                </select>
+                <button type="button" class="btn btn-info flex relaod-btn" (click)="GetFileInfo('')">Reload
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
                 </button>
               </div>
-          </div>
-          <div style="width: 67%; float: right;">   
-             
-            <div class="reresh-table" style="width: 25px;float:right;text-align: right;cursor: pointer;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-10" viewBox="0 0 20 20" fill="currentColor" (click)="GetFileInfo('')">
-                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
-              </svg>
-            </div>  
-            <select name="TemplateID" id="TemplateID" style="width: 45%;float: right;
-            position: relative;
-            bottom: 8px;" class="form-control"  formControlName="TemplateID" (change)="geTemplateNameListByTempID($event.target.value)">
-              <option value="0">Category</option>   
-              <option *ngFor="let _Temp of TemplateList" [value]="_Temp.TemplateID"  >  
-              {{_Temp.TemplateName}}  
-              </option>   
-            </select>
-            <label style="width: auto; float: right; position: relative;
-            top: 3px;
-            right: 8px;" for="TemplateID" class=" form-control-label">  Select Category </label>
-          </div>
-
-            <diV style="margin-top: 5%; font-size: 13px;">
+            </div>
+            <diV style="margin-top: 1%; font-size: 13px;">
               <p-table #tt selectionMode="single" style="width: 100%;" [autoLayout]="true" [paginator]="true" [rows]="10" [columns]="tableHeader" [value]="formattedData"  (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]" [loading]="loading" [(first)]="first" (onPage)="paginate($event)" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
               <ng-template pTemplate="caption">
                   <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
