@@ -248,9 +248,21 @@ ngAfterViewInit(): void {
       this.largeDataset = data;
     });
   }
-  selectedItem(item){
-    this.selectedItems.push(item.id);
-    console.log("checked item",this.selectedItems);   
+  selectedItem(e, item){
+    this.largeDataset.forEach((ele,index) => {
+      if(ele.id === item.id) {
+        if(e.target.checked) {
+          item.ischecked = true;
+          this.selectedItems.push(item.id);
+        } else {
+          item.ischecked = false;
+          this.selectedItems = this.selectedItems.filter(el=> el !== item.id);
+        }
+      }
+    });
+    const isAllChecked = this.largeDataset.filter(el => el.ischecked).length === this.largeDataset.length;
+    this.AddBranchMappingForm.controls['selectAll'].patchValue(isAllChecked);
+    console.log("checked item",this.selectedItems);
   }
   onSubmit() {
     this.submitted = true;

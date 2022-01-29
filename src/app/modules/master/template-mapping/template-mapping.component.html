@@ -138,7 +138,7 @@
               </div>
                 </li>
                 <li *ngFor="let item of largeDatasetForMap | filterBy:userFilter" class="d-flex">
-                  <input type="checkbox" [value]="item.id" [checked]="item.ischecked == 1" (click)="selectedItem(item)">
+                  <input type="checkbox" [value]="item.id" [checked]="item.ischecked == 1" (click)="selectedItem($event, item)">
                   <label>{{item.TemplateName}}</label>
                 </li>
                 

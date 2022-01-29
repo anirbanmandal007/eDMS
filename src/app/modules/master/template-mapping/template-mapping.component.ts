@@ -281,9 +281,20 @@ handleFilterChange(text: string): void {
       this.largeDatasetForMap = data;
     });
   }
-  selectedItem(item){
-    this.selectedItems.push(item.id);
-    console.log("checked item",this.selectedItems);   
+  selectedItem(e, item){
+    this.largeDatasetForMap.forEach((ele,index) => {
+      if(ele.id === item.id) {
+        if(e.target.checked) {
+          item.ischecked = true;
+          this.selectedItems.push(item.id);
+        } else {
+          item.ischecked = false;
+          this.selectedItems = this.selectedItems.filter(el=> el !== item.id);
+        }
+      }
+    });
+    const isAllChecked = this.largeDatasetForMap.filter(el => el.ischecked).length === this.largeDatasetForMap.length;
+    this.AddTemplateMappingForm.controls['selectAll'].patchValue(isAllChecked); 
   }
   onSubmit() {
     this.submitted = true;
@@ -347,17 +358,17 @@ handleFilterChange(text: string): void {
      }
      master_change(){
       let _bool =this.AddTemplateMappingForm.controls['selectAll'].value;
-      this.largeDataset.forEach((ele,index) => {
+      this.largeDatasetForMap.forEach((ele,index) => {
         if(_bool == true){
           ele.ischecked = true;
         }else
           ele.ischecked = false;
          
       });
-      console.log("this.largeDataset",this.largeDataset);
+      console.log("this.largeDataset",this.largeDatasetForMap);
      }
      filternames(mList){
-        this.largeDataset = mList;
+        this.largeDatasetForMap = mList;
      }
      searchforBranch(key){
         if(!key){

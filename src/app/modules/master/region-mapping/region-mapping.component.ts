@@ -43,7 +43,7 @@ export class RegionMappingComponent implements OnInit {
 
   //ng table data populate
   temp: any;
-  columns = [{prop: 'DepartmentName'}, {prop: 'BranchName'}];
+  columns = [{prop: 'DepartmentName', displayName: 'Cabinet Name'}, {prop: 'BranchName', displayName: 'Branch Name'}];
   @ViewChild('search', { static: false }) search: any;
   //multi select drop down
   selectedItems: any = [];
@@ -269,9 +269,21 @@ handleFilterChange(text: string): void {
       this.largeDataset = data;
     });
   }
-  selectedItem(item){
-    this.selectedItems.push(item.id);
-    console.log("checked item",this.selectedItems);   
+  selectedItem(e, item){
+    this.largeDataset.forEach((ele,index) => {
+      if(ele.id === item.id) {
+        if(e.target.checked) {
+          item.ischecked = true;
+          this.selectedItems.push(item.id);
+        } else {
+          item.ischecked = false;
+          this.selectedItems = this.selectedItems.filter(el=> el !== item.id);
+        }
+      }
+    });
+    const isAllChecked = this.largeDataset.filter(el => el.ischecked).length === this.largeDataset.length;
+    this.AddRegionMappingForm.controls['selectAll'].patchValue(isAllChecked);
+    console.log("checked item",this.selectedItems);
   }
   onSubmit() {
     this.submitted = true;
