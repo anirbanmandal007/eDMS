@@ -117,7 +117,7 @@
           <div class="form-row">
             <div class="col-md-6">
               <ul class="position-relative cust-list">
-                <label class="box-label">Folder List</label>
+                <!-- <label class="box-label">Folder List</label> -->
                 <li>
                   <input
                       class="custom-control-input"
@@ -134,7 +134,7 @@
                     </label>
                 </li>
                 <li *ngFor="let item of largeDataset | filterBy:userFilter" class="d-flex">
-                  <input type="checkbox" [value]="item.BranchID" [checked]="item.ischecked == 1" (click)="selectedItem(item)">
+                  <input type="checkbox" [value]="item.BranchID" [checked]="item.ischecked == 1" (click)="selectedItem($event, item)">
                   <label>{{item.BranchName}}</label>
                 </li>
               </ul>
