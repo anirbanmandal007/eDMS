@@ -23,27 +23,22 @@
         <div class="page-title">
           <h3>All </h3>
         </div>
-          <div class="grid grid-cols-2 gap-2">
-              <div>
-                  <form [formGroup]="ViewCustomeForm">
-                      <div class="dataTables_length" id="datatable_length">
-                          <label class=" form-control-label" for="UserIDS">
-                              <select class="form-control form-control-sm" [formControlName]="'TemplateID'" data-toggle="select" id="TemplateID"
-                              (change)="geTemplateNameListByTempID($event.target.value)">
-                                  <option value="0"> Select Category</option>
-                                  <option *ngFor="let _TL of TemplateList" [value]="_TL.id"  >
-                                  {{_TL.TemplateName}}
-                                  </option>
-                              </select>
-                          </label>
-                      </div>
-                  </form>
-              </div>
-              <div>
-                  <div class="btn-panel"><button type="button" (click)="addFields()">Add Index Field</button></div>
-              </div>
+        <div class="btn-panel"><button type="button" (click)="addFields()">Add Index Field</button></div>
+        <div class="grid grid-cols-2 gap-2">
+            <form [formGroup]="ViewCustomeForm">
+                <div class="dataTables_length" id="datatable_length">
+                    <label class=" form-control-label" for="UserIDS">
+                        <select class="form-control form-control-sm" [formControlName]="'TemplateID'" data-toggle="select" id="TemplateID"
+                        (change)="geTemplateNameListByTempID($event.target.value)">
+                            <option value="0"> Select Category</option>
+                            <option *ngFor="let _TL of TemplateList" [value]="_TL.id"  >
+                            {{_TL.TemplateName}}
+                            </option>
+                        </select>
+                    </label>
+                </div>
+            </form>
           </div>
-          <hr>
         <div *ngIf="loader">
           <div class="flex items-center justify-center">
             <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
