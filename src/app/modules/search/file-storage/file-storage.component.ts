@@ -680,7 +680,7 @@ filterFolderTable($event) {
       for (var key in d) {
         const strArr = val.split(',');
         strArr.forEach(el => {
-          if (d[key] && el!== '' && d[key].toLowerCase().indexOf(el.toLowerCase()) !== -1) {
+          if (d[key] && el!== '' && d[key].toString().toLowerCase().indexOf(el.toLowerCase()) != -1) {
             if (filteredArr.filter(el => el.fileNo === d.fileNo).length === 0) {
               filteredArr.push(d);
             }
