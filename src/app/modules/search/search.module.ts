@@ -14,6 +14,9 @@ import { AdvancedSearchComponent } from './advanced-search/advanced-search.compo
 import { FileStorageComponent } from './file-storage/file-storage.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {TreeModule} from 'primeng/tree';
+import { keywordSearchComponent } from './keyword-search/keyword-search.component';
+
+
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import {TreeModule} from 'primeng/tree';
     DeleteFilesComponent,
     BulkDownloadComponent,
     AdvancedSearchComponent,
-    FileStorageComponent
+    FileStorageComponent,
+    keywordSearchComponent
   ],
   imports: [
     RouterModule.forChild(searchRoutes),

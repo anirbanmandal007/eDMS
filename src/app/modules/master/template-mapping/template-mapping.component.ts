@@ -42,7 +42,10 @@ export class TemplateMappingComponent implements OnInit {
 
   //ng table data populate
   temp: any;
-  columns = [{prop: 'UserName'}, {prop: 'TemplateName'}];
+  //columns = [{prop: 'DepartmentName', displayName: 'Cabinet Name'}, {prop: 'BranchName', displayName: 'Folder Name'}];
+  
+
+  columns = [{prop: 'UserName', displayName: 'Name'}, {prop: 'TemplateName', displayName: 'Category'}];
   @ViewChild('search', { static: false }) search: any;
   //multi select drop down
   selectedItems: any = [];

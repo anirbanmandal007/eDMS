@@ -177,6 +177,11 @@ export class SearchService {
     return this._httpService.get(apiUrl);
   }
 
+  getBasicSearchDataByFilter(templateId,fileNo) {
+    const apiUrl = 'SearchFileStatus/getBasicSearchDataByFilter?UserID='+this.userId+'&user_Token='+this.userToken+'&TemplateID='+templateId+'&SearchValues='+fileNo ;
+    return this._httpService.get(apiUrl);
+  }
+
   GetMetaDataFileNo(data) {
     data["User_Token"]=this.userToken;
     data["userID"]=this.userId;

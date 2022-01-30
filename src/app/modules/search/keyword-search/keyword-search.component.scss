@@ -1,0 +1,13 @@
+.icon-button-css{
+    padding:1px;
+    float: left;
+    position: relative;
+    top: 20px;
+}
+
+::ng-deep .cdk-overlay-container{
+    z-index: 1200 !important;
+}
+::ng-deep .p-datatable-wrapper{
+    font-size: 15px !important;
+}

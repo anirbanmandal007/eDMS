@@ -82,10 +82,17 @@
                 <ngx-datatable-column name="SrNo">
                   <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column *ngFor="let column of columns; 
+
+                <!-- <ngx-datatable-column *ngFor="let column of columns; 
                   let i = index;" name="{{column.prop}}"
                   prop="{{column.prop}}">
                 </ngx-datatable-column>
+               -->
+               <ngx-datatable-column *ngFor="let column of columns; 
+               let i = index;" name="{{column.prop}}"
+               prop="{{column.prop}}">
+             </ngx-datatable-column>
+
               </ngx-datatable>
           </div>
           <!--<div class="pt-9" *ngIf="displayTable">

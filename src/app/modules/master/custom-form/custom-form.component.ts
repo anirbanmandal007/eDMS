@@ -20,8 +20,9 @@ export class CustomFormComponent implements OnInit {
   ViewCustomeForm: FormGroup;
  
   userFilter:any = { BranchName: '' };
+columns = [{prop: 'IndexField', displayName: 'Field'}, {prop: 'FieldTypeText', displayName: 'Data Type'}, {prop: 'MaxLenght', displayName: 'Lenght'}];
 
-  columns = [{prop: 'IndexField'}, {prop: 'DisplayName'}, {prop: 'FieldTypeText'}, {prop: 'MaxLenght'}];
+//  columns = [{prop: 'IndexField'}, {prop: 'DisplayName'}, {prop: 'FieldTypeText'}, {prop: 'MaxLenght'}];
   loader: boolean;
   TemplateList: any;
   _IndexList: any;

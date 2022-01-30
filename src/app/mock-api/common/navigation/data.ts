@@ -220,14 +220,14 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link : '/search/content-search',
                 disabled: false,
             },
-            // {
-            //     id   : 'Advanced Search',
-            //     title: 'Advanced Search',
-            //     type : 'basic',
-            //     icon : 'heroicons_outline:search-circle',
-            //     link : '/search/advanced-search',
-            //     disabled: false,
-            // },
+            {
+                id   : 'Advanced Search',
+                title: 'keyword-search',
+                type : 'basic',
+                icon : 'heroicons_outline:search-circle',
+                link : '/search/keyword-search',
+                disabled: false,
+            },
             {
                 id   : 'File Storage',
                 title: 'Folder Struture',

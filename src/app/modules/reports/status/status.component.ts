@@ -40,7 +40,10 @@ export class StatusComponent implements OnInit {
   uid: any;
   //ng table data populate
   temp_data: any;
-  columns = [{prop: 'Department'}, {prop: 'Customer'},{prop: 'FileNo'}, {prop: 'PageCount'},{prop: 'IsIndexing'}];
+  columns = [{prop: 'Department', displayName: 'Cabinet'}, {prop: 'FileNo', displayName: 'File Name'}, {prop: 'PageCount', displayName: 'PageCount'}];
+
+  //columns = [{prop: 'Department'}, {prop: 'Customer'},{prop: 'FileNo'}, {prop: 'PageCount'},{prop: 'IsIndexing'}];
+  
   @ViewChild('search', { static: false }) search: any;
   constructor(
     private __formBuilder: FormBuilder,

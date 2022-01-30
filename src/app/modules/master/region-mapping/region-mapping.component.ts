@@ -43,7 +43,7 @@ export class RegionMappingComponent implements OnInit {
 
   //ng table data populate
   temp: any;
-  columns = [{prop: 'DepartmentName', displayName: 'Cabinet Name'}, {prop: 'BranchName', displayName: 'Branch Name'}];
+  columns = [{prop: 'DepartmentName', displayName: 'Cabinet Name'}, {prop: 'BranchName', displayName: 'Folder Name'}];
   @ViewChild('search', { static: false }) search: any;
   //multi select drop down
   selectedItems: any = [];

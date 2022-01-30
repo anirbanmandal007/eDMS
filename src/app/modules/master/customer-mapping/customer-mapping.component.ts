@@ -39,7 +39,11 @@ export class CustomerMappingComponent implements OnInit {
     pageLength:10
   }
   temp: any;
-  columns = [{prop: 'UserName'}, {prop: 'BranchName'}];
+//columns = [{prop: 'DepartmentName', displayName: 'Cabinet Name'}, {prop: 'BranchName', displayName: 'Folder Name'}];
+
+columns = [{prop: 'UserName', displayName: 'Name'}, {prop: 'BranchName', displayName: 'Folder'}];
+ 
+ // columns = [{prop: 'UserName'}, {prop: 'BranchName'}];
   @ViewChild('search', { static: false }) search: any;
   selectedItems: any = [];
   dropdownSettings:IDropdownSettings;

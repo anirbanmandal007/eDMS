@@ -5,6 +5,8 @@
 export const environment = {
     production: false,
     baseUrl: 'https://e-storage.crownims.com/SODDMSTesting/api/'
+    // baseUrl: 'http://localhost:50819/api/'
+
 };
 
 /*

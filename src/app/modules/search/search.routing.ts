@@ -4,6 +4,7 @@ import { BulkDownloadComponent } from './bulk-download/bulk-download.component';
 import { ContentSearchComponent } from './content-search/content-search.component';
 import { DeleteFilesComponent } from './delete-files/delete-files.component';
 import { FileStorageComponent } from './file-storage/file-storage.component';
+import { keywordSearchComponent } from './keyword-search/keyword-search.component';
 
 
 export const searchRoutes: Route[] = [
@@ -15,6 +16,7 @@ export const searchRoutes: Route[] = [
             {path: 'file-storage', component: FileStorageComponent},
             {path: 'bulk-download', component: BulkDownloadComponent},
             {path: 'delete-files', component: DeleteFilesComponent},
+            {path: 'keyword-search', component: keywordSearchComponent},
         ]
     }
 ];
