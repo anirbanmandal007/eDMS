@@ -146,6 +146,7 @@ export class ViewIndexingComponent implements OnInit {
       });
     this._processService.saveIndexData(this.indexForm.value).subscribe(res=> {
       this.toaster.show('success', 'Saved!', 'Records saved succesfully!');
+      this._location.back();
     });
   }
 }

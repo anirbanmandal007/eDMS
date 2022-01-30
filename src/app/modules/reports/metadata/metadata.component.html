@@ -28,7 +28,7 @@
           <div flex>
               <div layout="row">
                   <form class="needs-validation"  [formGroup]="MetaDataForm">
-                      <div class="grid grid-cols-2 gap-4">
+                      <div class="grid grid-cols-3 gap-3">
                           <div >
                               <div class=" form-group">    
                                   <select name="DeptID" id="DeptID" class="form-control form-control-sm" formControlName="BranchID"  >
@@ -49,41 +49,32 @@
                                     </select>
                                 </div>
                           </div>
+                          <div class="btn-panel pt-3">
+                              <button class="btn" [disabled]="!isValid()" (click)="onSearch()"> Search</button>
+                              <button class="btn" [disabled]="!isValid()" (click)="onDownload()"> Download</button>    
+                          </div>
                       </div>
                     </form>
               </div>
           </div>
-          <div class="btn-panel pt-6"> <button class="btn" [disabled]="!isValid()" (click)="onSearch()"> Search</button>
-            <button class="btn" [disabled]="!isValid()" (click)="onDownload()"> Download</button>    </div>
         </div>
         
         <div class="dataTables_length flex" id="datatable_length">
           <label class="flex ">
-            <span class="p-6">Show</span>
+            <span class="p-2">Show</span>
             
-            <select
-              name="datatable_length"
-              aria-controls="datatable"
-              class="form-control form-control-sm"
-              (change)="entriesChange($event)"
-            >
+            <select name="datatable_length" aria-controls="datatable" class="select-box" (change)="entriesChange($event)">
               <option value="10" [selected]="entries == 10">10</option>
               <option value="25" [selected]="entries == 25">25</option>
               <option value="50" [selected]="entries == 50">50</option>
               <option value="-1" [selected]="entries == -1">All</option>
             </select>
-            <span class="p-6">entries</span>
+            <span class="p-2">entries</span>
             
           </label>
           <div id="datatable_filter" class="dataTables_filter flex-1 text-right">
             <label>
-              <input
-                type="search"
-                class="form-control form-control-sm"
-                placeholder="Search records"
-                aria-controls="datatable"
-                (keyup)="filterTable($event)"
-              />
+              <input type="search" placeholder="Search records" class="input-search-box" aria-controls="datatable"(keyup)="filterTable($event)">
             </label>
           </div>
         </div>
