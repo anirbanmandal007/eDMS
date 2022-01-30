@@ -24,11 +24,12 @@
         <div class="page-title">
           <h3>All Cabinet Access</h3>
         </div>
+        <div class="btn-panel"><button type="button" (click)="createRegionMapping()">Add Region Mapping</button></div>
           <div class="grid grid-cols-2 gap-2">
               <div>
                   <form [formGroup]="RegionMappingForm">
                       <div class="dataTables_length" id="datatable_length">
-                          <select name="DeptIDS" id="DeptIDS"  class="form-control" [formControlName]="'DeptIDS'" (change)="geBranchListByUserID($event.target.value)" >
+                          <select name="DeptIDS" id="DeptIDS"  class="form-control select-box-width" [formControlName]="'DeptIDS'" (change)="geBranchListByUserID($event.target.value)" >
                             <option value="0">Select Cabinet</option>
                             <option  *ngFor="let _Department of _DepartmentList"  [value]="_Department.id">
                               {{ _Department.DepartmentName }}
@@ -38,7 +39,10 @@
                   </form>
               </div>
               <div>
-                  <div class="btn-panel btn-poistion"><button type="button" (click)="createRegionMapping()">Add Region Mapping</button></div>
+                <div class="mt-3 text-right">
+                  Search: 
+                  <input #search id="search"  type="text"class="search-table form-control w-60 inline-block" aria-label="Search" aria-describedby="basic-addon1"/>
+                </div>
               </div>
           </div>
         <div *ngIf="loader">
@@ -48,22 +52,12 @@
             </div>
           </div>
         </div> 
-        <div class="w-full mb-4 text-right">
-          Search: 
-          <input
-            #search
-            id="search"
-            type="text"
-            class="search-table form-control w-60 inline-block"
-            aria-label="Search"
-            aria-describedby="basic-addon1"
-          />
-        </div>
-        <div *ngIf="displayTable">
+        
+        <div *ngIf="displayTable" class="mt-2">
           <ngx-datatable *ngIf="_TemplateList.length > 0" class="material w-full" style="height: 500px;" [rows]="_TemplateList" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
             [rowHeight]="50" [limit]="10" [count]="_TemplateList.length" [scrollbarV]="true">
             
-              <ngx-datatable-column name="SrNo">
+              <ngx-datatable-column name="Sr No.">
                 <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column *ngFor="let column of columns; 
@@ -99,7 +93,7 @@
         <form class="needs-validation" novalidate="" [formGroup]="AddRegionMappingForm" (ngSubmit)="onSubmit()">
           <div class="form-row">
               <div class="col-md-4">
-                <select name="DeptID" id="DeptID"class="form-control" [formControlName]="'DeptID'"(change)="getRegionListById($event.target.value)">
+                <select name="DeptID" id="DeptID"class="form-control select-box-width" [formControlName]="'DeptID'"(change)="getRegionListById($event.target.value)">
                   <option value="0">Select Cabinet</option>
                   <option  *ngFor="let _Department of _DepartmentList" [value]="_Department.id">
                     {{ _Department.DepartmentName }}
@@ -109,7 +103,7 @@
                   *ngIf="tf.DeptID && tf.DeptID.touched && tf.DeptID.invalid && tf.DeptID.errors.required">This field is Required</div>
               </div>
                <div class="col-md-6">
-                <input type="text" class="search-box" [(ngModel)]="userFilter.BranchName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(BranchName)" placeholder="Search by Folder"/>
+                <input type="text" class="search-box select-box-width" [(ngModel)]="userFilter.BranchName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(BranchName)" placeholder="Search by Folder"/>
               </div>
           </div>
           <div class="form-row">

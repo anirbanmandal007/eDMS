@@ -20,9 +20,11 @@ export class CustomFormComponent implements OnInit {
   ViewCustomeForm: FormGroup;
  
   userFilter:any = { BranchName: '' };
-columns = [{prop: 'IndexField', displayName: 'Field'}, {prop: 'FieldTypeText', displayName: 'Data Type'}, {prop: 'MaxLenght', displayName: 'Lenght'}];
+  temp: any;
+  columns = [{prop: 'IndexField', displayName: 'Field'}, {prop: 'FieldTypeText', displayName: 'Data Type'}, {prop: 'MaxLenght', displayName: 'Lenght'}];
 
 //  columns = [{prop: 'IndexField'}, {prop: 'DisplayName'}, {prop: 'FieldTypeText'}, {prop: 'MaxLenght'}];
+@ViewChild('search', { static: false }) search: any;
   loader: boolean;
   TemplateList: any;
   _IndexList: any;
@@ -98,6 +100,7 @@ getTempList(TempID: number) {
     this._masterService.getDataByTemplateId(TempID).subscribe((data: {}) => {     
       this._IndexList = data;
       this._FilteredList = data;
+      this.temp=data;
       console.log("this._FilteredList",this._FilteredList);
     });
 }
@@ -255,5 +258,45 @@ geTemplateNameListByTempID(templateId:number) {
       this.getTemplate();
     });   
     }
-    
+    ngAfterViewInit(): void {
+      // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+      // Add 'implements AfterViewInit' to the class.
+      fromEvent(this.search.nativeElement, 'keydown')
+        .pipe(
+          debounceTime(550),
+          map(x => x['target']['value'])
+        )
+        .subscribe(value => {
+          this.updateFilter(value);
+        });
+    }
+  
+    updateFilter(val: any) {
+      const value = val.toString().toLowerCase().trim();
+      // get the amount of columns in the table
+      const count = this.columns.length;
+      // get the key names of each column in the dataset
+      const keys = ['IndexField', 'FieldTypeText','MaxLenght'];
+      // assign filtered matches to the active datatable
+      this._FilteredList = this.temp.filter(item => {
+        // iterate through each row's column data
+        for (let i = 0; i < count; i++) {
+          // check for a match
+          if (
+            (item[keys[i]] &&
+              item[keys[i]]
+                .toString()
+                .toLowerCase()
+                .indexOf(value) !== -1) ||
+            !value
+          ) {
+            // found match, return true to add to result set
+            return true;
+          }
+        }
+      });
+  
+      // Whenever the filter changes, always go back to the first page
+      // this.table.offset = 0;
+    }
 }

@@ -23,12 +23,13 @@
         <div class="page-title">
           <h3>Category</h3>
         </div>
+        <div class="btn-panel"><button type="button" (click)="createTemplateMapping()">Create Category Access</button></div>
           <div class="grid grid-cols-2 gap-2">
               <div>
                   <form [formGroup]="TemplateMappingForm">
                       <div class="dataTables_length" id="datatable_length">
                           <label class=" form-control-label" for="UserIDS">
-                              <select class="form-control form-control-sm" [formControlName]="'UserIDS'" data-toggle="select" id="UserID"
+                              <select class="form-control form-control-sm select-box-width" [formControlName]="'UserIDS'" data-toggle="select" id="UserID"
                               (change)="getCustomerListByUserID($event.target.value)">
                                   <option value="0">Select User</option>
                                   <option *ngFor="let _User of _UserL" [value]="_User.id"  >
@@ -40,7 +41,10 @@
                   </form>
               </div>
               <div>
-                  <div class="btn-panel btn-poistion"><button type="button" (click)="createTemplateMapping()">Create Category Access</button></div>
+                <div class="mt-3 text-right">
+                  Search: 
+                  <input #search id="search" type="text" class="search-table form-control w-60 inline-block" aria-label="Search" aria-describedby="basic-addon1"/>
+                </div>
               </div>
           </div>
         <div *ngIf="loader">
@@ -50,17 +54,7 @@
             </div>
           </div>
         </div> 
-        <div class="w-full mb-4 text-right">
-          Search: 
-          <input
-            #search
-            id="search"
-            type="text"
-            class="search-table form-control w-60 inline-block"
-            aria-label="Search"
-            aria-describedby="basic-addon1"
-          />
-        </div>
+        
         <div *ngIf="displayTable">
           <ngx-datatable *ngIf="_TemplateList.length > 0" class="material w-full" style="height: 500px;" [rows]="_TemplateList" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
             [rowHeight]="50" [limit]="10" [count]="_TemplateList.length" [scrollbarV]="true">
@@ -69,6 +63,10 @@
                 let i = index;" name="{{column.prop}}"
                 prop="{{column.prop}}">
               </ngx-datatable-column> -->
+              <ngx-datatable-column name="Sr No.">
+                <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
+              </ngx-datatable-column>
+
               <ngx-datatable-column *ngFor="let column of columns; 
               let i = index;" name="{{column.displayName}}"
               prop="{{column.prop}}">
@@ -102,7 +100,7 @@
         <form class="needs-validation" novalidate="" [formGroup]="AddTemplateMappingForm">
           <div class="form-row">
             <div class="col-md-4">
-                <select class="form-control form-control-sm" [formControlName]="'UserID'" name="UserID" data-toggle="select" id="UserID" (change)="getTemplateListById($event.target.value)">
+                <select class="form-control form-control-sm select-box-width" [formControlName]="'UserID'" name="UserID" data-toggle="select" id="UserID" (change)="getTemplateListById($event.target.value)">
                 <option value="0"> Select User</option>
                 <option *ngFor="let _User of _UserL" [value]="_User.id"  >
                     {{_User.userid}}
@@ -112,7 +110,7 @@
                 *ngIf="tf.UserID && tf.UserID.touched && tf.UserID.invalid && tf.UserID.errors.required">This field is Required</div>
             </div>
             <div class="col-md-6">
-              <input type="text" class="search-box" [(ngModel)]="userFilter.TemplateName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(TemplateName)" placeholder="Search by Category Name"/>
+              <input type="text" class="search-box select-box-width" [(ngModel)]="userFilter.TemplateName" [ngModelOptions]="{standalone: true}" onkeyup="searchforBranch(TemplateName)" placeholder="Search by Category Name"/>
             </div>
         </div>
           <div class="form-row">
@@ -125,7 +123,7 @@
                     class=" custom-control custom-checkbox custom-checkbox-success"
                   >
                     <input
-                      class=" custom-control-input"
+                      class=" custom-control-input "
                       type="checkbox"
                       id="_checkAllID"
                       (change)="master_change()"
