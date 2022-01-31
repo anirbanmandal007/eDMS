@@ -50,9 +50,9 @@
                                     <option value=8>Logout</option>                 
                                 </select>
                             </div>
-                            <div class=" form-group btn-panel">
-                                <button class="btn h-8" [disabled]="!isValid()" (click)="onSearch()"> Search</button>
-                                <button class="btn h-8" [disabled]="!isValid()" (click)="onDownload()"> Download</button>
+                            <div class="form-group btn-panel mt-3">
+                                <button class="btn" [disabled]="!isValid()" (click)="onSearch()"> Search</button>
+                                <button class="btn" [disabled]="!isValid()" (click)="onDownload()"> Download</button>
                             </div>
                            
                         </div>
@@ -82,7 +82,7 @@
           <div *ngIf="displayTable">
             <ngx-datatable *ngIf="_FilteredList.length > 0" class="material w-full" style="height: 500px;" [rows]="_FilteredList" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
               [rowHeight]="50" [limit]="10" [count]="_FilteredList.length" [scrollbarV]="true">
-              <ngx-datatable-column name="SrNo">
+              <ngx-datatable-column name="Sr No.">
                 <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>{{rowIndex+1}}</ng-template>
               </ngx-datatable-column>
                 <ngx-datatable-column *ngFor="let column of columns; 
