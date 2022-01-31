@@ -51,7 +51,7 @@
                     </div>
                     <div class="w-full px-4 py-8">
                       <p-fileUpload #fileUpload (onSelect)="getFileDetails($event)" customUpload="true" (uploadHandler)="uploadFiles(fileUpload)"
-                        multiple="multiple" maxFileSize="1000000" invalidFileSizeMessageSummary accept=".xlsx,.pdf,.csv,.xls" invalidFileTypeMessageSummary>
+                        multiple="multiple" invalidFileSizeMessageSummary accept=".xlsx,.pdf,.csv,.xls" invalidFileTypeMessageSummary>
                         <ng-template pTemplate="content">
                             <ul *ngIf="myFiles.length">
                                 
