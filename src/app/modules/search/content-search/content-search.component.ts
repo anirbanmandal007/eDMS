@@ -444,18 +444,20 @@ export class ContentSearchComponent implements OnInit {
     let tableHeader: any = [
       { field: 'srNo', header: "SR NO", index: 1 },
       // { field: 'accId', header: 'Acc ID', index: 2 },
-      { field: 'branch', header: 'FOLDER', index: 3 },
+      { field: 'branch', header: 'FOLDER', index: 2 },
         //  { field: 'TemplateName', header: 'TemplateName', index: 3 },
     //  { field: 'department', header: 'Department', index: 4 },
     //  { field: 'docType', header: 'Doc Type', index: 5 },
-      { field: 'pageCount', header: 'PAGES', index: 6 },
-      { field: 'entryDate', header: 'UPLAOD DATE', index: 3 },
+     
     ];
     headerList.forEach((el, index) => {
       tableHeader.push({
-        field: 'metadata-' + parseInt(index+1), header: el.DisplayName, index: parseInt(7+index)
+        field: 'metadata-' + parseInt(index+1), header: el.DisplayName, index: parseInt(3+index)
       })
     })
+    tableHeader.push({ field: 'pageCount', header: 'PAGES', index: 11 });
+    tableHeader.push({ field: 'entryDate', header: 'UPLAOD DATE', index: 12 });
+    console.log("tableHeader",tableHeader);
     console.log("tableData",tableData);
     tableData.forEach((el, index) => {
       formattedData.push({
