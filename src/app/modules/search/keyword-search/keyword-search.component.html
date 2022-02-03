@@ -29,6 +29,41 @@
         <div class="page-title">
           <h3>Keyword Search</h3>
         </div>
+        <div class="search-flex-icon-container">
+            <button *ngIf="_isDownload" type="button" title="Download Files"
+            class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"  (click)="DownloadBulkFiles()" >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </button>
+          <button type="button" title="Download Metadata Dump "
+            class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"  (click)="DownloadMetadata()" >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+          </button>
+
+            <button *ngIf="_ShareLink" type="button" title="Share link"
+            class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"  (click)="ShareLink(ShareLinkFormPopup)" >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+          </button>
+        
+          <button *ngIf="_isEmail" type="button" title="Send E-Mail"
+          class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"   (click)="SendBulkEmail(EmailFormPopup)">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </button>
+
+        <button  type="button" title="Export to CSV" 
+        class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"   (click)="ExporttoExcel()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </button>
+        </div>
         <div class=" container-fluid mt--6">
           <div class=" row">
             <div id="ContentSearchPage">
@@ -87,39 +122,7 @@
                   
                 <div class="card-body pt-0">
                   <div class="mt--6">
-                  <button *ngIf="_isDownload" type="button" title="Download Files"
-                  class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"  (click)="DownloadBulkFiles()" >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </button>
-                <button type="button" title="Download Metadata Dump "
-                  class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"  (click)="DownloadMetadata()" >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                </button>
-        
-                <button *ngIf="_ShareLink" type="button" title="Share link"
-                class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"  (click)="ShareLink(ShareLinkFormPopup)" >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-              </button>
-              
-              <button *ngIf="_isEmail" type="button" title="Send E-Mail"
-              class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"   (click)="SendBulkEmail(EmailFormPopup)">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </button>
-        
-            <button  type="button" title="Export to CSV" 
-            class="btn btn-icon btn-secondary btn-icon-only rounded-circle icon-button-css"   (click)="ExporttoExcel()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </button>
+                
             </div>
 
                 </div>
