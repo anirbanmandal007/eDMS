@@ -15,7 +15,10 @@ export class IndexingComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   indexData: any;
   temp: any;
-  columns = [{prop: 'FileNo'}, {prop: 'BranchName'}, {prop: 'TemplateName'}]
+ // columns = [{prop: 'FileNo'}, {prop: 'BranchName'}, {prop: 'TemplateName'}]
+  columns = [{prop: 'FileNo', displayName: 'File Name'}, {prop: 'BranchName', displayName: 'Folder'}, {prop: 'TemplateName', displayName: 'Category'}];
+
+
   @ViewChild('search', { static: false }) search: any;
   
   constructor(

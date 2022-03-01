@@ -54,6 +54,14 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon : 'heroicons_outline:pencil-alt',
                 link : '/userManagement/change-password',
                 disabled: false,
+            },
+            {
+                id   : 'Projectconfiguration',
+                title: 'Project Configuration',
+                type : 'basic',
+                icon : 'heroicons_outline:pencil-alt',
+                link : '/userManagement/Projectconfiguration',
+                disabled: false,
             }
         ]
     },
@@ -343,6 +351,16 @@ export const horizontalNavigation: FuseNavigationItem[] = [
                 link : '/userManagement/change-password',
                 disabled: false,
             }
+            ,
+            {
+                id   : 'Projectconfiguration',
+                title: 'Project Configuration',
+                type : 'basic',
+                icon : 'heroicons_outline:pencil-alt',
+                link : '/userManagement/Projectconfiguration',
+                disabled: false,
+            }
+            
         ]
     },
     {
