@@ -37,7 +37,8 @@ export class LogsComponent implements OnInit {
 
   //ng table data populate
   temp_data: any;
-  columns = [{prop: 'UserName'},{prop: 'FileNo'}, {prop: 'Activity'},{prop: 'LogDate'}];
+  columns = [{prop: 'UserName',displayName: 'User Name'},{prop: 'FileNo' ,displayName: 'Access type'}, {prop: 'Activity',displayName: 'Activity'},{prop: 'LogDate',displayName: 'Activity date'}];
+  
   @ViewChild('search', { static: false }) search: any;
 
   constructor(

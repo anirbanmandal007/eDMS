@@ -336,6 +336,10 @@ thead{
     background: rgb(1, 15, 80);
     color: rgb(255, 255, 255);
     font-weight: 800;
+    
+}
+.datatable-body-cell-label{
+    font-size: 13px;
 }
 .search-table {
     border: 1px solid #aaa;
@@ -411,7 +415,9 @@ thead{
 .to-blue-100 {
     --tw-gradient-to: #dbeafe;
 }
-
+.p-datatable-wrapper{
+    font-size: 13px !important;
+}
 .p-datatable .p-datatable-header {
     border-bottom: 1px solid #111;
     background: #4757a1;
@@ -446,4 +452,7 @@ thead{
     position: absolute;
     right: 58px;
     top: 118px;
+}
+.dataTables_wrapper{
+    font-size: 13px !important;
 }
